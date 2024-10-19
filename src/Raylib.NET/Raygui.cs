@@ -1,7 +1,7 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Numerics;
 using Bindgen.Interop;
+using System.Numerics;
 
 namespace Raylib.NET;
 

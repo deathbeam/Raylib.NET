@@ -18,7 +18,6 @@ public class Generator
     private readonly string FileContent;
     private readonly CppParserOptions Options;
     private readonly HashSet<string> ReservedKeywords = new HashSet<string>();
-    private readonly HashSet<string> ExtraImports = new HashSet<string>();
     private readonly Dictionary<string, Dictionary<string, string>> LiteralValues = new();
 
     public Generator(
@@ -84,8 +83,13 @@ public class Generator
 
         builder.AppendLine("using System.Runtime.CompilerServices;");
         builder.AppendLine("using System.Runtime.InteropServices;");
-        builder.AppendLine("using System.Numerics;");
         builder.AppendLine("using Bindgen.Interop;");
+
+        foreach (var import in ExistingIdentifiers.Values.Distinct())
+        {
+            builder.AppendLine($"using {import};");
+        }
+
         builder.AppendLine();
         builder.AppendLine($"namespace {GeneratedNamespace};");
         builder.AppendLine();
@@ -154,7 +158,11 @@ public class Generator
             generated = "namespace " + GeneratedNamespace + ";\n\n" + generated;
             generated = "using Bindgen.Interop;\n\n" + generated;
             generated = "using System.Runtime.InteropServices;\n" + generated;
-            generated = "using System.Numerics;\n" + generated;
+            foreach (var import in ExistingIdentifiers.Values.Distinct())
+            {
+                generated = "using " + import + ";\n" + generated;
+            }
+
             var path = $"{OutputPath}/Types/{name}.cs";
             Console.WriteLine($"- Generated: {name} - {path}");
             WriteFile(path, generated);
@@ -577,11 +585,6 @@ public class Generator
             "uint64_t" => "ulong",
             _ => TransformIdentifier(o),
         };
-
-        if (ExistingIdentifiers.TryGetValue(o, out var existing))
-        {
-            ExtraImports.Add(existing);
-        }
 
         return o;
     }
