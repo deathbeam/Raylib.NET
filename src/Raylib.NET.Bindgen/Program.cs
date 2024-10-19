@@ -7,8 +7,7 @@ string[] defines = {
 };
 
 string[] includeFolders = {
-    "../lib/raylib/src",
-    "../lib/raygui/src",
+    "../../lib/raylib/src"
 };
 
 var transformIdentifier = (string identifier) => identifier switch
