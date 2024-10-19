@@ -34,7 +34,7 @@ string[] includeFolders = { $"{libPath}/raylib/src" };
 
 new Generator(
     generatedClass: "Raygui",
-    libraryName: "raygui",
+    libraryName: "raylib",
     filePath: $"{libPath}/raygui/src/raygui.h",
     generatedNamespace: generatedNamespace,
     outputPath: ouputPath,

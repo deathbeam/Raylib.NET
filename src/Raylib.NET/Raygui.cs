@@ -7,7 +7,7 @@ namespace Raylib.NET;
 
 public static unsafe partial class Raygui
 {
-    public const string LIBRARY = "raygui";
+    public const string LIBRARY = "raylib";
 
     public const int RAYGUI_VERSION_MAJOR = 4;
 
