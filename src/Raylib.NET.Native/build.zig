@@ -3,12 +3,18 @@ const std = @import("std");
 pub fn compileRaylib(b: *std.Build, target: std.Build.ResolvedTarget, optimize: std.builtin.OptimizeMode, shared: bool) *std.Build.Step.Compile {
     const raylib = b.dependency("raylib", .{ .target = target, .optimize = optimize, .shared = shared, .linux_display_backend = .X11 });
     const raygui = b.dependency("raygui", .{ .target = target, .optimize = optimize });
-    const xheaders = b.dependency("xheaders", .{ .target = target });
-    const glheaders = b.dependency("glheaders", .{ .target = target });
-
     const lib = raylib.artifact("raylib");
-    lib.linkLibrary(xheaders.artifact("x11-headers"));
-    lib.linkLibrary(glheaders.artifact("opengl-headers"));
+
+    if (target.result.isDarwin()) {
+        if (b.lazyDependency("xcode_frameworks", .{
+            .target = target,
+            .optimize = optimize,
+        })) |dep| {
+            lib.addSystemFrameworkPath(dep.path("Frameworks"));
+            lib.addSystemIncludePath(dep.path("include"));
+            lib.addLibraryPath(dep.path("lib"));
+        }
+    }
 
     var gen_step = b.addWriteFiles();
     lib.step.dependOn(&gen_step.step);
