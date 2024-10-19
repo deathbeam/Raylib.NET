@@ -45,7 +45,13 @@ public class Generator
 
         Options = new CppParserOptions
         {
-            AdditionalArguments = { "-xc", "-std=c99" },
+            AdditionalArguments = {
+                "-xc",
+                "-std=gnu99",
+                "-D_GNU_SOURCE",
+                "-DGL_SILENCE_DEPRECATION=199309L",
+                "-fno-sanitize=undefined",
+            },
             ParseAsCpp = false,
             ParseComments = true,
             ParseMacros = true,
