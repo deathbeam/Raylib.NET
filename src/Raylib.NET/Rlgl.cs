@@ -11,8 +11,6 @@ public static unsafe partial class Rlgl
 
     public const int BUILD_LIBTYPE_SHARED = 1;
 
-    public const int RAYGUI_IMPLEMENTATION = 1;
-
     public const string RLGL_VERSION = "5.0";
 
     public const int RL_DEFAULT_BATCH_BUFFER_ELEMENTS = 8192;

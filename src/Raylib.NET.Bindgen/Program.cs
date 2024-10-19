@@ -20,7 +20,7 @@ var existingIdentifiers = new Dictionary<string, string>
 
 string[] defines = {
     "BUILD_LIBTYPE_SHARED",
-    "RAYGUI_IMPLEMENTATION",
+    // "RAYGUI_IMPLEMENTATION",
     // "RLGL_IMPLEMENTATION"
 };
 
