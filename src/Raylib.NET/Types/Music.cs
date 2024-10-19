@@ -28,12 +28,12 @@ public partial struct Music
     /// </summary>
     public unsafe void* CtxData;
 
-    public unsafe Music(AudioStream Stream, uint FrameCount, NativeBool Looping, int CtxType, void* CtxData)
+    public unsafe Music(AudioStream stream, uint frameCount, NativeBool looping, int ctxType, void* ctxData)
     {
-        this.Stream = Stream;
-        this.FrameCount = FrameCount;
-        this.Looping = Looping;
-        this.CtxType = CtxType;
-        this.CtxData = CtxData;
+        this.Stream = stream;
+        this.FrameCount = frameCount;
+        this.Looping = looping;
+        this.CtxType = ctxType;
+        this.CtxData = ctxData;
     }
 }

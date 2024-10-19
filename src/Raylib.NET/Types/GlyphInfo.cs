@@ -28,12 +28,12 @@ public partial struct GlyphInfo
     /// </summary>
     public Image Image;
 
-    public GlyphInfo(int Value, int OffsetX, int OffsetY, int AdvanceX, Image Image)
+    public GlyphInfo(int value, int offsetX, int offsetY, int advanceX, Image image)
     {
-        this.Value = Value;
-        this.OffsetX = OffsetX;
-        this.OffsetY = OffsetY;
-        this.AdvanceX = AdvanceX;
-        this.Image = Image;
+        this.Value = value;
+        this.OffsetX = offsetX;
+        this.OffsetY = offsetY;
+        this.AdvanceX = advanceX;
+        this.Image = image;
     }
 }

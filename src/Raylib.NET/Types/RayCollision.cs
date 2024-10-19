@@ -24,11 +24,11 @@ public partial struct RayCollision
     /// </summary>
     public Vector3 Normal;
 
-    public RayCollision(NativeBool Hit, float Distance, Vector3 Point, Vector3 Normal)
+    public RayCollision(NativeBool hit, float distance, Vector3 point, Vector3 normal)
     {
-        this.Hit = Hit;
-        this.Distance = Distance;
-        this.Point = Point;
-        this.Normal = Normal;
+        this.Hit = hit;
+        this.Distance = distance;
+        this.Point = point;
+        this.Normal = normal;
     }
 }

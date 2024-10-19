@@ -16,9 +16,9 @@ public partial struct BoundingBox
     /// </summary>
     public Vector3 Max;
 
-    public BoundingBox(Vector3 Min, Vector3 Max)
+    public BoundingBox(Vector3 min, Vector3 max)
     {
-        this.Min = Min;
-        this.Max = Max;
+        this.Min = min;
+        this.Max = max;
     }
 }

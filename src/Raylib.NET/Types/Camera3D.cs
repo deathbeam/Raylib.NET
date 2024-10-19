@@ -28,12 +28,12 @@ public partial struct Camera3D
     /// </summary>
     public int Projection;
 
-    public Camera3D(Vector3 Position, Vector3 Target, Vector3 Up, float Fovy, int Projection)
+    public Camera3D(Vector3 position, Vector3 target, Vector3 up, float fovy, int projection)
     {
-        this.Position = Position;
-        this.Target = Target;
-        this.Up = Up;
-        this.Fovy = Fovy;
-        this.Projection = Projection;
+        this.Position = position;
+        this.Target = target;
+        this.Up = up;
+        this.Fovy = fovy;
+        this.Projection = projection;
     }
 }

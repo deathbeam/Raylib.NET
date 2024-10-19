@@ -24,11 +24,11 @@ public partial struct Camera2D
     /// </summary>
     public float Zoom;
 
-    public Camera2D(Vector2 Offset, Vector2 Target, float Rotation, float Zoom)
+    public Camera2D(Vector2 offset, Vector2 target, float rotation, float zoom)
     {
-        this.Offset = Offset;
-        this.Target = Target;
-        this.Rotation = Rotation;
-        this.Zoom = Zoom;
+        this.Offset = offset;
+        this.Target = target;
+        this.Rotation = rotation;
+        this.Zoom = zoom;
     }
 }

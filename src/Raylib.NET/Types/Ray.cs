@@ -16,9 +16,9 @@ public partial struct Ray
     /// </summary>
     public Vector3 Direction;
 
-    public Ray(Vector3 Position, Vector3 Direction)
+    public Ray(Vector3 position, Vector3 direction)
     {
-        this.Position = Position;
-        this.Direction = Direction;
+        this.Position = position;
+        this.Direction = direction;
     }
 }

@@ -20,10 +20,10 @@ public partial struct Transform
     /// </summary>
     public Vector3 Scale;
 
-    public Transform(Vector3 Translation, Vector4 Rotation, Vector3 Scale)
+    public Transform(Vector3 translation, Vector4 rotation, Vector3 scale)
     {
-        this.Translation = Translation;
-        this.Rotation = Rotation;
-        this.Scale = Scale;
+        this.Translation = translation;
+        this.Rotation = rotation;
+        this.Scale = scale;
     }
 }

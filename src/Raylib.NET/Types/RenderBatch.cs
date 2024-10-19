@@ -32,13 +32,13 @@ public partial struct RenderBatch
     /// </summary>
     public float CurrentDepth;
 
-    public unsafe RenderBatch(int BufferCount, int CurrentBuffer, VertexBuffer* VertexBuffer, DrawCall* Draws, int DrawCounter, float CurrentDepth)
+    public unsafe RenderBatch(int bufferCount, int currentBuffer, VertexBuffer* vertexBuffer, DrawCall* draws, int drawCounter, float currentDepth)
     {
-        this.BufferCount = BufferCount;
-        this.CurrentBuffer = CurrentBuffer;
-        this.VertexBuffer = VertexBuffer;
-        this.Draws = Draws;
-        this.DrawCounter = DrawCounter;
-        this.CurrentDepth = CurrentDepth;
+        this.BufferCount = bufferCount;
+        this.CurrentBuffer = currentBuffer;
+        this.VertexBuffer = vertexBuffer;
+        this.Draws = draws;
+        this.DrawCounter = drawCounter;
+        this.CurrentDepth = currentDepth;
     }
 }

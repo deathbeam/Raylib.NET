@@ -16,9 +16,9 @@ public partial struct Sound
     /// </summary>
     public uint FrameCount;
 
-    public Sound(AudioStream Stream, uint FrameCount)
+    public Sound(AudioStream stream, uint frameCount)
     {
-        this.Stream = Stream;
-        this.FrameCount = FrameCount;
+        this.Stream = stream;
+        this.FrameCount = frameCount;
     }
 }

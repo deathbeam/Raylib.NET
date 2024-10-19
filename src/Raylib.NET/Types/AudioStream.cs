@@ -28,12 +28,12 @@ public partial struct AudioStream
     /// </summary>
     public uint Channels;
 
-    public unsafe AudioStream(rAudioBuffer* Buffer, rAudioProcessor* Processor, uint SampleRate, uint SampleSize, uint Channels)
+    public unsafe AudioStream(rAudioBuffer* buffer, rAudioProcessor* processor, uint sampleRate, uint sampleSize, uint channels)
     {
-        this.Buffer = Buffer;
-        this.Processor = Processor;
-        this.SampleRate = SampleRate;
-        this.SampleSize = SampleSize;
-        this.Channels = Channels;
+        this.Buffer = buffer;
+        this.Processor = processor;
+        this.SampleRate = sampleRate;
+        this.SampleSize = sampleSize;
+        this.Channels = channels;
     }
 }

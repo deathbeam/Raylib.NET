@@ -44,13 +44,7 @@ public class Generator
 
         Options = new CppParserOptions
         {
-            AdditionalArguments = {
-                "-xc",
-                "-std=gnu99",
-                "-D_GNU_SOURCE",
-                "-DGL_SILENCE_DEPRECATION=199309L",
-                "-fno-sanitize=undefined",
-            },
+            AdditionalArguments = { "-xc", "-std=gnu99" },
             ParseAsCpp = false,
             ParseComments = true,
             ParseMacros = true,
@@ -191,17 +185,6 @@ public class Generator
         File.WriteAllText(path, content);
     }
 
-    private static void CopyFile(string sourcePath, string destinationPath)
-    {
-        var directoryPath = Path.GetDirectoryName(destinationPath);
-        if (!string.IsNullOrEmpty(directoryPath))
-        {
-            Directory.CreateDirectory(directoryPath);
-        }
-
-        File.Copy(sourcePath, destinationPath, true);
-    }
-
     private String GenerateConstant(CppMacro macro, out String output)
     {
         if (macro.Span.Start.File != "cppast.input")
@@ -306,6 +289,7 @@ public class Generator
         output += $"public partial struct {structName}\n";
         output += "{\n";
 
+        // Generate constants
         if (LiteralValues.TryGetValue(structName, out var values))
         {
             foreach (var value in values)
@@ -368,7 +352,7 @@ public class Generator
             {
                 var pointerCount = 0;
                 string fieldType = ConvertCppTypeToCSharp(field.Type, ref pointerCount, out var arraySize);
-                string fieldName = MapIdentifier(field.Name, true);
+                string fieldName = ToCamelCase(MapIdentifier(field.Name, true));
 
                 if (!first)
                 {
@@ -384,14 +368,13 @@ public class Generator
                 }
             }
 
-            constructorOutput =
-                "\n    public " + (unsafeDecl ? "unsafe " : "") + structName + "(" + constructorOutput + ")\n    {\n";
+            constructorOutput = "\n    public " + (unsafeDecl ? "unsafe " : "") + structName + "(" + constructorOutput + ")\n    {\n";
             output += constructorOutput;
 
             foreach (var field in cppStruct.Fields)
             {
                 string fieldName = MapIdentifier(field.Name, true);
-                output += $"        this.{fieldName} = {fieldName};\n";
+                output += $"        this.{fieldName} = {ToCamelCase(fieldName)};\n";
             }
             output += "    }\n";
         }
@@ -438,8 +421,7 @@ public class Generator
 
         if (functionName != function.Name)
         {
-            output +=
-                $"    [LibraryImport(LIBRARY, EntryPoint = \"{function.Name}\", StringMarshalling = StringMarshalling.Utf8)]\n";
+            output += $"    [LibraryImport(LIBRARY, EntryPoint = \"{function.Name}\", StringMarshalling = StringMarshalling.Utf8)]\n";
         }
         else
         {
@@ -447,8 +429,7 @@ public class Generator
         }
 
         output += "    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]\n";
-        output +=
-            $"    public static {(isUnsafe ? "unsafe " : "")}partial {returnType} {functionName}({parametersString});";
+        output += $"    public static {(isUnsafe ? "unsafe " : "")}partial {returnType} {functionName}({parametersString});";
 
         return functionName;
     }
@@ -476,12 +457,7 @@ public class Generator
         return false;
     }
 
-    private string ConvertCppTypeToCSharp(
-        CppType cppType,
-        ref int pointerCount,
-        out int arraySize,
-        bool skipHighOrder = false
-    )
+    private string ConvertCppTypeToCSharp(CppType cppType, ref int pointerCount, out int arraySize, bool skipHighOrder = false)
     {
         arraySize = 0;
         switch (cppType)
@@ -615,6 +591,16 @@ public class Generator
         }
 
         return char.ToUpper(value[0]) + value.Substring(1);
+    }
+
+    private static string ToCamelCase(string value)
+    {
+        if (string.IsNullOrEmpty(value))
+        {
+            return value;
+        }
+
+        return char.ToLower(value[0]) + value.Substring(1);
     }
 
     private static string ExtractComments(string sourceCode, int functionStartLine, int functionEndLine)

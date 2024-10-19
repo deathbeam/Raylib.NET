@@ -20,10 +20,10 @@ public partial struct MaterialMap
     /// </summary>
     public float Value;
 
-    public MaterialMap(Texture Texture, Color Color, float Value)
+    public MaterialMap(Texture texture, Color color, float value)
     {
-        this.Texture = Texture;
-        this.Color = Color;
-        this.Value = Value;
+        this.Texture = texture;
+        this.Color = color;
+        this.Value = value;
     }
 }

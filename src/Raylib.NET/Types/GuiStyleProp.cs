@@ -20,10 +20,10 @@ public partial struct GuiStyleProp
     /// </summary>
     public int PropertyValue;
 
-    public GuiStyleProp(ushort ControlId, ushort PropertyId, int PropertyValue)
+    public GuiStyleProp(ushort controlId, ushort propertyId, int propertyValue)
     {
-        this.ControlId = ControlId;
-        this.PropertyId = PropertyId;
-        this.PropertyValue = PropertyValue;
+        this.ControlId = controlId;
+        this.PropertyId = propertyId;
+        this.PropertyValue = propertyValue;
     }
 }

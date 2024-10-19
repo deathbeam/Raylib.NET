@@ -16,9 +16,9 @@ public partial struct Shader
     /// </summary>
     public unsafe int* Locs;
 
-    public unsafe Shader(uint Id, int* Locs)
+    public unsafe Shader(uint id, int* locs)
     {
-        this.Id = Id;
-        this.Locs = Locs;
+        this.Id = id;
+        this.Locs = locs;
     }
 }

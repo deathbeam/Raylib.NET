@@ -24,11 +24,11 @@ public partial struct DrawCall
     /// </summary>
     public uint TextureId;
 
-    public DrawCall(int Mode, int VertexCount, int VertexAlignment, uint TextureId)
+    public DrawCall(int mode, int vertexCount, int vertexAlignment, uint textureId)
     {
-        this.Mode = Mode;
-        this.VertexCount = VertexCount;
-        this.VertexAlignment = VertexAlignment;
-        this.TextureId = TextureId;
+        this.Mode = mode;
+        this.VertexCount = vertexCount;
+        this.VertexAlignment = vertexAlignment;
+        this.TextureId = textureId;
     }
 }

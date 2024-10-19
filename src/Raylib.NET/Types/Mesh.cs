@@ -76,24 +76,24 @@ public partial struct Mesh
     /// </summary>
     public unsafe uint* VboId;
 
-    public unsafe Mesh(int VertexCount, int TriangleCount, float* Vertices, float* Texcoords, float* Texcoords2, float* Normals, float* Tangents, byte* Colors, ushort* Indices, float* AnimVertices, float* AnimNormals, byte* BoneIds, float* BoneWeights, Matrix4x4* BoneMatrices, int BoneCount, uint VaoId, uint* VboId)
+    public unsafe Mesh(int vertexCount, int triangleCount, float* vertices, float* texcoords, float* texcoords2, float* normals, float* tangents, byte* colors, ushort* indices, float* animVertices, float* animNormals, byte* boneIds, float* boneWeights, Matrix4x4* boneMatrices, int boneCount, uint vaoId, uint* vboId)
     {
-        this.VertexCount = VertexCount;
-        this.TriangleCount = TriangleCount;
-        this.Vertices = Vertices;
-        this.Texcoords = Texcoords;
-        this.Texcoords2 = Texcoords2;
-        this.Normals = Normals;
-        this.Tangents = Tangents;
-        this.Colors = Colors;
-        this.Indices = Indices;
-        this.AnimVertices = AnimVertices;
-        this.AnimNormals = AnimNormals;
-        this.BoneIds = BoneIds;
-        this.BoneWeights = BoneWeights;
-        this.BoneMatrices = BoneMatrices;
-        this.BoneCount = BoneCount;
-        this.VaoId = VaoId;
-        this.VboId = VboId;
+        this.VertexCount = vertexCount;
+        this.TriangleCount = triangleCount;
+        this.Vertices = vertices;
+        this.Texcoords = texcoords;
+        this.Texcoords2 = texcoords2;
+        this.Normals = normals;
+        this.Tangents = tangents;
+        this.Colors = colors;
+        this.Indices = indices;
+        this.AnimVertices = animVertices;
+        this.AnimNormals = animNormals;
+        this.BoneIds = boneIds;
+        this.BoneWeights = boneWeights;
+        this.BoneMatrices = boneMatrices;
+        this.BoneCount = boneCount;
+        this.VaoId = vaoId;
+        this.VboId = vboId;
     }
 }

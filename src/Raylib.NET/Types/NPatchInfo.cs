@@ -32,13 +32,13 @@ public partial struct NPatchInfo
     /// </summary>
     public int Layout;
 
-    public NPatchInfo(Vector4 Source, int Left, int Top, int Right, int Bottom, int Layout)
+    public NPatchInfo(Vector4 source, int left, int top, int right, int bottom, int layout)
     {
-        this.Source = Source;
-        this.Left = Left;
-        this.Top = Top;
-        this.Right = Right;
-        this.Bottom = Bottom;
-        this.Layout = Layout;
+        this.Source = source;
+        this.Left = left;
+        this.Top = top;
+        this.Right = right;
+        this.Bottom = bottom;
+        this.Layout = layout;
     }
 }

@@ -51,11 +51,11 @@ public partial struct Color
     /// </summary>
     public byte A;
 
-    public Color(byte R, byte G, byte B, byte A)
+    public Color(byte r, byte g, byte b, byte a)
     {
-        this.R = R;
-        this.G = G;
-        this.B = B;
-        this.A = A;
+        this.R = r;
+        this.G = g;
+        this.B = b;
+        this.A = a;
     }
 }

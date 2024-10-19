@@ -20,10 +20,10 @@ public partial struct RenderTexture
     /// </summary>
     public Texture Depth;
 
-    public RenderTexture(uint Id, Texture Texture, Texture Depth)
+    public RenderTexture(uint id, Texture texture, Texture depth)
     {
-        this.Id = Id;
-        this.Texture = Texture;
-        this.Depth = Depth;
+        this.Id = id;
+        this.Texture = texture;
+        this.Depth = depth;
     }
 }

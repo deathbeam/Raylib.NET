@@ -32,13 +32,13 @@ public partial struct Font
     /// </summary>
     public unsafe GlyphInfo* Glyphs;
 
-    public unsafe Font(int BaseSize, int GlyphCount, int GlyphPadding, Texture Texture, Vector4* Recs, GlyphInfo* Glyphs)
+    public unsafe Font(int baseSize, int glyphCount, int glyphPadding, Texture texture, Vector4* recs, GlyphInfo* glyphs)
     {
-        this.BaseSize = BaseSize;
-        this.GlyphCount = GlyphCount;
-        this.GlyphPadding = GlyphPadding;
-        this.Texture = Texture;
-        this.Recs = Recs;
-        this.Glyphs = Glyphs;
+        this.BaseSize = baseSize;
+        this.GlyphCount = glyphCount;
+        this.GlyphPadding = glyphPadding;
+        this.Texture = texture;
+        this.Recs = recs;
+        this.Glyphs = glyphs;
     }
 }

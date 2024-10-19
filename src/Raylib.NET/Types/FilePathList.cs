@@ -20,10 +20,10 @@ public partial struct FilePathList
     /// </summary>
     public unsafe sbyte** Paths;
 
-    public unsafe FilePathList(uint Capacity, uint Count, sbyte** Paths)
+    public unsafe FilePathList(uint capacity, uint count, sbyte** paths)
     {
-        this.Capacity = Capacity;
-        this.Count = Count;
-        this.Paths = Paths;
+        this.Capacity = capacity;
+        this.Count = count;
+        this.Paths = paths;
     }
 }

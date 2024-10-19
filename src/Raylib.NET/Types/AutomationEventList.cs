@@ -20,10 +20,10 @@ public partial struct AutomationEventList
     /// </summary>
     public unsafe AutomationEvent* Events;
 
-    public unsafe AutomationEventList(uint Capacity, uint Count, AutomationEvent* Events)
+    public unsafe AutomationEventList(uint capacity, uint count, AutomationEvent* events)
     {
-        this.Capacity = Capacity;
-        this.Count = Count;
-        this.Events = Events;
+        this.Capacity = capacity;
+        this.Count = count;
+        this.Events = events;
     }
 }

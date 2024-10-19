@@ -28,12 +28,12 @@ public partial struct Wave
     /// </summary>
     public unsafe void* Data;
 
-    public unsafe Wave(uint FrameCount, uint SampleRate, uint SampleSize, uint Channels, void* Data)
+    public unsafe Wave(uint frameCount, uint sampleRate, uint sampleSize, uint channels, void* data)
     {
-        this.FrameCount = FrameCount;
-        this.SampleRate = SampleRate;
-        this.SampleSize = SampleSize;
-        this.Channels = Channels;
-        this.Data = Data;
+        this.FrameCount = frameCount;
+        this.SampleRate = sampleRate;
+        this.SampleSize = sampleSize;
+        this.Channels = channels;
+        this.Data = data;
     }
 }

@@ -44,16 +44,16 @@ public partial struct Model
     /// </summary>
     public unsafe Transform* BindPose;
 
-    public unsafe Model(Matrix4x4 Transform, int MeshCount, int MaterialCount, Mesh* Meshes, Material* Materials, int* MeshMaterial, int BoneCount, BoneInfo* Bones, Transform* BindPose)
+    public unsafe Model(Matrix4x4 transform, int meshCount, int materialCount, Mesh* meshes, Material* materials, int* meshMaterial, int boneCount, BoneInfo* bones, Transform* bindPose)
     {
-        this.Transform = Transform;
-        this.MeshCount = MeshCount;
-        this.MaterialCount = MaterialCount;
-        this.Meshes = Meshes;
-        this.Materials = Materials;
-        this.MeshMaterial = MeshMaterial;
-        this.BoneCount = BoneCount;
-        this.Bones = Bones;
-        this.BindPose = BindPose;
+        this.Transform = transform;
+        this.MeshCount = meshCount;
+        this.MaterialCount = materialCount;
+        this.Meshes = meshes;
+        this.Materials = materials;
+        this.MeshMaterial = meshMaterial;
+        this.BoneCount = boneCount;
+        this.Bones = bones;
+        this.BindPose = bindPose;
     }
 }

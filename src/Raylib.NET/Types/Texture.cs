@@ -28,12 +28,12 @@ public partial struct Texture
     /// </summary>
     public int Format;
 
-    public Texture(uint Id, int Width, int Height, int Mipmaps, int Format)
+    public Texture(uint id, int width, int height, int mipmaps, int format)
     {
-        this.Id = Id;
-        this.Width = Width;
-        this.Height = Height;
-        this.Mipmaps = Mipmaps;
-        this.Format = Format;
+        this.Id = id;
+        this.Width = width;
+        this.Height = height;
+        this.Mipmaps = mipmaps;
+        this.Format = format;
     }
 }

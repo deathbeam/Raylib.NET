@@ -28,12 +28,12 @@ public partial struct Image
     /// </summary>
     public int Format;
 
-    public unsafe Image(void* Data, int Width, int Height, int Mipmaps, int Format)
+    public unsafe Image(void* data, int width, int height, int mipmaps, int format)
     {
-        this.Data = Data;
-        this.Width = Width;
-        this.Height = Height;
-        this.Mipmaps = Mipmaps;
-        this.Format = Format;
+        this.Data = data;
+        this.Width = width;
+        this.Height = height;
+        this.Mipmaps = mipmaps;
+        this.Format = format;
     }
 }
