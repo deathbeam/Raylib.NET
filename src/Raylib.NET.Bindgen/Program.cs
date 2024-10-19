@@ -42,22 +42,18 @@ foreach (var include in Directory.GetDirectories("/usr/lib/clang", "*", SearchOp
     }
 }
 
-foreach (var include in Directory.GetDirectories("/usr/lib/", "llvm-*", SearchOption.AllDirectories))
-{
-    string includePath = Path.Combine(include, "include/c++/v1");
-    if (Directory.Exists(includePath))
-    {
-        Console.WriteLine(includePath);
-        systemIncludeList.Add(includePath);
-    }
-}
+// foreach (var include in Directory.GetDirectories("/usr/lib/", "llvm-*", SearchOption.AllDirectories))
+// {
+//     string includePath = Path.Combine(include, "include/c++/v1");
+//     if (Directory.Exists(includePath))
+//     {
+//         Console.WriteLine(includePath);
+//         systemIncludeList.Add(includePath);
+//     }
+// }
 
 systemIncludeList.Add("/usr/include");
 string[] systemIncludeFolders = systemIncludeList.ToArray();
-
-// Find "/usr/lib/clang/*/include/",
-// Find "/usr/lib/llvm-*/include/c++/v1/",
-
 string[] includeFolders = { $"{libPath}/raylib/src" };
 
 new Generator(
