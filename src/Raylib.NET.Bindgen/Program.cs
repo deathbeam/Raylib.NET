@@ -30,6 +30,11 @@ var generatedNamespace = "Raylib.NET";
 var ouputPath = "../../src/Raylib.NET";
 var libPath = "../../lib";
 
+string[] systemIncludeFolders = {
+    "/usr/lib/clang/18/include/",
+    "/usr/include"
+};
+
 string[] includeFolders = { $"{libPath}/raylib/src" };
 
 new Generator(
@@ -38,6 +43,7 @@ new Generator(
     filePath: $"{libPath}/raygui/src/raygui.h",
     generatedNamespace: generatedNamespace,
     outputPath: ouputPath,
+    systemIncludeFolders: systemIncludeFolders,
     includeFolders: includeFolders,
     defines: defines,
     transformIdentifier: transformIdentifier,
@@ -50,6 +56,7 @@ new Generator(
     filePath: $"{libPath}/raylib/src/rlgl.h",
     generatedNamespace: generatedNamespace,
     outputPath: ouputPath,
+    systemIncludeFolders: systemIncludeFolders,
     includeFolders: includeFolders,
     defines: defines,
     transformIdentifier: transformIdentifier,
@@ -62,6 +69,7 @@ new Generator(
     filePath: $"{libPath}/raylib/src/raymath.h",
     generatedNamespace: generatedNamespace,
     outputPath: ouputPath,
+    systemIncludeFolders: systemIncludeFolders,
     includeFolders: includeFolders,
     defines: defines,
     transformIdentifier: transformIdentifier,
@@ -74,6 +82,7 @@ new Generator(
     filePath: $"{libPath}/raylib/src/raylib.h",
     generatedNamespace: generatedNamespace,
     outputPath: ouputPath,
+    systemIncludeFolders: systemIncludeFolders,
     includeFolders: includeFolders,
     defines: defines,
     transformIdentifier: transformIdentifier,

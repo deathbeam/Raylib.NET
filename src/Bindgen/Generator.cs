@@ -27,6 +27,7 @@ public class Generator
         string outputPath,
         string libraryName,
         string filePath,
+        string[] systemIncludeFolders,
         string[] includeFolders,
         string[] defines,
         Func<string, string> transformIdentifier,
@@ -44,13 +45,13 @@ public class Generator
 
         Options = new CppParserOptions
         {
-            SystemIncludeFolders = { "/usr/lib/clang/18/include/", "/usr/include" },
             AdditionalArguments = { "-xc", "-std=c99" },
             ParseAsCpp = false,
             ParseComments = true,
             ParseMacros = true,
         };
 
+        Options.SystemIncludeFolders.AddRange(systemIncludeFolders);
         Options.IncludeFolders.AddRange(includeFolders);
         Options.Defines.AddRange(defines);
 
