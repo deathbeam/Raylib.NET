@@ -18,7 +18,16 @@ while (!WindowShouldClose())
 
     DrawRectangleV(new Vector2 { X = 10, Y = 10 }, new Vector2 { X = 100, Y = 100 }, Color.RED);
 
-    DrawRectangleRec(new Vector4 { X = 10, Y = 150, W = 100, Z = 100 }, Color.GREEN);
+    DrawRectangleRec(
+        new Vector4
+        {
+            X = 10,
+            Y = 150,
+            W = 100,
+            Z = 100,
+        },
+        Color.GREEN
+    );
 
     EndDrawing();
 }

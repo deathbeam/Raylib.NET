@@ -1,152 +1,63 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
-        <NoWarn>$(NoWarn);NU5128</NoWarn>
-    </PropertyGroup>
-
-    <PropertyGroup>
-        <IsPackable>true</IsPackable>
-        <IncludeContentInPack>true</IncludeContentInPack>
-        <IncludeBuildOutput>false</IncludeBuildOutput>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 
         <Title Condition="'$(Configuration)' == 'Debug'">Raylib.NET.Native.Debug</Title>
         <Title Condition="'$(Configuration)' == 'Release'">Raylib.NET.Native.Release</Title>
     </PropertyGroup>
 
     <PropertyGroup>
-        <RaylibNativeProcessorArch>$([System.Runtime.InteropServices.RuntimeInformation]::ProcessArchitecture)</RaylibNativeProcessorArch>
+        <NativeArch>$([System.Runtime.InteropServices.RuntimeInformation]::ProcessArchitecture)</NativeArch>
+        <CompileOptions>$(RaylibCompileOptions)</CompileOptions>
+        <NativeOptimize Condition="'$(Configuration)' == 'Debug'">Debug</NativeOptimize>
+        <NativeOptimize Condition="'$(Configuration)' == 'Release'">ReleaseFast</NativeOptimize>
+    </PropertyGroup>
 
-        <RaylibNativeLinux Condition="$([MSBuild]::IsOSPlatform('Linux'))">true</RaylibNativeLinux>
-        <RaylibNativeOsx Condition="$([MSBuild]::IsOSPlatform('OSX'))">true</RaylibNativeOsx>
-        <RaylibNativeWindows Condition="$([MSBuild]::IsOSPlatform('Windows'))">true</RaylibNativeWindows>
+    <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('Linux'))">
+        <NativeExt>so</NativeExt>
+        <NativePre>lib</NativePre>
+        <NativeId Condition="'$(NativeArch)' == 'X64'">linux-x64</NativeId>
+        <NativeId Condition="'$(NativeArch)' == 'Arm64'">linux-arm64</NativeId>
+        <NativeTarget Condition="'$(NativeArch)' == 'X64'">x86_64-linux-gnu</NativeTarget>
+        <NativeTarget Condition="'$(NativeArch)' == 'Arm64'">aarch64-linux-gnu</NativeTarget>
+    </PropertyGroup>
 
-        <RaylibNativeX64 Condition="'$(RaylibNativeProcessorArch)' == 'X64'">true</RaylibNativeX64>
-        <RaylibNativeArm64 Condition="'$(RaylibNativeProcessorArch)' == 'Arm64'">true</RaylibNativeArm64>
+    <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('OSX'))">
+        <NativeExt>dylib</NativeExt>
+        <NativePre>lib</NativePre>
+        <NativeId Condition="'$(NativeArch)' == 'X64'">osx-x64</NativeId>
+        <NativeId Condition="'$(NativeArch)' == 'Arm64'">osx-arm64</NativeId>
+        <NativeTarget Condition="'$(NativeArch)' == 'X64'">x86_64-macos</NativeTarget>
+        <NativeTarget Condition="'$(NativeArch)' == 'Arm64'">aarch64-macos</NativeTarget>
+    </PropertyGroup>
 
-        <RaylibNativeLinuxX64 Condition="'$(RaylibNativeLinux)' == 'true' And '$(RaylibNativeX64)' == 'true'">true</RaylibNativeLinuxX64>
-        <RaylibNativeOsxX64 Condition="'$(RaylibNativeOsx)' == 'true' And '$(RaylibNativeX64)' == 'true'">true</RaylibNativeOsxX64>
-        <RaylibNativeWindowsX64 Condition="'$(RaylibNativeWindows)' == 'true' And '$(RaylibNativeX64)' == 'true'">true</RaylibNativeWindowsX64>
-
-        <RaylibNativeLinuxArm64 Condition="'$(RaylibNativeLinux)' == 'true' And '$(RaylibNativeArm64)' == 'true'">true</RaylibNativeLinuxArm64>
-        <RaylibNativeOsxArm64 Condition="'$(RaylibNativeOsx)' == 'true' And '$(RaylibNativeArm64)' == 'true'">true</RaylibNativeOsxArm64>
-        <RaylibNativeWindowsArm64 Condition="'$(RaylibNativeWindows)' == 'true' And '$(RaylibNativeArm64)' == 'true'">true</RaylibNativeWindowsArm64>
-
-        <RaylibCompileOptions>$(RaylibCompileOptions)</RaylibCompileOptions>
+    <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('Windows'))">
+        <NativeExt>dll</NativeExt>
+        <NativePre>$(Configuration)/</NativePre>
+        <NativeId Condition="'$(NativeArch)' == 'X64'">win-x64</NativeId>
+        <NativeId Condition="'$(NativeArch)' == 'Arm64'">win-arm64</NativeId>
+        <NativeTarget Condition="'$(NativeArch)' == 'X64'">x86_64-windows-gnu</NativeTarget>
+        <NativeTarget Condition="'$(NativeArch)' == 'Arm64'">aarch64-windows-gnu</NativeTarget>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Vezel.Zig.Toolsets.linux-x64" Version="0.13.0.1" Condition="'$(RaylibNativeLinuxX64)' == 'true'">
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-            <PrivateAssets>all</PrivateAssets>
-            </PackageReference>
-
-        <PackageReference Include="Vezel.Zig.Toolsets.linux-arm64" Version="0.13.0.1" Condition="'$(RaylibNativeLinuxArm64)' == 'true'">
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-            <PrivateAssets>all</PrivateAssets>
-        </PackageReference>
-
-        <PackageReference Include="Vezel.Zig.Toolsets.osx-x64" Version="0.13.0.1" Condition="'$(RaylibNativeOsxX64)' == 'true'">
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-            <PrivateAssets>all</PrivateAssets>
-        </PackageReference>
-
-        <PackageReference Include="Vezel.Zig.Toolsets.osx-arm64" Version="0.13.0.1" Condition="'$(RaylibNativeOsxArm64)' == 'true'">
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-            <PrivateAssets>all</PrivateAssets>
-        </PackageReference>
-
-        <PackageReference Include="Vezel.Zig.Toolsets.win-x64" Version="0.13.0.1" Condition="'$(RaylibNativeWindowsX64)' == 'true'">
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-            <PrivateAssets>all</PrivateAssets>
-        </PackageReference>
-
-        <PackageReference Include="Vezel.Zig.Toolsets.win-arm64" Version="0.13.0.1" Condition="'$(RaylibNativeWindowsAmr64)' == 'true'">
+        <PackageReference Include="Vezel.Zig.Toolsets.$(NativeId)" Version="0.13.0.1">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
     </ItemGroup>
 
-    <!--Build Files-->
-    <ItemGroup>
-        <Content Condition="'$(Configuration)' == 'Debug'" Include="buildTransitive/Raylib.NET.Native.props" PackagePath="buildTransitive/Raylib.NET.Native.Debug.props"/>
-        <Content Condition="'$(Configuration)' == 'Debug'" Include="buildTransitive/Raylib.NET.Native.targets" PackagePath="buildTransitive/Raylib.NET.Native.Debug.targets"/>
-
-        <Content Condition="'$(Configuration)' == 'Release'" Include="buildTransitive/Raylib.NET.Native.props" PackagePath="buildTransitive/Raylib.NET.Native.Release.props"/>
-        <Content Condition="'$(Configuration)' == 'Release'" Include="buildTransitive/Raylib.NET.Native.targets" PackagePath="buildTransitive/Raylib.NET.Native.Release.targets"/>
-    </ItemGroup>
+    <Target Name="CompileNatives" AfterTargets="build">
+        <Exec Command="$(ZigExePath) build $(CompileOptions) -Doptimize=$(NativeOptimize) --prefix $(OutputPath)native  --prefix-lib-dir $(NativeId) --prefix-exe-dir $(NativeId) -Dtarget=$(NativeTarget)"/>
+    </Target>
 
     <ItemGroup>
-        <!--Shared Libraries-->
-
-        <!--X64-->
-        <Content Condition="'$(Configuration)' == 'Debug' And Exists('debug/linux-x64/libraylib.so')" Include="debug/linux-x64/libraylib.so" PackagePath="runtimes/linux-x64/native/libraylib.so"/>
-        <Content Condition="'$(Configuration)' == 'Debug' And Exists('debug/osx-x64/libraylib.dylib')" Include="debug/osx-x64/libraylib.dylib" PackagePath="runtimes/osx-x64/native/libraylib.dylib"/>
-        <Content Condition="'$(Configuration)' == 'Debug' And Exists('debug/win-x64/raylib.dll')" Include="debug/win-x64/raylib.dll" PackagePath="runtimes/win-x64/native/raylib.dll"/>
-        <Content Condition="'$(Configuration)' == 'Debug' And Exists('debug/win-x64/raylib.pdb')" Include="debug/win-x64/raylib.pdb" PackagePath="runtimes/win-x64/native/raylib.pdb"/>
-
-        <Content Condition="'$(Configuration)' == 'Release' And Exists('release/linux-x64/libraylib.so')" Include="release/linux-x64/libraylib.so" PackagePath="runtimes/linux-x64/native/libraylib.so"/>
-        <Content Condition="'$(Configuration)' == 'Release' And Exists('release/osx-x64/libraylib.dylib')" Include="release/osx-x64/libraylib.dylib" PackagePath="runtimes/osx-x64/native/libraylib.dylib"/>
-        <Content Condition="'$(Configuration)' == 'Release' And Exists('release/win-x64/raylib.dll')" Include="release/win-x64/raylib.dll" PackagePath="runtimes/win-x64/native/raylib.dll"/>
-
-        <!--Arm64-->
-        <Content Condition="'$(Configuration)' == 'Debug' And Exists('debug/linux-arm64/libraylib.so')" Include="debug/linux-arm64/libraylib.so" PackagePath="runtimes/linux-arm64/native/libraylib.so"/>
-        <Content Condition="'$(Configuration)' == 'Debug' And Exists('debug/osx-arm64/libraylib.dylib')" Include="debug/osx-arm64/libraylib.dylib" PackagePath="runtimes/osx-arm64/native/libraylib.dylib"/>
-        <Content Condition="'$(Configuration)' == 'Debug' And Exists('debug/win-arm64/raylib.dll')" Include="debug/win-arm64/raylib.dll" PackagePath="runtimes/win-arm64/native/raylib.dll"/>
-        <Content Condition="'$(Configuration)' == 'Debug' And Exists('debug/win-arm64/raylib.pdb')" Include="debug/win-arm64/raylib.pdb" PackagePath="runtimes/win-arm64/native/raylib.pdb"/>
-
-        <Content Condition="'$(Configuration)' == 'Release' And Exists('release/linux-arm64/libraylib.so')" Include="release/linux-arm64/libraylib.so" PackagePath="runtimes/linux-arm64/native/libraylib.so"/>
-        <Content Condition="'$(Configuration)' == 'Release' And Exists('release/osx-arm64/libraylib.dylib')" Include="release/osx-arm64/libraylib.dylib" PackagePath="runtimes/osx-arm64/native/libraylib.dylib"/>
-        <Content Condition="'$(Configuration)' == 'Release' And Exists('release/win-arm64/raylib.dll')" Include="release/win-arm64/raylib.dll" PackagePath="runtimes/win-arm64/native/raylib.dll"/>
-
-        <!--Static Libraries-->
-
-        <!--X64-->
-        <Content Condition="'$(Configuration)' == 'Debug' And Exists('debug/linux-x64/libraylib.a')" Include="debug/linux-x64/libraylib.a" PackagePath="static_libraries/linux-x64/libraylib.a"/>
-        <Content Condition="'$(Configuration)' == 'Debug' And Exists('debug/osx-x64/libraylib.a')" Include="debug/osx-x64/libraylib.a" PackagePath="static_libraries/osx-x64/libraylib.a"/>
-        <Content Condition="'$(Configuration)' == 'Debug' And Exists('debug/win-x64/raylib.lib')" Include="debug/win-x64/raylib.lib" PackagePath="static_libraries/win-x64/raylib.lib"/>
-
-        <Content Condition="'$(Configuration)' == 'Release' And Exists('release/linux-x64/libraylib.a')" Include="release/linux-x64/libraylib.a" PackagePath="static_libraries/linux-x64/libraylib.a"/>
-        <Content Condition="'$(Configuration)' == 'Release' And Exists('release/osx-x64/libraylib.a')" Include="release/osx-x64/libraylib.a" PackagePath="static_libraries/osx-x64/libraylib.a"/>
-        <Content Condition="'$(Configuration)' == 'Release' And Exists('release/win-x64/raylib.lib')" Include="release/win-x64/raylib.lib" PackagePath="static_libraries/win-x64/raylib.lib"/>
-
-        <!--Arm64-->
-        <Content Condition="'$(Configuration)' == 'Debug' And Exists('debug/linux-arm64/libraylib.a')" Include="debug/linux-arm64/libraylib.a" PackagePath="static_libraries/linux-arm64/libraylib.a"/>
-        <Content Condition="'$(Configuration)' == 'Debug' And Exists('debug/osx-arm64/libraylib.a')" Include="debug/osx-arm64/libraylib.a" PackagePath="static_libraries/osx-arm64/libraylib.a"/>
-        <Content Condition="'$(Configuration)' == 'Debug' And Exists('debug/win-arm64/raylib.lib')" Include="debug/win-arm64/raylib.lib" PackagePath="static_libraries/win-arm64/raylib.lib"/>
-
-        <Content Condition="'$(Configuration)' == 'Release' And Exists('release/linux-arm64/libraylib.a')" Include="release/linux-arm64/libraylib.a" PackagePath="static_libraries/linux-arm64/libraylib.a"/>
-        <Content Condition="'$(Configuration)' == 'Release' And Exists('release/osx-arm64/libraylib.a')" Include="release/osx-arm64/libraylib.a" PackagePath="static_libraries/osx-arm64/libraylib.a"/>
-        <Content Condition="'$(Configuration)' == 'Release' And Exists('release/win-arm64/raylib.lib')" Include="release/win-arm64/raylib.lib" PackagePath="static_libraries/win-arm64/raylib.lib"/>
+        <Content
+          Include="$(OutputPath)native/$(NativeId)/$(NativePre)raylib.$(NativeExt)"
+          Link="%(Filename)%(Extension)"
+          CopyToOutputDirectory="PreserveNewest"
+          Condition="Exists('$(OutputPath)native/$(NativeId)/$(NativePre)raylib.$(NativeExt)')" />
     </ItemGroup>
-
-    <Target Name="Compile Raylib Linux x64" AfterTargets="build" Condition="'$(RaylibNativeLinuxX64)' == 'true'">
-        <Exec Command="$(ZigExePath) build $(RaylibCompileOptions) -Doptimize=Debug --prefix debug --prefix-lib-dir linux-x64        --prefix-exe-dir linux-x64        -Dtarget=x86_64-linux-gnu"/>
-        <Exec Command="$(ZigExePath) build $(RaylibCompileOptions) -Doptimize=ReleaseFast --prefix release --prefix-lib-dir linux-x64        --prefix-exe-dir linux-x64        -Dtarget=x86_64-linux-gnu"/>
-        </Target>
-
-    <Target Name="Compile Raylib Linux arm64" AfterTargets="build" Condition="'$(RaylibNativeLinuxArm64)' == 'true'">
-        <Exec Command="$(ZigExePath) build $(RaylibCompileOptions) -Doptimize=Debug --prefix debug --prefix-lib-dir linux-arm64        --prefix-exe-dir linux-arm64        -Dtarget=aarch64-linux-gnu"/>
-        <Exec Command="$(ZigExePath) build $(RaylibCompileOptions) -Doptimize=ReleaseFast --prefix release --prefix-lib-dir linux-arm64        --prefix-exe-dir linux-arm64        -Dtarget=aarch64-linux-gnu"/>
-    </Target>
-
-    <Target Name="Compile Raylib Osx x64" AfterTargets="build" Condition="'$(RaylibNativeOsxX64)' == 'true'">
-        <Exec Command="$(ZigExePath) build $(RaylibCompileOptions) -Doptimize=Debug --prefix debug --prefix-lib-dir osx-x64          --prefix-exe-dir osx-x64          -Dtarget=x86_64-macos"/>
-        <Exec Command="$(ZigExePath) build $(RaylibCompileOptions) -Doptimize=ReleaseFast --prefix release --prefix-lib-dir osx-x64          --prefix-exe-dir osx-x64          -Dtarget=x86_64-macos"/>
-        </Target>
-
-    <Target Name="Compile Raylib Osx arm64" AfterTargets="build" Condition="'$(RaylibNativeOsxArm64)' == 'true'">
-        <Exec Command="$(ZigExePath) build $(RaylibCompileOptions) -Doptimize=Debug --prefix debug --prefix-lib-dir osx-arm64          --prefix-exe-dir osx-arm64          -Dtarget=aarch64-macos"/>
-        <Exec Command="$(ZigExePath) build $(RaylibCompileOptions) -Doptimize=ReleaseFast --prefix release --prefix-lib-dir osx-arm64          --prefix-exe-dir osx-arm64          -Dtarget=aarch64-macos"/>
-    </Target>
-
-    <Target Name="Compile Raylib Windows x64" AfterTargets="build" Condition="'$(RaylibNativeWindowsX64)' == 'true'">
-        <Exec Command="$(ZigExePath) build $(RaylibCompileOptions) -Doptimize=Debug --prefix debug --prefix-lib-dir win-x64          --prefix-exe-dir win-x64          -Dtarget=x86_64-windows-gnu"/>
-        <Exec Command="$(ZigExePath) build $(RaylibCompileOptions) -Doptimize=ReleaseFast --prefix release --prefix-lib-dir win-x64          --prefix-exe-dir win-x64          -Dtarget=x86_64-windows-gnu"/>
-    </Target>
-
-    <Target Name="Compile Raylib Windows arm64" AfterTargets="build" Condition="'$(RaylibNativeWindowsArm64)' == 'true'">
-        <Exec Command="$(ZigExePath) build $(RaylibCompileOptions) -Doptimize=Debug --prefix debug --prefix-lib-dir win-arm64          --prefix-exe-dir win-arm64          -Dtarget=aarch64-windows-gnu"/>
-        <Exec Command="$(ZigExePath) build $(RaylibCompileOptions) -Doptimize=ReleaseFast --prefix release --prefix-lib-dir win-arm64          --prefix-exe-dir win-arm64          -Dtarget=aarch64-windows-gnu"/>
-    </Target>
 </Project>

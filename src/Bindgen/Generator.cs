@@ -1,7 +1,7 @@
-using CppAst;
 using System.Text;
-using Microsoft.CodeAnalysis.CSharp;
 using System.Text.RegularExpressions;
+using CppAst;
+using Microsoft.CodeAnalysis.CSharp;
 
 namespace Bindgen;
 
@@ -21,15 +21,17 @@ public class Generator
     private readonly HashSet<string> ExtraImports = new HashSet<string>();
     private readonly Dictionary<string, Dictionary<string, string>> LiteralValues = new();
 
-    public Generator(string generatedNamespace,
-                     string generatedClass,
-                     string outputPath,
-                     string libraryName,
-                     string filePath,
-                     string[] includeFolders,
-                     string[] defines,
-                     Func<string, string> transformIdentifier,
-                     Dictionary<string, string> existingIdentifiers)
+    public Generator(
+        string generatedNamespace,
+        string generatedClass,
+        string outputPath,
+        string libraryName,
+        string filePath,
+        string[] includeFolders,
+        string[] defines,
+        Func<string, string> transformIdentifier,
+        Dictionary<string, string> existingIdentifiers
+    )
     {
         GeneratedNamespace = generatedNamespace;
         GeneratedClass = generatedClass;
@@ -40,12 +42,13 @@ public class Generator
         ExistingIdentifiers = existingIdentifiers;
         FileContent = File.ReadAllText(FilePath);
 
-        Options = new CppParserOptions {
+        Options = new CppParserOptions
+        {
             SystemIncludeFolders = { "/usr/lib/clang/18/include/", "/usr/include" },
             AdditionalArguments = { "-xc", "-std=c99" },
             ParseAsCpp = false,
             ParseComments = true,
-            ParseMacros = true
+            ParseMacros = true,
         };
 
         Options.IncludeFolders.AddRange(includeFolders);
@@ -325,13 +328,13 @@ public class Generator
                 }
             }
             else
-            {   if (pointerCount > 0)
+            {
+                if (pointerCount > 0)
                 {
                     output += $"    public unsafe {fieldType}{new string('*', pointerCount)} {fieldName};\n";
                 }
                 else
                 {
-
                     output += $"    public {fieldType} {fieldName};\n";
                 }
             }
@@ -363,7 +366,8 @@ public class Generator
                 }
             }
 
-            constructorOutput = "\n    public " + (unsafeDecl ? "unsafe " : "") + structName + "(" + constructorOutput + ")\n    {\n";
+            constructorOutput =
+                "\n    public " + (unsafeDecl ? "unsafe " : "") + structName + "(" + constructorOutput + ")\n    {\n";
             output += constructorOutput;
 
             foreach (var field in cppStruct.Fields)
@@ -416,7 +420,8 @@ public class Generator
 
         if (functionName != function.Name)
         {
-            output += $"    [LibraryImport(LIBRARY, EntryPoint = \"{function.Name}\", StringMarshalling = StringMarshalling.Utf8)]\n";
+            output +=
+                $"    [LibraryImport(LIBRARY, EntryPoint = \"{function.Name}\", StringMarshalling = StringMarshalling.Utf8)]\n";
         }
         else
         {
@@ -424,7 +429,8 @@ public class Generator
         }
 
         output += "    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]\n";
-        output += $"    public static {(isUnsafe ? "unsafe " : "")}partial {returnType} {functionName}({parametersString});";
+        output +=
+            $"    public static {(isUnsafe ? "unsafe " : "")}partial {returnType} {functionName}({parametersString});";
 
         return functionName;
     }
@@ -452,7 +458,12 @@ public class Generator
         return false;
     }
 
-    private string ConvertCppTypeToCSharp(CppType cppType, ref int pointerCount, out int arraySize, bool skipHighOrder = false)
+    private string ConvertCppTypeToCSharp(
+        CppType cppType,
+        ref int pointerCount,
+        out int arraySize,
+        bool skipHighOrder = false
+    )
     {
         arraySize = 0;
         switch (cppType)
@@ -472,7 +483,7 @@ public class Generator
                     CppPrimitiveKind.UnsignedShort => "ushort",
                     CppPrimitiveKind.UnsignedInt => "uint",
                     CppPrimitiveKind.UnsignedLong => "ulong",
-                    _ => throw new NotSupportedException($"Unsupported primitive type: {primitiveType.Kind}")
+                    _ => throw new NotSupportedException($"Unsupported primitive type: {primitiveType.Kind}"),
                 };
             case CppPointerType pointerType:
                 if (pointerCount == 0 && !skipHighOrder)
@@ -514,7 +525,12 @@ public class Generator
                 return cppEnum.Name;
             case CppFunctionType cppFunctionType:
                 var returnPointerCount = 0;
-                string returnType = ConvertCppTypeToCSharp(cppFunctionType.ReturnType, ref returnPointerCount, out _, true);
+                string returnType = ConvertCppTypeToCSharp(
+                    cppFunctionType.ReturnType,
+                    ref returnPointerCount,
+                    out _,
+                    true
+                );
                 returnType = AddPointer(returnType, returnPointerCount);
 
                 List<string> parameters = new List<string>();
@@ -552,7 +568,7 @@ public class Generator
             "uint8_t" => "byte",
             "int64_t" => "long",
             "uint64_t" => "ulong",
-            _ => TransformIdentifier(o)
+            _ => TransformIdentifier(o),
         };
 
         if (ExistingIdentifiers.TryGetValue(o, out var existing))
