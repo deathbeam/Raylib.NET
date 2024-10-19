@@ -12,7 +12,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Bindgen\Bindgen.csproj" />
+        <ProjectReference Include="..\Bindgen\Bindgen.csproj" />
     </ItemGroup>
 
     <Target Name="RunAfterBuild" AfterTargets="Build">

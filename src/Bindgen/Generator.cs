@@ -382,7 +382,7 @@ public class Generator
 
         var pointerCount = 0;
         string returnType = ConvertCppTypeToCSharp(function.ReturnType, ref pointerCount, out _);
-        returnType = AddPointer(returnType, pointerCount);
+        returnType = AppendPointer(returnType, pointerCount);
 
         string functionName = MapIdentifier(function.Name);
         List<string> parameters = new List<string>();
@@ -392,7 +392,7 @@ public class Generator
         {
             var paramPointerCount = 0;
             string paramType = ConvertCppTypeToCSharp(parameter.Type, ref paramPointerCount, out _);
-            paramType = AddPointer(paramType, paramPointerCount);
+            paramType = AppendPointer(paramType, paramPointerCount);
             string paramName = MapIdentifier(parameter.Name);
 
             if (paramPointerCount > 0)
@@ -527,14 +527,14 @@ public class Generator
                     out _,
                     true
                 );
-                returnType = AddPointer(returnType, returnPointerCount);
+                returnType = AppendPointer(returnType, returnPointerCount);
 
                 List<string> parameters = new List<string>();
                 foreach (var parameter in cppFunctionType.Parameters)
                 {
                     var paramPointerCount = 0;
                     string paramType = ConvertCppTypeToCSharp(parameter.Type, ref paramPointerCount, out _, true);
-                    paramType = AddPointer(paramType, paramPointerCount);
+                    paramType = AppendPointer(paramType, paramPointerCount);
                     parameters.Add(paramType);
                 }
 
@@ -554,7 +554,7 @@ public class Generator
             return "@" + o;
         }
 
-        o = o switch
+        return o switch
         {
             "int32_t" => "int",
             "uint32_t" => "uint",
@@ -566,11 +566,9 @@ public class Generator
             "uint64_t" => "ulong",
             _ => TransformIdentifier(o),
         };
-
-        return o;
     }
 
-    private static string AddPointer(string type, int pointerCount)
+    private static string AppendPointer(string type, int pointerCount)
     {
         if (type.Contains("delegate"))
         {
