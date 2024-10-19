@@ -7,8 +7,4 @@ namespace Raylib.NET;
 [StructLayout(LayoutKind.Sequential)]
 public partial struct rAudioBuffer
 {
-
-    public rAudioBuffer()
-    {
-    }
 }

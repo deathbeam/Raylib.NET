@@ -300,7 +300,7 @@ public class Generator
             output += "\n";
         }
 
-        var generateConstructor = true;
+        var generateConstructor = cppStruct.Fields.Count > 0;
 
         // Generate fields
         foreach (var field in cppStruct.Fields)
