@@ -1,4 +1,4 @@
-namespace Raylib.NET;
+namespace RaylibNET;
 
 public enum MaterialMapIndex
 {

@@ -1,6 +1,6 @@
-using Raylib.NET;
-using static Raylib.NET.Raygui;
-using static Raylib.NET.Raylib;
+using RaylibNET;
+using static RaylibNET.Raygui;
+using static RaylibNET.Raylib;
 
 bool showMessageBox = false;
 

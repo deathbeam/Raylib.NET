@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 using Bindgen.Interop;
 using System.Numerics;
 
-namespace Raylib.NET;
+namespace RaylibNET;
 
 public static unsafe partial class Raygui
 {

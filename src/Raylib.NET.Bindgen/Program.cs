@@ -21,7 +21,7 @@ var existingIdentifiers = new Dictionary<string, string>
 
 string[] defines = {};
 
-var generatedNamespace = "Raylib.NET";
+var generatedNamespace = "RaylibNET";
 var ouputPath = "../../src/Raylib.NET";
 var libPath = "../../lib";
 
