@@ -24,7 +24,6 @@
         </When>
         <When Condition="$([MSBuild]::IsOSPlatform('Linux'))">
             <PropertyGroup>
-                <PlatformCondition>Linux</PlatformCondition>
                 <NativeExt>so</NativeExt>
                 <NativePre>lib</NativePre>
                 <NativeId Condition="'$(NativeArch)' == 'X64'">linux-x64</NativeId>
