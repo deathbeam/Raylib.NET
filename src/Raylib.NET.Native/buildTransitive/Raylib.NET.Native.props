@@ -5,23 +5,17 @@
         <RaylibStaticLibrary_linux-x64>$([MSBuild]::NormalizePath('$(RaylibStaticLibraryFolder)linux-x64/libraylib.a'))</RaylibStaticLibrary_linux-x64>
         <RaylibStaticLibrary_win-x64>$([MSBuild]::NormalizePath('$(RaylibStaticLibraryFolder)win-x64/raylib.lib'))</RaylibStaticLibrary_win-x64>
         <RaylibStaticLibrary_osx-x64>$([MSBuild]::NormalizePath('$(RaylibStaticLibraryFolder)osx-x64/libraylib.a'))</RaylibStaticLibrary_osx-x64>
-        <RaylibStaticLibrary_iossimulator-x64>$([MSBuild]::NormalizePath('$(RaylibStaticLibraryFolder)iossimulator-x64/libraylib.a'))</RaylibStaticLibrary_iossimulator-x64>
 
         <RaylibStaticLibrary_linux-arm64>$([MSBuild]::NormalizePath('$(RaylibStaticLibraryFolder)linux-arm64/libraylib.a'))</RaylibStaticLibrary_linux-arm64>
         <RaylibStaticLibrary_osx-arm64>$([MSBuild]::NormalizePath('$(RaylibStaticLibraryFolder)osx-arm64/libraylib.a'))</RaylibStaticLibrary_osx-arm64>
         <RaylibStaticLibrary_win-arm64>$([MSBuild]::NormalizePath('$(RaylibStaticLibraryFolder)win-arm64/raylib.lib'))</RaylibStaticLibrary_win-arm64>
-        <RaylibStaticLibrary_ios-arm64>$([MSBuild]::NormalizePath('$(RaylibStaticLibraryFolder)ios-arm64/libraylib.a'))</RaylibStaticLibrary_ios-arm64>
-        <RaylibStaticLibrary_iossimulator-arm64>$([MSBuild]::NormalizePath('$(RaylibStaticLibraryFolder)iossimulator-arm64/libraylib.a'))</RaylibStaticLibrary_iossimulator-arm64>
 
         <RaylibStaticLibrary Condition="'$(RuntimeIdentifier)' == 'linux-x64'">$(RaylibStaticLibrary_linux-x64)</RaylibStaticLibrary>
         <RaylibStaticLibrary Condition="'$(RuntimeIdentifier)' == 'osx-x64'">$(RaylibStaticLibrary_osx-x64)</RaylibStaticLibrary>
         <RaylibStaticLibrary Condition="'$(RuntimeIdentifier)' == 'win-x64'">$(RaylibStaticLibrary_win-x64)</RaylibStaticLibrary>
-        <RaylibStaticLibrary Condition="'$(RuntimeIdentifier)' == 'iossimulator-x64'">$(RaylibStaticLibrary_iossimulator-x64)</RaylibStaticLibrary>
 
         <RaylibStaticLibrary Condition="'$(RuntimeIdentifier)' == 'linux-arm64'">$(RaylibStaticLibrary_linux-arm64)</RaylibStaticLibrary>
         <RaylibStaticLibrary Condition="'$(RuntimeIdentifier)' == 'osx-arm64'">$(RaylibStaticLibrary_osx-arm64)</RaylibStaticLibrary>
         <RaylibStaticLibrary Condition="'$(RuntimeIdentifier)' == 'win-arm64'">$(RaylibStaticLibrary_win-arm64)</RaylibStaticLibrary>
-        <RaylibStaticLibrary Condition="'$(RuntimeIdentifier)' == 'ios-arm64'">$(RaylibStaticLibrary_ios-arm64</RaylibStaticLibrary>
-        <RaylibStaticLibrary Condition="'$(RuntimeIdentifier)' == 'iossimulator-arm64'">$(RaylibStaticLibrary_iossimulator-arm64)</RaylibStaticLibrary>
     </PropertyGroup>
 </Project>

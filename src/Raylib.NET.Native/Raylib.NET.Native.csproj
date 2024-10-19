@@ -21,7 +21,7 @@
 
         <RaylibNativeProcessorArch>$([System.Runtime.InteropServices.RuntimeInformation]::ProcessArchitecture)</RaylibNativeProcessorArch>
 
-        <RaylibCompileOptions>$(RaylibCompileOptions)--build-file ../../build.zig -Draygui=true</RaylibCompileOptions>
+        <RaylibCompileOptions>$(RaylibCompileOptions)</RaylibCompileOptions>
     </PropertyGroup>
 
     <ItemGroup>
@@ -92,25 +92,19 @@
         <Content Condition="'$(Configuration)' == 'Debug' And Exists('debug/linux-x64/libraylib.a')" Include="debug/linux-x64/libraylib.a" PackagePath="static_libraries/linux-x64/libraylib.a"/>
         <Content Condition="'$(Configuration)' == 'Debug' And Exists('debug/osx-x64/libraylib.a')" Include="debug/osx-x64/libraylib.a" PackagePath="static_libraries/osx-x64/libraylib.a"/>
         <Content Condition="'$(Configuration)' == 'Debug' And Exists('debug/win-x64/raylib.lib')" Include="debug/win-x64/raylib.lib" PackagePath="static_libraries/win-x64/raylib.lib"/>
-        <Content Condition="'$(Configuration)' == 'Debug' And Exists('debug/iossimulator-x64/libraylib.a')" Include="debug/iossimulator-x64/libraylib.a" PackagePath="static_libraries/iossimulator-x64/libraylib.a"/>
 
         <Content Condition="'$(Configuration)' == 'Release' And Exists('release/linux-x64/libraylib.a')" Include="release/linux-x64/libraylib.a" PackagePath="static_libraries/linux-x64/libraylib.a"/>
         <Content Condition="'$(Configuration)' == 'Release' And Exists('release/osx-x64/libraylib.a')" Include="release/osx-x64/libraylib.a" PackagePath="static_libraries/osx-x64/libraylib.a"/>
         <Content Condition="'$(Configuration)' == 'Release' And Exists('release/win-x64/raylib.lib')" Include="release/win-x64/raylib.lib" PackagePath="static_libraries/win-x64/raylib.lib"/>
-        <Content Condition="'$(Configuration)' == 'Release' And Exists('release/iossimulator-x64/libraylib.a')" Include="release/iossimulator-x64/libraylib.a" PackagePath="static_libraries/iossimulator-x64/libraylib.a"/>
 
         <!--Arm64-->
         <Content Condition="'$(Configuration)' == 'Debug' And Exists('debug/linux-arm64/libraylib.a')" Include="debug/linux-arm64/libraylib.a" PackagePath="static_libraries/linux-arm64/libraylib.a"/>
         <Content Condition="'$(Configuration)' == 'Debug' And Exists('debug/osx-arm64/libraylib.a')" Include="debug/osx-arm64/libraylib.a" PackagePath="static_libraries/osx-arm64/libraylib.a"/>
         <Content Condition="'$(Configuration)' == 'Debug' And Exists('debug/win-arm64/raylib.lib')" Include="debug/win-arm64/raylib.lib" PackagePath="static_libraries/win-arm64/raylib.lib"/>
-        <Content Condition="'$(Configuration)' == 'Debug' And Exists('debug/ios-arm64/libraylib.a')" Include="debug/ios-arm64/libraylib.a" PackagePath="static_libraries/ios-arm64/libraylib.a"/>
-        <Content Condition="'$(Configuration)' == 'Debug' And Exists('debug/iossimulator-arm64/libraylib.a')" Include="debug/iossimulator-arm64/libraylib.a" PackagePath="static_libraries/iossimulator-arm64/libraylib.a"/>
 
         <Content Condition="'$(Configuration)' == 'Release' And Exists('release/linux-arm64/libraylib.a')" Include="release/linux-arm64/libraylib.a" PackagePath="static_libraries/linux-arm64/libraylib.a"/>
         <Content Condition="'$(Configuration)' == 'Release' And Exists('release/osx-arm64/libraylib.a')" Include="release/osx-arm64/libraylib.a" PackagePath="static_libraries/osx-arm64/libraylib.a"/>
         <Content Condition="'$(Configuration)' == 'Release' And Exists('release/win-arm64/raylib.lib')" Include="release/win-arm64/raylib.lib" PackagePath="static_libraries/win-arm64/raylib.lib"/>
-        <Content Condition="'$(Configuration)' == 'Release' And Exists('release/ios-arm64/libraylib.a')" Include="release/ios-arm64/libraylib.a" PackagePath="static_libraries/ios-arm64/libraylib.a"/>
-        <Content Condition="'$(Configuration)' == 'Release' And Exists('release/iossimulator-arm64/libraylib.a')" Include="release/iossimulator-arm64/libraylib.a" PackagePath="static_libraries/iossimulator-arm64/libraylib.a"/>
     </ItemGroup>
 
     <Target Name="Compile Raylib" AfterTargets="build">
@@ -118,25 +112,19 @@
         <Exec Command="$(ZigExePath) build $(RaylibCompileOptions) -Doptimize=Debug --prefix debug --prefix-lib-dir linux-x64        --prefix-exe-dir linux-x64        -Dtarget=x86_64-linux-gnu"/>
         <Exec Command="$(ZigExePath) build $(RaylibCompileOptions) -Doptimize=Debug --prefix debug --prefix-lib-dir win-x64          --prefix-exe-dir win-x64          -Dtarget=x86_64-windows-gnu"/>
         <Exec Command="$(ZigExePath) build $(RaylibCompileOptions) -Doptimize=Debug --prefix debug --prefix-lib-dir osx-x64          --prefix-exe-dir osx-x64          -Dtarget=x86_64-macos"/>
-        <Exec Command="$(ZigExePath) build $(RaylibCompileOptions) -Doptimize=Debug --prefix debug --prefix-lib-dir iossimulator-x64 --prefix-exe-dir iossimulator-x64 -Dtarget=x86_64-ios-simulator --sysroot $(IosSimulatorSdkPath)" Condition="'$(IosSimulatorSdkPath)' != ''"/>
 
         <Exec Command="$(ZigExePath) build $(RaylibCompileOptions) -Doptimize=ReleaseFast --prefix release --prefix-lib-dir linux-x64        --prefix-exe-dir linux-x64        -Dtarget=x86_64-linux-gnu"/>
         <Exec Command="$(ZigExePath) build $(RaylibCompileOptions) -Doptimize=ReleaseFast --prefix release --prefix-lib-dir win-x64          --prefix-exe-dir win-x64          -Dtarget=x86_64-windows-gnu"/>
         <Exec Command="$(ZigExePath) build $(RaylibCompileOptions) -Doptimize=ReleaseFast --prefix release --prefix-lib-dir osx-x64          --prefix-exe-dir osx-x64          -Dtarget=x86_64-macos"/>
-        <Exec Command="$(ZigExePath) build $(RaylibCompileOptions) -Doptimize=ReleaseFast --prefix release --prefix-lib-dir iossimulator-x64 --prefix-exe-dir iossimulator-x64 -Dtarget=x86_64-ios-simulator --sysroot $(IosSimulatorSdkPath)" Condition="'$(IosSimulatorSdkPath)' != ''"/>
 
         <!--Arm64-->
         <Exec Command="$(ZigExePath) build $(RaylibCompileOptions) -Doptimize=Debug --prefix debug --prefix-lib-dir linux-arm64        --prefix-exe-dir linux-arm64        -Dtarget=aarch64-linux-gnu"/>
         <Exec Command="$(ZigExePath) build $(RaylibCompileOptions) -Doptimize=Debug --prefix debug --prefix-lib-dir win-arm64          --prefix-exe-dir win-arm64          -Dtarget=aarch64-windows-gnu"/>
         <Exec Command="$(ZigExePath) build $(RaylibCompileOptions) -Doptimize=Debug --prefix debug --prefix-lib-dir osx-arm64          --prefix-exe-dir osx-arm64          -Dtarget=aarch64-macos"/>
-        <Exec Command="$(ZigExePath) build $(RaylibCompileOptions) -Doptimize=Debug --prefix debug --prefix-lib-dir ios-arm64          --prefix-exe-dir ios-arm64          -Dtarget=aarch64-ios           --sysroot $(IosSdkPath)" Condition="'$(IosSdkPath)' != ''"/>
-        <Exec Command="$(ZigExePath) build $(RaylibCompileOptions) -Doptimize=Debug --prefix debug --prefix-lib-dir iossimulator-arm64 --prefix-exe-dir iossimulator-arm64 -Dtarget=aarch64-ios-simulator --sysroot $(IosSimulatorSdkPath)" Condition="'$(IosSimulatorSdkPath)' != ''"/>
 
         <Exec Command="$(ZigExePath) build $(RaylibCompileOptions) -Doptimize=ReleaseFast --prefix release --prefix-lib-dir linux-arm64        --prefix-exe-dir linux-arm64        -Dtarget=aarch64-linux-gnu"/>
         <Exec Command="$(ZigExePath) build $(RaylibCompileOptions) -Doptimize=ReleaseFast --prefix release --prefix-lib-dir win-arm64          --prefix-exe-dir win-arm64          -Dtarget=aarch64-windows-gnu"/>
         <Exec Command="$(ZigExePath) build $(RaylibCompileOptions) -Doptimize=ReleaseFast --prefix release --prefix-lib-dir osx-arm64          --prefix-exe-dir osx-arm64          -Dtarget=aarch64-macos"/>
-        <Exec Command="$(ZigExePath) build $(RaylibCompileOptions) -Doptimize=ReleaseFast --prefix release --prefix-lib-dir ios-arm64          --prefix-exe-dir ios-arm64          -Dtarget=aarch64-ios           --sysroot $(IosSdkPath)" Condition="'$(IosSdkPath)' != ''"/>
-        <Exec Command="$(ZigExePath) build $(RaylibCompileOptions) -Doptimize=ReleaseFast --prefix release --prefix-lib-dir iossimulator-arm64 --prefix-exe-dir iossimulator-arm64 -Dtarget=aarch64-ios-simulator --sysroot $(IosSimulatorSdkPath)" Condition="'$(IosSimulatorSdkPath)' != ''"/>
     </Target>
 
 </Project>

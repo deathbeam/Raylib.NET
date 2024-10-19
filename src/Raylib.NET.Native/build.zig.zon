@@ -6,8 +6,8 @@
     .minimum_zig_version = "0.12.0",
 
     .dependencies = .{
-        .raylib = .{ .path = "lib/raylib" },
-        .raygui = .{ .path = "lib/raygui" },
+        .raylib = .{ .path = "../../lib/raylib" },
+        .raygui = .{ .path = "../../lib/raygui" },
     },
 
     .paths = .{

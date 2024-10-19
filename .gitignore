@@ -2,3 +2,5 @@ bin/
 obj/
 zig-out/
 .zig-cache/
+debug/
+release/
