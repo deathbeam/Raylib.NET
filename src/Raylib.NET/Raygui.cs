@@ -9,8 +9,6 @@ public static unsafe partial class Raygui
 {
     public const string LIBRARY = "raygui";
 
-    public const int BUILD_LIBTYPE_SHARED = 1;
-
     public const int RAYGUI_VERSION_MAJOR = 4;
 
     public const int RAYGUI_VERSION_MINOR = 5;
@@ -18,20 +16,6 @@ public static unsafe partial class Raygui
     public const int RAYGUI_VERSION_PATCH = 0;
 
     public const string RAYGUI_VERSION = "4.5-dev";
-
-    public const int RAYLIB_VERSION_MAJOR = 5;
-
-    public const int RAYLIB_VERSION_MINOR = 5;
-
-    public const int RAYLIB_VERSION_PATCH = 0;
-
-    public const string RAYLIB_VERSION = "5.5-dev";
-
-    public const float PI = 3.14159265358979323846f;
-
-    public static readonly float DEG2RAD = (PI/180.0f);
-
-    public static readonly float RAD2DEG = (180.0f/PI);
 
     public const int SCROLLBAR_LEFT_SIDE = 0;
 

@@ -183,6 +183,12 @@ public class Generator
 
     private String GenerateConstant(CppMacro macro, out String output)
     {
+        if (macro.Span.Start.File != "cppast.input")
+        {
+            output = "";
+            return "";
+        }
+
         string name = macro.Name.Trim();
         string value = macro.Value.Trim();
 
@@ -374,7 +380,6 @@ public class Generator
 
     private String GenerateFunction(CppFunction function, out String output)
     {
-        // Check if the function is from the main header file
         if (function.Span.Start.File != "cppast.input")
         {
             output = "";
