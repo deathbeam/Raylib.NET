@@ -798,35 +798,35 @@ public static unsafe partial class Raylib
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void SetTraceLogCallback(delegate* unmanaged[Cdecl]<int, string, string, void> callback);
+    public static unsafe partial void SetTraceLogCallback(delegate* unmanaged[Cdecl]<int, sbyte*, sbyte*, void> callback);
 
     /// <summary>
     /// Set custom file binary data loader
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void SetLoadFileDataCallback(delegate* unmanaged[Cdecl]<string, int*, byte*> callback);
+    public static unsafe partial void SetLoadFileDataCallback(delegate* unmanaged[Cdecl]<sbyte*, int*, byte*> callback);
 
     /// <summary>
     /// Set custom file binary data saver
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void SetSaveFileDataCallback(delegate* unmanaged[Cdecl]<string, void*, int, NativeBool> callback);
+    public static unsafe partial void SetSaveFileDataCallback(delegate* unmanaged[Cdecl]<sbyte*, void*, int, sbyte> callback);
 
     /// <summary>
     /// Set custom file text data loader
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void SetLoadFileTextCallback(delegate* unmanaged[Cdecl]<string, string> callback);
+    public static unsafe partial void SetLoadFileTextCallback(delegate* unmanaged[Cdecl]<sbyte*, sbyte*> callback);
 
     /// <summary>
     /// Set custom file text data saver
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void SetSaveFileTextCallback(delegate* unmanaged[Cdecl]<string, string, NativeBool> callback);
+    public static unsafe partial void SetSaveFileTextCallback(delegate* unmanaged[Cdecl]<sbyte*, sbyte*, sbyte> callback);
 
     /// <summary>
     /// Load file data as byte array (read)

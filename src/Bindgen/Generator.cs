@@ -452,7 +452,7 @@ public class Generator
         return false;
     }
 
-    private string ConvertCppTypeToCSharp(CppType cppType, ref int pointerCount, out int arraySize)
+    private string ConvertCppTypeToCSharp(CppType cppType, ref int pointerCount, out int arraySize, bool skipHighOrder = false)
     {
         arraySize = 0;
         switch (cppType)
@@ -461,7 +461,7 @@ public class Generator
                 return primitiveType.Kind switch
                 {
                     CppPrimitiveKind.Void => "void",
-                    CppPrimitiveKind.Bool => "NativeBool",
+                    CppPrimitiveKind.Bool => skipHighOrder ? "sbyte" : "NativeBool",
                     CppPrimitiveKind.Char => "sbyte",
                     CppPrimitiveKind.Short => "short",
                     CppPrimitiveKind.Int => "int",
@@ -475,7 +475,7 @@ public class Generator
                     _ => throw new NotSupportedException($"Unsupported primitive type: {primitiveType.Kind}")
                 };
             case CppPointerType pointerType:
-                if (pointerCount == 0)
+                if (pointerCount == 0 && !skipHighOrder)
                 {
                     if (pointerType.ElementType is CppPrimitiveType pt)
                     {
@@ -497,32 +497,31 @@ public class Generator
                 }
 
                 pointerCount++;
-                return ConvertCppTypeToCSharp(pointerType.ElementType, ref pointerCount, out _);;
+                return ConvertCppTypeToCSharp(pointerType.ElementType, ref pointerCount, out _, skipHighOrder);
             case CppReferenceType referenceType:
                 pointerCount++;
-                return ConvertCppTypeToCSharp(referenceType.ElementType, ref pointerCount, out _);
+                return ConvertCppTypeToCSharp(referenceType.ElementType, ref pointerCount, out _, skipHighOrder);
             case CppArrayType arrayType:
                 arraySize = arrayType.Size;
-                return ConvertCppTypeToCSharp(arrayType.ElementType, ref pointerCount, out _);
+                return ConvertCppTypeToCSharp(arrayType.ElementType, ref pointerCount, out _, skipHighOrder);
             case CppQualifiedType qualifiedType:
-                return ConvertCppTypeToCSharp(qualifiedType.ElementType, ref pointerCount, out _);
+                return ConvertCppTypeToCSharp(qualifiedType.ElementType, ref pointerCount, out _, skipHighOrder);
             case CppTypedef typedefType:
-                return ConvertCppTypeToCSharp(typedefType.ElementType, ref pointerCount, out _);
+                return ConvertCppTypeToCSharp(typedefType.ElementType, ref pointerCount, out _, skipHighOrder);
             case CppClass cppClass:
                 return MapIdentifier(cppClass.Name);
             case CppEnum cppEnum:
                 return cppEnum.Name;
             case CppFunctionType cppFunctionType:
-                // TODO: Types here are still kinda scuffed, i dont want string or NativeBool probs?
                 var returnPointerCount = 0;
-                string returnType = ConvertCppTypeToCSharp(cppFunctionType.ReturnType, ref returnPointerCount, out _);
+                string returnType = ConvertCppTypeToCSharp(cppFunctionType.ReturnType, ref returnPointerCount, out _, true);
                 returnType = AddPointer(returnType, returnPointerCount);
 
                 List<string> parameters = new List<string>();
                 foreach (var parameter in cppFunctionType.Parameters)
                 {
                     var paramPointerCount = 0;
-                    string paramType = ConvertCppTypeToCSharp(parameter.Type, ref paramPointerCount, out _);
+                    string paramType = ConvertCppTypeToCSharp(parameter.Type, ref paramPointerCount, out _, true);
                     paramType = AddPointer(paramType, paramPointerCount);
                     parameters.Add(paramType);
                 }
