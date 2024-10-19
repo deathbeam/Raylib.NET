@@ -174,17 +174,6 @@ public class Generator
         WriteFile(outPath, Interop.Generate());
     }
 
-    private static void WriteFile(string path, string content)
-    {
-        var directoryPath = Path.GetDirectoryName(path);
-        if (!string.IsNullOrEmpty(directoryPath))
-        {
-            Directory.CreateDirectory(directoryPath);
-        }
-
-        File.WriteAllText(path, content);
-    }
-
     private String GenerateConstant(CppMacro macro, out String output)
     {
         if (macro.Span.Start.File != "cppast.input")
@@ -317,7 +306,7 @@ public class Generator
             {
                 generateConstructor = false;
 
-                if (IsType(fieldType))
+                if (IsNotPrimitive(fieldType))
                 {
                     for (int i = 0; i < arraySize; i++)
                     {
@@ -436,6 +425,23 @@ public class Generator
 
     private bool GenerateComments(CppDeclaration dec, ref String output)
     {
+        static string ExtractComments(string sourceCode, int functionStartLine, int functionEndLine)
+        {
+            var lines = sourceCode.Split('\n');
+            var comments = new List<string>();
+
+            for (int i = functionStartLine - 1; i < functionEndLine; i++)
+            {
+                var line = lines[i].Trim();
+                if (line.Contains("//"))
+                {
+                    comments.Add(line.Substring(line.IndexOf("//") + 2).Trim());
+                }
+            }
+
+            return string.Join("\n", comments);
+        }
+
         var comments = ExtractComments(FileContent, dec.Span.Start.Line, dec.Span.End.Line);
         if (string.IsNullOrEmpty(comments))
         {
@@ -578,7 +584,7 @@ public class Generator
         return type + new string('*', pointerCount);
     }
 
-    private static bool IsType(string identifier)
+    private static bool IsNotPrimitive(string identifier)
     {
         return identifier[0].ToString().ToLower() != identifier[0].ToString();
     }
@@ -603,20 +609,14 @@ public class Generator
         return char.ToLower(value[0]) + value.Substring(1);
     }
 
-    private static string ExtractComments(string sourceCode, int functionStartLine, int functionEndLine)
+    private static void WriteFile(string path, string content)
     {
-        var lines = sourceCode.Split('\n');
-        var comments = new List<string>();
-
-        for (int i = functionStartLine - 1; i < functionEndLine; i++)
+        var directoryPath = Path.GetDirectoryName(path);
+        if (!string.IsNullOrEmpty(directoryPath))
         {
-            var line = lines[i].Trim();
-            if (line.Contains("//"))
-            {
-                comments.Add(line.Substring(line.IndexOf("//") + 2).Trim());
-            }
+            Directory.CreateDirectory(directoryPath);
         }
 
-        return string.Join("\n", comments);
+        File.WriteAllText(path, content);
     }
 }
