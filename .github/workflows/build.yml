@@ -5,6 +5,28 @@ on:
       - master
 
 jobs:
+  bindgen-ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Setup Environment
+        shell: bash
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install gcc-multilib
+
+      - name: Build
+        run: dotnet build -c Release src/Raylib.NET.BindGen
+
   natives-ubuntu:
     runs-on: ubuntu-latest
     steps:
@@ -23,10 +45,10 @@ jobs:
         run: |
           sudo apt-get update -qq
           sudo apt-get install gcc-multilib
-          sudo apt-get install -y --no-install-recommends libglfw3 libglfw3-dev libx11-dev libxcursor-dev libxrandr-dev libxinerama-dev libxi-dev libxext-dev libxfixes-dev libwayland-dev libxkbcommon-dev
+          sudo apt-get install -y --no-install-recommends libgl1-mesa-dev xorg-dev
 
       - name: Build
-        run: dotnet build -c Release
+        run: dotnet build -c Release src/Raylib.NET.Native
 
   # natives:
   #   strategy:
