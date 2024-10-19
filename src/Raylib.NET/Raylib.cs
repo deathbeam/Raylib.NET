@@ -549,11 +549,11 @@ public static unsafe partial class Raylib
     public static partial Shader LoadShaderFromMemory(string vsCode, string fsCode);
 
     /// <summary>
-    /// Check if a shader is ready
+    /// Check if a shader is valid (loaded on GPU)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial NativeBool IsShaderReady(Shader shader);
+    public static partial NativeBool IsShaderValid(Shader shader);
 
     /// <summary>
     /// Get shader uniform location
@@ -1058,6 +1058,27 @@ public static unsafe partial class Raylib
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static unsafe partial byte* DecodeDataBase64(byte* data, int* outputSize);
+
+    /// <summary>
+    /// Compute CRC32 hash code
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static unsafe partial uint ComputeCRC32(byte* data, int dataSize);
+
+    /// <summary>
+    /// Compute MD5 hash code, returns static int[4] (16 bytes)
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static unsafe partial uint* ComputeMD5(byte* data, int dataSize);
+
+    /// <summary>
+    /// Compute SHA1 hash code, returns static int[5] (20 bytes)
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static unsafe partial uint* ComputeSHA1(byte* data, int dataSize);
 
     /// <summary>
     /// Load automation events list from file, NULL for empty list, capacity = MAX_AUTOMATION_EVENTS
@@ -1963,11 +1984,11 @@ public static unsafe partial class Raylib
     public static partial Image LoadImageFromScreen();
 
     /// <summary>
-    /// Check if an image is ready
+    /// Check if an image is valid (data and parameters)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial NativeBool IsImageReady(Image image);
+    public static partial NativeBool IsImageValid(Image image);
 
     /// <summary>
     /// Unload image from CPU memory (RAM)
@@ -2495,11 +2516,11 @@ public static unsafe partial class Raylib
     public static partial RenderTexture LoadRenderTexture(int width, int height);
 
     /// <summary>
-    /// Check if a texture is ready
+    /// Check if a texture is valid (loaded in GPU)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial NativeBool IsTextureReady(Texture texture);
+    public static partial NativeBool IsTextureValid(Texture texture);
 
     /// <summary>
     /// Unload texture from GPU memory (VRAM)
@@ -2509,11 +2530,11 @@ public static unsafe partial class Raylib
     public static partial void UnloadTexture(Texture texture);
 
     /// <summary>
-    /// Check if a render texture is ready
+    /// Check if a render texture is valid (loaded in GPU)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial NativeBool IsRenderTextureReady(RenderTexture target);
+    public static partial NativeBool IsRenderTextureValid(RenderTexture target);
 
     /// <summary>
     /// Unload render texture from GPU memory (VRAM)
@@ -2754,11 +2775,11 @@ public static unsafe partial class Raylib
     public static unsafe partial Font LoadFontFromMemory(string fileType, byte* fileData, int dataSize, int fontSize, int* codepoints, int codepointCount);
 
     /// <summary>
-    /// Check if a font is ready
+    /// Check if a font is valid (font data loaded, WARNING: GPU texture not checked)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial NativeBool IsFontReady(Font font);
+    public static partial NativeBool IsFontValid(Font font);
 
     /// <summary>
     /// Load font data for further use
@@ -3230,11 +3251,11 @@ public static unsafe partial class Raylib
     public static partial Model LoadModelFromMesh(Mesh mesh);
 
     /// <summary>
-    /// Check if a model is ready
+    /// Check if a model is valid (loaded in GPU, VAO/VBOs)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial NativeBool IsModelReady(Model model);
+    public static partial NativeBool IsModelValid(Model model);
 
     /// <summary>
     /// Unload model (including meshes) from memory (RAM and/or VRAM)
@@ -3475,11 +3496,11 @@ public static unsafe partial class Raylib
     public static partial Material LoadMaterialDefault();
 
     /// <summary>
-    /// Check if a material is ready
+    /// Check if a material is valid (shader assigned, map textures loaded in GPU)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial NativeBool IsMaterialReady(Material material);
+    public static partial NativeBool IsMaterialValid(Material material);
 
     /// <summary>
     /// Unload material from GPU memory (VRAM)
@@ -3650,11 +3671,11 @@ public static unsafe partial class Raylib
     public static unsafe partial Wave LoadWaveFromMemory(string fileType, byte* fileData, int dataSize);
 
     /// <summary>
-    /// Checks if wave data is ready
+    /// Checks if wave data is valid (data loaded and parameters)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial NativeBool IsWaveReady(Wave wave);
+    public static partial NativeBool IsWaveValid(Wave wave);
 
     /// <summary>
     /// Load sound from file
@@ -3678,11 +3699,11 @@ public static unsafe partial class Raylib
     public static partial Sound LoadSoundAlias(Sound source);
 
     /// <summary>
-    /// Checks if a sound is ready
+    /// Checks if a sound is valid (data loaded and buffers initialized)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial NativeBool IsSoundReady(Sound sound);
+    public static partial NativeBool IsSoundValid(Sound sound);
 
     /// <summary>
     /// Update sound buffer with new data
@@ -3832,11 +3853,11 @@ public static unsafe partial class Raylib
     public static unsafe partial Music LoadMusicStreamFromMemory(string fileType, byte* data, int dataSize);
 
     /// <summary>
-    /// Checks if a music stream is ready
+    /// Checks if a music stream is valid (context and buffers initialized)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial NativeBool IsMusicReady(Music music);
+    public static partial NativeBool IsMusicValid(Music music);
 
     /// <summary>
     /// Unload music stream
@@ -3937,11 +3958,11 @@ public static unsafe partial class Raylib
     public static partial AudioStream LoadAudioStream(uint sampleRate, uint sampleSize, uint channels);
 
     /// <summary>
-    /// Checks if an audio stream is ready
+    /// Checks if an audio stream is valid (buffers initialized)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial NativeBool IsAudioStreamReady(AudioStream stream);
+    public static partial NativeBool IsAudioStreamValid(AudioStream stream);
 
     /// <summary>
     /// Unload audio stream and free memory
