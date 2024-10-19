@@ -15,4 +15,8 @@
     <ItemGroup>
       <ProjectReference Include="..\Bindgen\Bindgen.csproj" />
     </ItemGroup>
+
+    <Target Name="RunAfterBuild" AfterTargets="Build">
+        <Exec Command="dotnet &quot;$(TargetDir)$(TargetFileName)&quot;" />
+    </Target>
 </Project>

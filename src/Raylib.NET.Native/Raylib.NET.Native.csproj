@@ -6,6 +6,7 @@
 
         <Title Condition="'$(Configuration)' == 'Debug'">Raylib.NET.Native.Debug</Title>
         <Title Condition="'$(Configuration)' == 'Release'">Raylib.NET.Native.Release</Title>
+        <NoWarn>$(NoWarn);CS2008</NoWarn>
     </PropertyGroup>
 
     <PropertyGroup>

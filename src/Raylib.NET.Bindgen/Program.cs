@@ -27,8 +27,8 @@ string[] defines =
 };
 
 var generatedNamespace = "Raylib.NET";
-var ouputPath = "src/Raylib.NET";
-var libPath = "lib";
+var ouputPath = "../../src/Raylib.NET";
+var libPath = "../../lib";
 
 string[] includeFolders = { $"{libPath}/raylib/src" };
 
