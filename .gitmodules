@@ -1,0 +1,6 @@
+[submodule "lib/raygui"]
+	path = lib/raygui
+	url = https://github.com/raysan5/raygui
+[submodule "lib/raylib"]
+	path = lib/raylib
+	url = https://github.com/raysan5/raylib
