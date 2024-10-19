@@ -1,33 +1,32 @@
-// See https://aka.ms/new-console-template for more information
-
-using System.Numerics;
 using Raylib.NET;
 using static Raylib.NET.Raylib;
+using static Raylib.NET.Raygui;
 
-const int screenWidth = 800;
-const int screenHeight = 540;
+bool showMessageBox = false;
 
-InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
+InitWindow(640, 480, "Raylib.NET - Test");
+SetConfigFlags((int)ConfigFlags.FLAG_WINDOW_RESIZABLE | (int)ConfigFlags.FLAG_WINDOW_HIGHDPI);
+SetTargetFPS(60);
 
 while (!WindowShouldClose())
 {
     BeginDrawing();
-    ClearBackground(Color.RAYWHITE);
 
-    DrawText("Congrats! You created your first window!", 190, 200, 20, Color.LIGHTGRAY);
+    ClearBackground(GetColor((uint)GuiGetStyle((int)GuiControl.DEFAULT, (int)GuiDefaultProperty.BACKGROUND_COLOR)));
 
-    DrawRectangleV(new Vector2 { X = 10, Y = 10 }, new Vector2 { X = 100, Y = 100 }, Color.RED);
+    DrawText("Congrats! You created your first window!", 10, 10, 20, Color.LIGHTGRAY);
 
-    DrawRectangleRec(
-        new Vector4
-        {
-            X = 10,
-            Y = 150,
-            W = 100,
-            Z = 100,
-        },
-        Color.GREEN
-    );
+    if (GuiButton(new(40, 40, 120, 30), "#191#Show Message") == 1) {
+        showMessageBox = true;
+    }
+
+    if (showMessageBox)
+    {
+        int result = GuiMessageBox(new(85, 70, 250, 100), "#191#Message Box", "Hi! This is a message!", "Nice;Cool");
+        if (result >= 0) {
+            showMessageBox = false;
+        }
+    }
 
     EndDrawing();
 }

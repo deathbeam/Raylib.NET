@@ -1,7 +1,7 @@
 const std = @import("std");
 
 pub fn compileRaylib(b: *std.Build, target: std.Build.ResolvedTarget, optimize: std.builtin.OptimizeMode, shared: bool) *std.Build.Step.Compile {
-    const raylib = b.dependency("raylib", .{ .target = target, .optimize = optimize, .shared = shared });
+    const raylib = b.dependency("raylib", .{ .target = target, .optimize = optimize, .shared = shared, .linux_display_backend = .X11 });
     const lib = raylib.artifact("raylib");
     const raygui_dep = b.dependency("raygui", .{ .target = target, .optimize = optimize, .shared = shared });
 
