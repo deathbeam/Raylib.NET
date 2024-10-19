@@ -34,6 +34,8 @@ pub fn compileRaylib(b: *std.Build, target: std.Build.ResolvedTarget, optimize: 
     lib.addIncludePath(raylib.path("src"));
     lib.addIncludePath(raygui.path("src"));
     lib.installHeader(raygui.path("src/raygui.h"), "raygui.h");
+    // lib.addLibraryPath(b.path("/usr/lib/x86_64-linux-gnu/"));
+    lib.addLibraryPath(.{ .cwd_relative = "/usr/lib/x86_64-linux-gnu/" });
 
     return lib;
 }
