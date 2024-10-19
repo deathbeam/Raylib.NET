@@ -9,6 +9,7 @@ Im not touching the generated stuff, only generator.
 ### TODO/Maybe
 
 - [ ] Normalize ints/uints
+- [ ] Get rid of remaining fake ints/bools (in Raygui especially i think)
 - [ ] Any way to map enums to input params automatically?
 - [ ] Detect arrays automatically, use Span?
 - [ ] String/NativeBool in delegates?
