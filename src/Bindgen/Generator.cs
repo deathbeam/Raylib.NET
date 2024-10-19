@@ -155,17 +155,20 @@ public class Generator
                 continue;
             }
 
-            generated = "namespace " + GeneratedNamespace + ";\n\n" + generated;
-            generated = "using Bindgen.Interop;\n\n" + generated;
-            generated = "using System.Runtime.InteropServices;\n" + generated;
+            var generate = "";
+            generate += "using System.Runtime.InteropServices;\n";
+            generate += "using Bindgen.Interop;\n";
+
             foreach (var import in ExistingIdentifiers.Values.Distinct())
             {
-                generated = "using " + import + ";\n" + generated;
+                generate += "using " + import + ";\n";
             }
 
+            generate += "\nnamespace " + GeneratedNamespace + ";\n\n";
+            generate += generated;
             var path = $"{OutputPath}/Types/{name}.cs";
             Console.WriteLine($"- Generated: {name} - {path}");
-            WriteFile(path, generated);
+            WriteFile(path, generate);
         }
 
         var outPath = $"{OutputPath}/{GeneratedClass}.cs";
