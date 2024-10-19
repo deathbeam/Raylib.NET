@@ -30,30 +30,11 @@ var generatedNamespace = "Raylib.NET";
 var ouputPath = "../../src/Raylib.NET";
 var libPath = "../../lib";
 
-List<string> systemIncludeList = new();
+string[] systemIncludeFolders = {
+    $"{libPath}/zig/lib/libc/include/generic-musl",
+    $"{libPath}/zig/lib/libc/include/x86-linux-musl"
+};
 
-foreach (var include in Directory.GetDirectories("/usr/lib/clang", "*", SearchOption.AllDirectories))
-{
-    string includePath = Path.Combine(include, "include");
-    if (Directory.Exists(includePath))
-    {
-        Console.WriteLine(includePath);
-        systemIncludeList.Add(includePath);
-    }
-}
-
-// foreach (var include in Directory.GetDirectories("/usr/lib/", "llvm-*", SearchOption.AllDirectories))
-// {
-//     string includePath = Path.Combine(include, "include/c++/v1");
-//     if (Directory.Exists(includePath))
-//     {
-//         Console.WriteLine(includePath);
-//         systemIncludeList.Add(includePath);
-//     }
-// }
-
-systemIncludeList.Add("/usr/include");
-string[] systemIncludeFolders = systemIncludeList.ToArray();
 string[] includeFolders = { $"{libPath}/raylib/src" };
 
 new Generator(
