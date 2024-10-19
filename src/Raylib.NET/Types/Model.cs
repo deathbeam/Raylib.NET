@@ -5,7 +5,7 @@ using Bindgen.Interop;
 namespace Raylib.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct Model
+public partial struct Model
 {
     /// <summary>
     /// Local transform matrix

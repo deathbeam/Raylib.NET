@@ -5,7 +5,7 @@ using Bindgen.Interop;
 namespace Raylib.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct ModelAnimation
+public partial struct ModelAnimation
 {
     /// <summary>
     /// Number of bones

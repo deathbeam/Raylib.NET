@@ -5,7 +5,7 @@ using Bindgen.Interop;
 namespace Raylib.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct RayCollision
+public partial struct RayCollision
 {
     /// <summary>
     /// Did the ray hit something?

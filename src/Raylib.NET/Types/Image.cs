@@ -5,7 +5,7 @@ using Bindgen.Interop;
 namespace Raylib.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct Image
+public partial struct Image
 {
     /// <summary>
     /// Image raw data

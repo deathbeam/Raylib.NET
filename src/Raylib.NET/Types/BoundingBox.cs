@@ -5,7 +5,7 @@ using Bindgen.Interop;
 namespace Raylib.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct BoundingBox
+public partial struct BoundingBox
 {
     /// <summary>
     /// Minimum vertex box-corner

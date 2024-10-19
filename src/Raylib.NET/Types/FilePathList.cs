@@ -5,7 +5,7 @@ using Bindgen.Interop;
 namespace Raylib.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct FilePathList
+public partial struct FilePathList
 {
     /// <summary>
     /// Filepaths max entries

@@ -5,7 +5,7 @@ using Bindgen.Interop;
 namespace Raylib.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct VrStereoConfig
+public partial struct VrStereoConfig
 {
     /// <summary>
     /// VR projection matrices (per eye)

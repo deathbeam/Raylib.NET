@@ -5,7 +5,7 @@ using Bindgen.Interop;
 namespace Raylib.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct NPatchInfo
+public partial struct NPatchInfo
 {
     /// <summary>
     /// Texture source rectangle

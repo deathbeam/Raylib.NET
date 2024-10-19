@@ -5,7 +5,7 @@ using Bindgen.Interop;
 namespace Raylib.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct Wave
+public partial struct Wave
 {
     /// <summary>
     /// Total number of frames (considering channels)

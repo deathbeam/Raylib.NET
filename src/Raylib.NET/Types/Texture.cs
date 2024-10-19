@@ -5,7 +5,7 @@ using Bindgen.Interop;
 namespace Raylib.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct Texture
+public partial struct Texture
 {
     /// <summary>
     /// OpenGL texture id

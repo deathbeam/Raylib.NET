@@ -5,7 +5,7 @@ using Bindgen.Interop;
 namespace Raylib.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct MaterialMap
+public partial struct MaterialMap
 {
     /// <summary>
     /// Material map texture

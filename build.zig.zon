@@ -1,0 +1,17 @@
+.{
+    .name = "Raylib.NET",
+
+    .version = "0.0.0",
+
+    .minimum_zig_version = "0.12.0",
+
+    .dependencies = .{
+        .raylib = .{ .path = "lib/raylib" },
+        .raygui = .{ .path = "lib/raygui" },
+    },
+
+    .paths = .{
+        "build.zig",
+        "build.zig.zon",
+    },
+}

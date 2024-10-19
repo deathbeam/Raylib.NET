@@ -5,7 +5,7 @@ using Bindgen.Interop;
 namespace Raylib.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct Font
+public partial struct Font
 {
     /// <summary>
     /// Base size (default chars height)

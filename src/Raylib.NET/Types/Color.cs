@@ -5,7 +5,7 @@ using Bindgen.Interop;
 namespace Raylib.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct Color
+public partial struct Color
 {
     public static readonly Color LIGHTGRAY = new Color(200,200,200,255);
     public static readonly Color GRAY = new Color(130,130,130,255);

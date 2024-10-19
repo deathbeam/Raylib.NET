@@ -5,7 +5,7 @@ using Bindgen.Interop;
 namespace Raylib.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct BoneInfo
+public partial struct BoneInfo
 {
     /// <summary>
     /// Bone name

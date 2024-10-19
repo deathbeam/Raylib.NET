@@ -5,7 +5,7 @@ using Bindgen.Interop;
 namespace Raylib.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct RenderTexture
+public partial struct RenderTexture
 {
     /// <summary>
     /// OpenGL framebuffer object id

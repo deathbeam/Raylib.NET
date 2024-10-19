@@ -5,7 +5,7 @@ using Bindgen.Interop;
 namespace Raylib.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct VertexBuffer
+public partial struct VertexBuffer
 {
     /// <summary>
     /// Number of elements in the buffer (QUADS)

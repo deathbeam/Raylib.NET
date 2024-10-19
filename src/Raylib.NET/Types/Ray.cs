@@ -5,7 +5,7 @@ using Bindgen.Interop;
 namespace Raylib.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct Ray
+public partial struct Ray
 {
     /// <summary>
     /// Ray position (origin)

@@ -5,7 +5,7 @@ using Bindgen.Interop;
 namespace Raylib.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct VrDeviceInfo
+public partial struct VrDeviceInfo
 {
     /// <summary>
     /// Horizontal resolution in pixels

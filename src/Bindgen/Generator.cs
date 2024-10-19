@@ -282,7 +282,7 @@ public class Generator
         }
 
         output += "[StructLayout(LayoutKind.Sequential)]\n";
-        output += $"public struct {structName}\n";
+        output += $"public partial struct {structName}\n";
         output += "{\n";
 
         if (LiteralValues.TryGetValue(structName, out var values))

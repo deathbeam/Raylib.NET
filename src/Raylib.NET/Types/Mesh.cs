@@ -5,7 +5,7 @@ using Bindgen.Interop;
 namespace Raylib.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct Mesh
+public partial struct Mesh
 {
     /// <summary>
     /// Number of vertices stored in arrays

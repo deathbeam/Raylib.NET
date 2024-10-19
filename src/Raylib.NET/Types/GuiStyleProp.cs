@@ -5,7 +5,7 @@ using Bindgen.Interop;
 namespace Raylib.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct GuiStyleProp
+public partial struct GuiStyleProp
 {
     /// <summary>
     /// Control identifier

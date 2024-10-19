@@ -5,7 +5,7 @@ using Bindgen.Interop;
 namespace Raylib.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct Transform
+public partial struct Transform
 {
     /// <summary>
     /// Translation

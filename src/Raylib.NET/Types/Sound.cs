@@ -5,7 +5,7 @@ using Bindgen.Interop;
 namespace Raylib.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct Sound
+public partial struct Sound
 {
     /// <summary>
     /// Audio stream

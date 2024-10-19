@@ -5,7 +5,7 @@ using Bindgen.Interop;
 namespace Raylib.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct AudioStream
+public partial struct AudioStream
 {
     /// <summary>
     /// Pointer to internal data used by the audio system

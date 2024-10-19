@@ -5,7 +5,7 @@ using Bindgen.Interop;
 namespace Raylib.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct Camera2D
+public partial struct Camera2D
 {
     /// <summary>
     /// Camera offset (displacement from target)

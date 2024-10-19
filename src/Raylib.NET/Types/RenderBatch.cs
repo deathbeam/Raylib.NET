@@ -5,7 +5,7 @@ using Bindgen.Interop;
 namespace Raylib.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct RenderBatch
+public partial struct RenderBatch
 {
     /// <summary>
     /// Number of vertex buffers (multi-buffering support)

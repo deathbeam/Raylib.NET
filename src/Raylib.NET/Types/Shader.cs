@@ -5,7 +5,7 @@ using Bindgen.Interop;
 namespace Raylib.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct Shader
+public partial struct Shader
 {
     /// <summary>
     /// Shader program id

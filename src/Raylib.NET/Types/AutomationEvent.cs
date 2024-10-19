@@ -5,7 +5,7 @@ using Bindgen.Interop;
 namespace Raylib.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct AutomationEvent
+public partial struct AutomationEvent
 {
     /// <summary>
     /// Event frame

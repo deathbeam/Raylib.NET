@@ -5,7 +5,7 @@ using Bindgen.Interop;
 namespace Raylib.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct GlyphInfo
+public partial struct GlyphInfo
 {
     /// <summary>
     /// Character value (Unicode)

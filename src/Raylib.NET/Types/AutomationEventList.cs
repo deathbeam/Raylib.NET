@@ -5,7 +5,7 @@ using Bindgen.Interop;
 namespace Raylib.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct AutomationEventList
+public partial struct AutomationEventList
 {
     /// <summary>
     /// Events max entries (MAX_AUTOMATION_EVENTS)

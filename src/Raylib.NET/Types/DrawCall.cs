@@ -5,7 +5,7 @@ using Bindgen.Interop;
 namespace Raylib.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct DrawCall
+public partial struct DrawCall
 {
     /// <summary>
     /// Drawing mode: LINES, TRIANGLES, QUADS

@@ -5,7 +5,7 @@ using Bindgen.Interop;
 namespace Raylib.NET;
 
 [StructLayout(LayoutKind.Sequential)]
-public struct Camera3D
+public partial struct Camera3D
 {
     /// <summary>
     /// Camera position
