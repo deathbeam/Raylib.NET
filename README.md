@@ -10,7 +10,21 @@ Generates bindings, builds natives for whatever os you are on etc:
 dotnet build
 ```
 
-Im not touching the generated stuff, only generator.
+Can somewhat cross-compile with RID:
+
+```sh
+cd src/Raylib.NET.Native
+dotnet build -r win-x64
+dotnet build -r win-x86
+dotnet build -r linux-x64
+```
+
+Still limited by missing native libs and missing OSX SDK, so basically only thing that works
+well is cross-compiling to win from linux.
+
+### Stuff being done here
+
+Everything is 100% generated, Im not touching the generated stuff, only generator.
 
 ### TODO/Maybe
 

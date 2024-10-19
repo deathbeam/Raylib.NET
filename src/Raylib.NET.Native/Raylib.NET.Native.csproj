@@ -71,6 +71,11 @@
                 <ZigIdentifier>x86_64-linux-gnu</ZigIdentifier>
             </PropertyGroup>
         </When>
+        <When Condition="$(RuntimeIdentifier) == 'linux-x86'">
+            <PropertyGroup>
+                <ZigIdentifier>x86-linux-gnu</ZigIdentifier>
+            </PropertyGroup>
+        </When>
         <When Condition="$(RuntimeIdentifier) == 'linux-arm'">
             <PropertyGroup>
                 <ZigIdentifier>arm-linux-gnueabihf</ZigIdentifier>
@@ -79,11 +84,6 @@
         <When Condition="$(RuntimeIdentifier) == 'linux-arm64'">
             <PropertyGroup>
                 <ZigIdentifier>aarch64-linux-gnu</ZigIdentifier>
-            </PropertyGroup>
-        </When>
-        <When Condition="$(RuntimeIdentifier) == 'linux-musl-x64'">
-            <PropertyGroup>
-                <ZigIdentifier>x86_64-linux-musl</ZigIdentifier>
             </PropertyGroup>
         </When>
         <When Condition="$(RuntimeIdentifier) == 'osx-x64'">
