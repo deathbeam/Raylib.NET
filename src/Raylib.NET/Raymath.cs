@@ -9,6 +9,10 @@ public static unsafe partial class Raymath
 {
     public const string LIBRARY = "raylib";
 
+    public const int BUILD_LIBTYPE_SHARED = 1;
+
+    public const int RAYGUI_IMPLEMENTATION = 1;
+
     public const float PI = 3.14159265358979323846f;
 
     public const float EPSILON = 0.000001f;

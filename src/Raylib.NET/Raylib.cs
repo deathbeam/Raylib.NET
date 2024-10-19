@@ -9,6 +9,10 @@ public static unsafe partial class Raylib
 {
     public const string LIBRARY = "raylib";
 
+    public const int BUILD_LIBTYPE_SHARED = 1;
+
+    public const int RAYGUI_IMPLEMENTATION = 1;
+
     public const int RAYLIB_VERSION_MAJOR = 5;
 
     public const int RAYLIB_VERSION_MINOR = 5;

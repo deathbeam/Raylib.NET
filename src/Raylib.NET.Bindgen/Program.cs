@@ -1,15 +1,6 @@
 using System.Text.RegularExpressions;
 using Bindgen;
 
-string[] defines = {
-    // "RAYGUI_IMPLEMENTATION",
-    // "RLGL_IMPLEMENTATION"
-};
-
-string[] includeFolders = {
-    "../../lib/raylib/src"
-};
-
 var transformIdentifier = (string identifier) => identifier switch
 {
     "Matrix" => "Matrix4x4",
@@ -27,9 +18,19 @@ var existingIdentifiers = new Dictionary<string, string>
     {"Matrix4x4", "System.Numerics" },
 };
 
+string[] defines = {
+    "BUILD_LIBTYPE_SHARED",
+    "RAYGUI_IMPLEMENTATION",
+    // "RLGL_IMPLEMENTATION"
+};
+
 var generatedNamespace = "Raylib.NET";
-var ouputPath = "../Raylib.NET";
-var libPath = "../../lib";
+var ouputPath = "src/Raylib.NET";
+var libPath = "lib";
+
+string[] includeFolders = {
+    $"{libPath}/raylib/src",
+};
 
 new Generator(
         generatedClass: "Raygui",
