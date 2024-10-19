@@ -425,37 +425,33 @@ public class Generator
 
     private bool GenerateComments(CppDeclaration dec, ref String output)
     {
-        static string ExtractComments(string sourceCode, int functionStartLine, int functionEndLine)
+        var lines = FileContent.Split('\n');
+        var comments = new List<string>();
+
+        for (int i = dec.Span.Start.Line - 1; i < dec.Span.End.Line; i++)
         {
-            var lines = sourceCode.Split('\n');
-            var comments = new List<string>();
-
-            for (int i = functionStartLine - 1; i < functionEndLine; i++)
+            var line = lines[i].Trim();
+            if (line.Contains("//"))
             {
-                var line = lines[i].Trim();
-                if (line.Contains("//"))
-                {
-                    comments.Add(line.Substring(line.IndexOf("//") + 2).Trim());
-                }
+                comments.Add(line.Substring(line.IndexOf("//") + 2).Trim());
             }
-
-            return string.Join("\n", comments);
         }
 
-        var comments = ExtractComments(FileContent, dec.Span.Start.Line, dec.Span.End.Line);
-        if (string.IsNullOrEmpty(comments))
+        var commentsString = string.Join("\n", comments);
+
+        if (string.IsNullOrEmpty(commentsString))
         {
             var commentList = dec.Comment?.ToString().Split('\n').Select(c => c.Trim().Replace("/", ""));
             if (commentList != null)
             {
-                comments = string.Join("\n    /// ", commentList);
+                commentsString = string.Join("\n    /// ", commentList);
             }
         }
 
-        if (!string.IsNullOrEmpty(comments))
+        if (!string.IsNullOrEmpty(commentsString))
         {
             output += $"    /// <summary>\n";
-            output += $"    /// {comments}\n";
+            output += $"    /// {commentsString}\n";
             output += $"    /// </summary>\n";
             return true;
         }
