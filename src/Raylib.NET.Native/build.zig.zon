@@ -8,6 +8,14 @@
     .dependencies = .{
         .raylib = .{ .path = "../../lib/raylib" },
         .raygui = .{ .path = "../../lib/raygui" },
+        .xheaders = .{
+            .url = "https://github.com/hexops/x11-headers/archive/refs/heads/main.zip",
+            .hash = "1220e79da2d5efd5e9dd8b6453f83a9ec79534e2e203b3331766b81e49171f3db474"
+        },
+        .glheaders = .{
+            .url = "https://github.com/hexops/opengl-headers/archive/refs/heads/main.zip",
+            .hash = "1220c47bacdd04bbe84c0bf1e8c70846beabc022b7f31d188c8dcec25e7ba41ec7cc"
+        }
     },
 
     .paths = .{

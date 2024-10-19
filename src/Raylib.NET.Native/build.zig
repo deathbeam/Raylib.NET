@@ -2,8 +2,13 @@ const std = @import("std");
 
 pub fn compileRaylib(b: *std.Build, target: std.Build.ResolvedTarget, optimize: std.builtin.OptimizeMode, shared: bool) *std.Build.Step.Compile {
     const raylib = b.dependency("raylib", .{ .target = target, .optimize = optimize, .shared = shared, .linux_display_backend = .X11 });
+    const raygui = b.dependency("raygui", .{ .target = target, .optimize = optimize });
+    const xheaders = b.dependency("xheaders", .{ .target = target });
+    const glheaders = b.dependency("glheaders", .{ .target = target });
+
     const lib = raylib.artifact("raylib");
-    const raygui_dep = b.dependency("raygui", .{ .target = target, .optimize = optimize, .shared = shared });
+    lib.linkLibrary(xheaders.artifact("x11-headers"));
+    lib.linkLibrary(glheaders.artifact("opengl-headers"));
 
     var gen_step = b.addWriteFiles();
     lib.step.dependOn(&gen_step.step);
@@ -21,8 +26,8 @@ pub fn compileRaylib(b: *std.Build, target: std.Build.ResolvedTarget, optimize: 
     });
 
     lib.addIncludePath(raylib.path("src"));
-    lib.addIncludePath(raygui_dep.path("src"));
-    lib.installHeader(raygui_dep.path("src/raygui.h"), "raygui.h");
+    lib.addIncludePath(raygui.path("src"));
+    lib.installHeader(raygui.path("src/raygui.h"), "raygui.h");
 
     return lib;
 }
