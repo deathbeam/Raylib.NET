@@ -39,7 +39,10 @@ jobs:
         run: |
           sudo apt-get update -qq
           sudo apt-get install gcc-multilib
-          sudo apt-get install -y --no-install-recommends libgl1-mesa-dev xorg-dev
+          sudo apt-get install -y --no-install-recommends libgl1-mesa-dev libx11-dev
+          zig version
+          sudo apt-file search libX11.so
+          sudo apt-file search libGL.so
 
       - name: Build
         run: dotnet build -c Release src/Raylib.NET.Native
