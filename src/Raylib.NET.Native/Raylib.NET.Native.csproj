@@ -3,6 +3,7 @@
         <TargetFramework>net8.0</TargetFramework>
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
         <NoWarn>$(NoWarn);CS2008</NoWarn>
     </PropertyGroup>
 
@@ -52,7 +53,7 @@
         </When>
         <When Condition="$(RuntimeIdentifier) == 'win-x86'">
             <PropertyGroup>
-                <ZigIdentifier>i386-windows-gnu</ZigIdentifier>
+                <ZigIdentifier>x86-windows-gnu</ZigIdentifier>
             </PropertyGroup>
         </When>
         <When Condition="$(RuntimeIdentifier) == 'win-arm'">
@@ -108,7 +109,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Vezel.Zig.Toolsets.$(RuntimeIdentifier)" Version="0.13.0.1">
+        <PackageReference Include="Vezel.Zig.Toolsets.$(NativeId)" Version="0.13.0.1">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
