@@ -19,12 +19,7 @@ var existingIdentifiers = new Dictionary<string, string>
     { "Matrix4x4", "System.Numerics" },
 };
 
-string[] defines =
-{
-    "BUILD_LIBTYPE_SHARED",
-    // "RAYGUI_IMPLEMENTATION",
-    // "RLGL_IMPLEMENTATION"
-};
+string[] defines = {};
 
 var generatedNamespace = "Raylib.NET";
 var ouputPath = "../../src/Raylib.NET";
