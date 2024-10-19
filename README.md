@@ -1,3 +1,9 @@
+Initializes submodules:
+
+```sh
+git submodule update --init --recursive
+```
+
 Generates bindings, builds natives for whatever os you are on etc:
 
 ```sh
