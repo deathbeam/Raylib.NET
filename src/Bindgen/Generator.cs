@@ -374,6 +374,13 @@ public class Generator
 
     private String GenerateFunction(CppFunction function, out String output)
     {
+        // Check if the function is from the main header file
+        if (function.Span.Start.File != "cppast.input")
+        {
+            output = "";
+            return "";
+        }
+
         var pointerCount = 0;
         string returnType = ConvertCppTypeToCSharp(function.ReturnType, ref pointerCount, out _);
         returnType = AddPointer(returnType, pointerCount);
