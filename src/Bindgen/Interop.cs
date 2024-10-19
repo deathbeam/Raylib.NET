@@ -38,16 +38,17 @@ public class Interop
                 }
             }
 
-            // This is only maybe useful for delegates but for now unused
             [StructLayout(LayoutKind.Sequential)]
             public unsafe struct NativeString(sbyte* value) : IDisposable
             {
                 private sbyte* _value = value;
 
+                #pragma warning disable CS8603 // Possible null reference return
                 public static implicit operator string(NativeString nstring)
                 {
                     return Marshal.PtrToStringAnsi((IntPtr)nstring._value);
                 }
+                #pragma warning restore CS8603 // Possible null reference return
 
                 public static implicit operator NativeString(string value)
                 {
