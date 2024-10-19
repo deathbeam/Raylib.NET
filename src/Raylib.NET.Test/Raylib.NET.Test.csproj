@@ -1,12 +1,12 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
     <ProjectReference Include="..\Raylib.NET\Raylib.NET.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Raylib-cs.BleedingEdge.Runtimes" Version="5.5.0-dev-83" />
-  </ItemGroup>
+  <!-- <ItemGroup> -->
+  <!--   <PackageReference Include="Raylib-cs.BleedingEdge.Runtimes" Version="5.5.0-dev-83" /> -->
+  <!-- </ItemGroup> -->
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
