@@ -1,4 +1,5 @@
 bin/
 obj/
 zig-out/
+nuget/
 .zig-cache/
