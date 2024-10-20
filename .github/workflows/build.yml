@@ -6,7 +6,9 @@ on:
       - master
 
 jobs:
-  bindgen:
+  update-bindings:
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -21,6 +23,14 @@ jobs:
 
       - name: Build
         run: dotnet build -c Release src/Raylib.NET.Bindgen
+
+      - name: Push Changes
+        run: |
+          git config --global user.name github-actions
+          git config --global user.email github-actions@github.com
+          git add .
+          git commit -m "Update bindings"
+          git push
 
   natives-linux:
     runs-on: ubuntu-latest
@@ -112,13 +122,13 @@ jobs:
           if-no-files-found: error
 
   build-and-upload:
+    permissions:
+      packages: write
     runs-on: ubuntu-latest
     needs:
       - natives-linux
       - natives-osx
       - natives-windows
-    permissions:
-      packages: write
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
