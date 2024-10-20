@@ -24,7 +24,7 @@ jobs:
   natives:
     strategy:
       matrix:
-        distribution: [linux-x64, osx-x64, win-x64]
+        distribution: [linux-x64, win-x64]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -41,8 +41,8 @@ jobs:
         shell: bash
         run: |
           sudo apt-get update -qq
-          sudo apt-get install build-essential gcc-multilib
           sudo apt-get install \
+              gcc-multilib \
               libasound2-dev \
               libx11-dev \
               libxrandr-dev \
@@ -65,9 +65,33 @@ jobs:
           path: src/Raylib.NET.Native/bin/Release/native/${{ matrix.distribution }}/*
           if-no-files-found: error
 
+  natives-osx:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Build Natives
+        run: dotnet build -c Release -r osx-x64
+        working-directory: src/Raylib.NET.Native
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: natives-osx-x64
+          path: src/Raylib.NET.Native/bin/Release/native/osx-x64/*
+          if-no-files-found: error
+
   nuget:
     runs-on: ubuntu-latest
-    needs: [bindgen, natives]
+    needs: [bindgen, natives, natives-osx]
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
