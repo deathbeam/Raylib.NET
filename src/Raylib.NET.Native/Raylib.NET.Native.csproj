@@ -8,10 +8,21 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Title Condition="'$(Configuration)' == 'Debug'">Raylib.NET.Native.Debug</Title>
-        <Title Condition="'$(Configuration)' == 'Release'">Raylib.NET.Native.Release</Title>
         <NativeArch>$([System.Runtime.InteropServices.RuntimeInformation]::ProcessArchitecture)</NativeArch>
     </PropertyGroup>
+
+    <Choose>
+        <When Condition="'$(Configuration)' == 'Debug'">
+            <PropertyGroup>
+                <PackageId>Raylib.NET.Native.Debug</PackageId>
+            </PropertyGroup>
+        </When>
+        <When Condition="'$(Configuration)' == 'Release'">
+            <PropertyGroup>
+                <PackageId>Raylib.NET.Native</PackageId>
+            </PropertyGroup>
+        </When>
+    </Choose>
 
     <Choose>
         <When Condition="$([MSBuild]::IsOSPlatform('Windows'))">
