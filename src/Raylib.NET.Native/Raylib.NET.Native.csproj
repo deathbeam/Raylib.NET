@@ -114,7 +114,7 @@
         </PackageReference>
     </ItemGroup>
 
-    <Target Name="CompileNatives" AfterTargets="build">
+    <Target Name="CompileNatives" AfterTargets="build" Condition="'$(SkipCompileNatives)' != 'true'">
         <Exec Command="$(ZigExePath) build -Doptimize=$(ZigConfiguration) --prefix $(OutputPath)native  --prefix-lib-dir $(RuntimeIdentifier) --prefix-exe-dir $(RuntimeIdentifier) -Dtarget=$(ZigIdentifier)"/>
     </Target>
 

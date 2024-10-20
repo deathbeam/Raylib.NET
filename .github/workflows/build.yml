@@ -142,11 +142,8 @@ jobs:
           name: natives-win-x64
           path: src/Raylib.NET.Native/bin/Release/native/win-x64
 
-      - name: Create Raylib.NET.Native NuGet Package
-        run: dotnet pack src/Raylib.NET.Native -c Release --output nuget --no-build
-
-      - name: Create Raylib.NET NuGet Package
-        run: dotnet pack src/Raylib.NET -c Release --output nuget
+      - name: Create NuGet Packages
+        run: dotnet pack -c Release --output nuget -p:SkipCompileNatives=true
 
       - name: Upload NuGet Packages As Artifacts
         uses: actions/upload-artifact@v4
