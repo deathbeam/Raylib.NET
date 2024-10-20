@@ -142,10 +142,16 @@ jobs:
           name: natives-win-x64
           path: src/Raylib.NET.Native/bin/Release/native/win-x64
 
-      - name: Create NuGet Package
-        run: dotnet pack -c Release --output nuget
+      - name: Create Raylib.NET.Native NuGet Package
+        run: dotnet pack src/Raylib.NET.Native -c Release --output nuget --no-build
 
-      - name: Upload NuGet Package As Artifact
+      - name: Create Raylib.NET NuGet Package
+        run: dotnet pack src/Raylib.NET -c Release --output nuget
+
+      - name: Upload NuGet Packages As Artifacts
         uses: actions/upload-artifact@v4
         with:
           path: nuget/*
+
+      - name: Publish NuGet Packages to GitHub Packages
+        run: dotnet nuget push nuget/*.nupkg -s https://nuget.pkg.github.com/deathbeam/index.json -k ${{ secrets.GITHUB_TOKEN }}
