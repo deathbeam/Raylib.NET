@@ -152,6 +152,9 @@ jobs:
         id: version
         run: echo "VERSION_SUFFIX=$(date +%Y%m%d%H%M%S)" >> $GITHUB_ENV
 
+      - name: Create NuGet Debug Packages
+        run: dotnet pack -c Debug --output nuget -p:SkipCompileNatives=true -p:VersionSuffix=${{ env.VERSION_SUFFIX }}
+
       - name: Create NuGet Packages
         run: dotnet pack -c Release --output nuget -p:SkipCompileNatives=true -p:VersionSuffix=${{ env.VERSION_SUFFIX }}
 
