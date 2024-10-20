@@ -148,8 +148,12 @@ jobs:
           name: natives-win-x64
           path: src/Raylib.NET.Native/bin/Release/native/win-x64
 
+      - name: Generate Version Suffix
+        id: version
+        run: echo "VERSION_SUFFIX=$(date +%Y%m%d%H%M%S)" >> $GITHUB_ENV
+
       - name: Create NuGet Packages
-        run: dotnet pack -c Release --output nuget -p:SkipCompileNatives=true
+        run: dotnet pack -c Release --output nuget -p:SkipCompileNatives=true -p:VersionSuffix=${{ env.VERSION_SUFFIX }}
 
       - name: Upload NuGet Packages As Artifacts
         uses: actions/upload-artifact@v4
