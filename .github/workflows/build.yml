@@ -60,7 +60,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: natives-linux-x64
-          path: src/Raylib.NET.Native/bin/Release/native/linux-x64/*
+          path: src/Raylib.NET.Native/bin/Release/runtimes/linux-x64/native/*
           if-no-files-found: error
 
   natives-osx:
@@ -84,7 +84,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: natives-osx-x64
-          path: src/Raylib.NET.Native/bin/Release/native/osx-x64/*
+          path: src/Raylib.NET.Native/bin/Release/runtimes/osx-x64/native/*
           if-no-files-found: error
 
   natives-windows:
@@ -108,7 +108,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: natives-win-x64
-          path: src/Raylib.NET.Native/bin/Release/native/win-x64/*
+          path: src/Raylib.NET.Native/bin/Release/runtimes/win-x64/native/*
           if-no-files-found: error
 
   build-and-upload:
@@ -134,19 +134,19 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: natives-linux-x64
-          path: src/Raylib.NET.Native/bin/Release/native/linux-x64
+          path: src/Raylib.NET.Native/bin/Release/runtimes/linux-x64/native
 
       - name: Download osx-x64 Natives
         uses: actions/download-artifact@v4
         with:
           name: natives-osx-x64
-          path: src/Raylib.NET.Native/bin/Release/native/osx-x64
+          path: src/Raylib.NET.Native/bin/Release/runtimes/osx-x64/native
 
       - name: Download win-x64 Natives
         uses: actions/download-artifact@v4
         with:
           name: natives-win-x64
-          path: src/Raylib.NET.Native/bin/Release/native/win-x64
+          path: src/Raylib.NET.Native/bin/Release/runtimes/win-x64/native
 
       - name: Generate Version Suffix
         id: version
