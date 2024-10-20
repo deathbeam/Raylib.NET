@@ -17,10 +17,8 @@ cd src/Raylib.NET.Native
 dotnet build -r win-x64
 dotnet build -r win-x86
 dotnet build -r linux-x64
+dotnet build -r osx-x64
 ```
-
-Still limited by missing native libs and missing OSX SDK, so basically only thing that works
-well is cross-compiling to win from linux.
 
 ### Stuff being done here
 
