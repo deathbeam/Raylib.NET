@@ -55,7 +55,8 @@ jobs:
               libxkbcommon-dev
 
       - name: Build Natives
-        run: dotnet build -c Release src/Raylib.NET.Native -p {{ matrix.distribution }}
+        run: dotnet build -c Release -r {{ matrix.distribution }}
+        working-directory: src/Raylib.NET.Native
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
