@@ -114,15 +114,15 @@
         </PackageReference>
     </ItemGroup>
 
-    <Target Name="CompileNatives" AfterTargets="build" Condition="'$(SkipCompileNatives)' != 'true'">
+    <Target Name="CompileNatives" BeforeTargets="Build" Condition="'$(SkipCompileNatives)' != 'true'">
         <Exec Command="$(ZigExePath) build -Doptimize=$(ZigConfiguration) --prefix $(OutputPath)native  --prefix-lib-dir $(RuntimeIdentifier) --prefix-exe-dir $(RuntimeIdentifier) -Dtarget=$(ZigIdentifier)"/>
     </Target>
 
     <ItemGroup>
-        <Content
-            Include="$(OutputPath)native/$(RuntimeIdentifier)/$(NativePre)raylib.$(NativeExt)"
-            Link="%(Filename)%(Extension)"
+        <Content Include="$(OutputPath)native/**/**"
+            Link="%(RecursiveDir)/%(Filename)%(Extension)"
+            Pack="true"
             CopyToOutputDirectory="PreserveNewest"
-            Condition="Exists('$(OutputPath)native/$(RuntimeIdentifier)/$(NativePre)raylib.$(NativeExt)')" />
+        />
     </ItemGroup>
 </Project>
