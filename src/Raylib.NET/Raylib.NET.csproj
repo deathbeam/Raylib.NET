@@ -16,13 +16,4 @@
         <PackProject>true</PackProject>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
-
-    <ItemGroup>
-        <Content Include="$(OutputPath)/**/native/**">
-            <Pack>true</Pack>
-            <PackagePath>native</PackagePath>
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
-    </ItemGroup>
-
 </Project>
