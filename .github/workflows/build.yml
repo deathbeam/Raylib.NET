@@ -62,7 +62,9 @@ jobs:
         run: dotnet pack -c Release --output nuget -p:SkipCompileNatives=true -p:VersionSuffix=${{ steps.package-info.outputs.version }}
 
       - name: Remove Native Packages
-        run: rm -rf nuget/Raylib.NET.Native*
+        run: |
+          rm -rf nuget/Raylib.NET.Native*
+          rm -rf nuget/Raylib.NET.Test*
 
       - name: Upload NuGet Packages As Artifacts
         uses: actions/upload-artifact@v4
