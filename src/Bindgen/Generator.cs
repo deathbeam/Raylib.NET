@@ -404,6 +404,13 @@ public class Generator
             parameters.Add($"{paramType} {paramName}");
         }
 
+        if (function.Flags.HasFlag(CppFunctionFlags.Variadic))
+        {
+            // https://github.com/dotnet/runtime/issues/48796
+            Console.WriteLine($"- Unsupported function param: {functionName} (variadic)");
+            // parameters.Add("__arglist");
+        }
+
         string parametersString = string.Join(", ", parameters);
 
         output = "";
