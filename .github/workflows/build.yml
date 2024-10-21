@@ -94,13 +94,10 @@ jobs:
     outputs:
       version: ${{ steps.package-info.outputs.version }}
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
       - name: Generate Version Info
         id: package-info
         run: |
-          echo "version=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+          echo "version=dev-${{ github.run_number }}" >> $GITHUB_OUTPUT
 
       - name: Print Version Info
         run: |
