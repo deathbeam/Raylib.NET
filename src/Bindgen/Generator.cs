@@ -7,42 +7,26 @@ namespace Bindgen;
 
 public class Generator
 {
-    private readonly string GeneratedNamespace;
-    private readonly string GeneratedClass;
-    private readonly string OutputPath;
-    private readonly string LibraryName;
-    private readonly string FilePath;
-    private readonly Func<string, string, string> TransformType;
-    private readonly Dictionary<string, string> ExistingTypes;
+    private readonly GeneratorOptions options;
 
-    private readonly string FileContent;
-    private readonly CppParserOptions Options;
-    private readonly HashSet<string> ReservedKeywords = new HashSet<string>();
-    private readonly Dictionary<string, Dictionary<string, string>> LiteralValues = new();
+    private readonly string fileContent;
+    private readonly HashSet<string> reservedKeywords = new HashSet<string>();
+    private readonly Dictionary<string, Dictionary<string, string>> literalValues = new();
 
-    public Generator(
-        string generatedNamespace,
-        string generatedClass,
-        string outputPath,
-        string libraryName,
-        string filePath,
-        string[] systemIncludeFolders,
-        string[] includeFolders,
-        string[] defines,
-        Func<string, string, string> transformType,
-        Dictionary<string, string> existingTypes
-    )
+    public Generator(GeneratorOptions options)
     {
-        GeneratedNamespace = generatedNamespace;
-        GeneratedClass = generatedClass;
-        OutputPath = outputPath;
-        LibraryName = libraryName;
-        FilePath = filePath;
-        TransformType = transformType;
-        ExistingTypes = existingTypes;
-        FileContent = File.ReadAllText(FilePath);
+        this.options = options;
+        fileContent = File.ReadAllText(options.FilePath);
 
-        Options = new CppParserOptions
+        foreach (var keyword in SyntaxFacts.GetKeywordKinds())
+        {
+            reservedKeywords.Add(SyntaxFacts.GetText(keyword));
+        }
+    }
+
+    public void Generate()
+    {
+        var parserOptions  = new CppParserOptions
         {
             AdditionalArguments = { "-xc", "-std=gnu99" },
             ParseAsCpp = false,
@@ -50,21 +34,13 @@ public class Generator
             ParseMacros = true,
         };
 
-        Options.SystemIncludeFolders.AddRange(systemIncludeFolders);
-        Options.IncludeFolders.AddRange(includeFolders);
-        Options.Defines.AddRange(defines);
+        parserOptions.SystemIncludeFolders.AddRange(options.SystemIncludeFolders);
+        parserOptions.IncludeFolders.AddRange(options.IncludeFolders);
+        parserOptions.Defines.AddRange(options.Defines);
 
-        foreach (var keyword in SyntaxFacts.GetKeywordKinds())
-        {
-            ReservedKeywords.Add(SyntaxFacts.GetText(keyword));
-        }
-    }
-
-    public void Generate()
-    {
         Console.WriteLine();
-        Console.WriteLine($">>>>>>>> Parsing: {FilePath}");
-        var ast = CppParser.Parse(FileContent, Options);
+        Console.WriteLine($">>>>>>>> Parsing: {options.FilePath}");
+        var ast = CppParser.Parse(fileContent, parserOptions);
 
         Console.WriteLine();
         Console.WriteLine($"> Diagnostics: {ast.Diagnostics.Messages.Count}");
@@ -79,17 +55,17 @@ public class Generator
         builder.AppendLine("using System.Runtime.InteropServices;");
         builder.AppendLine("using Bindgen.Interop;");
 
-        foreach (var import in ExistingTypes.Values.Distinct())
+        foreach (var import in options.ExistingTypes.Values.Distinct())
         {
             builder.AppendLine($"using {import};");
         }
 
         builder.AppendLine();
-        builder.AppendLine($"namespace {GeneratedNamespace};");
+        builder.AppendLine($"namespace {options.GeneratedNamespace};");
         builder.AppendLine();
-        builder.AppendLine($"public static unsafe partial class {GeneratedClass}");
+        builder.AppendLine($"public static unsafe partial class {options.GeneratedClass}");
         builder.AppendLine("{");
-        builder.AppendLine($"    public const string LIBRARY = \"{LibraryName}\";");
+        builder.AppendLine($"    public const string LIBRARY = \"{options.LibraryName}\";");
 
         Console.WriteLine();
         Console.WriteLine($"> Macros: {ast.Macros.Count}");
@@ -133,8 +109,8 @@ public class Generator
                 continue;
             }
 
-            generated = "namespace " + GeneratedNamespace + ";\n\n" + generated;
-            var path = $"{OutputPath}/Enums/{name}.cs";
+            generated = "namespace " + options.GeneratedNamespace + ";\n\n" + generated;
+            var path = $"{options.OutputPath}/Enums/{name}.cs";
             Console.WriteLine($"- Generated: {name} - {path}");
             WriteFile(path, generated);
         }
@@ -153,23 +129,23 @@ public class Generator
             generate += "using System.Runtime.InteropServices;\n";
             generate += "using Bindgen.Interop;\n";
 
-            foreach (var import in ExistingTypes.Values.Distinct())
+            foreach (var import in options.ExistingTypes.Values.Distinct())
             {
                 generate += "using " + import + ";\n";
             }
 
-            generate += "\nnamespace " + GeneratedNamespace + ";\n\n";
+            generate += "\nnamespace " + options.GeneratedNamespace + ";\n\n";
             generate += generated;
-            var path = $"{OutputPath}/Types/{name}.cs";
+            var path = $"{options.OutputPath}/Types/{name}.cs";
             Console.WriteLine($"- Generated: {name} - {path}");
             WriteFile(path, generate);
         }
 
-        var outPath = $"{OutputPath}/{GeneratedClass}.cs";
-        Console.WriteLine($"> Generated: {GeneratedClass} - {outPath}");
+        var outPath = $"{options.OutputPath}/{options.GeneratedClass}.cs";
+        Console.WriteLine($"> Generated: {options.GeneratedClass} - {outPath}");
         WriteFile(outPath, builder.ToString());
 
-        outPath = $"{OutputPath}/Interop.cs";
+        outPath = $"{options.OutputPath}/Interop.cs";
         Console.WriteLine($"> Generated: Interop - {outPath}");
         WriteFile(outPath, Interop.Generate());
     }
@@ -219,12 +195,12 @@ public class Generator
             var type = match.Groups[1].Value;
             var typeValue = value.Substring(match.Length + 1, value.Length - match.Length - 2);
 
-            if (!LiteralValues.ContainsKey(type))
+            if (!literalValues.ContainsKey(type))
             {
-                LiteralValues.Add(type, new());
+                literalValues.Add(type, new());
             }
 
-            LiteralValues[type][name] = typeValue;
+            literalValues[type][name] = typeValue;
         }
         else
         {
@@ -269,7 +245,7 @@ public class Generator
 
         output = "";
 
-        if (ExistingTypes.ContainsKey(structName))
+        if (options.ExistingTypes.ContainsKey(structName))
         {
             return "";
         }
@@ -279,7 +255,7 @@ public class Generator
         output += "{\n";
 
         // Generate constants
-        if (LiteralValues.TryGetValue(structName, out var values))
+        if (literalValues.TryGetValue(structName, out var values))
         {
             foreach (var value in values)
             {
@@ -443,7 +419,7 @@ public class Generator
 
     private bool GenerateComments(CppDeclaration dec, ref String output)
     {
-        var lines = FileContent.Split('\n');
+        var lines = fileContent.Split('\n');
         var comments = new List<string>();
 
         for (int i = dec.Span.Start.Line - 1; i < dec.Span.End.Line; i++)
@@ -574,7 +550,7 @@ public class Generator
     {
         var o = toPascalCase ? ToPascalCase(type) : type;
 
-        if (!isPrimitive && ReservedKeywords.Contains(o))
+        if (!isPrimitive && reservedKeywords.Contains(o))
         {
             return "@" + o;
         }
@@ -589,7 +565,7 @@ public class Generator
             "uint8_t" => "byte",
             "int64_t" => "long",
             "uint64_t" => "ulong",
-            _ => TransformType(name, o),
+            _ => options.TransformType(name, o),
         };
     }
 
