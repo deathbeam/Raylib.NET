@@ -4,10 +4,10 @@ Initializes submodules:
 git submodule update --init --recursive
 ```
 
-Updates submodules:
+Updates raylib submodules:
 
 ```sh
-git submodule update --recursive --remote
+git submodule update --recursive --remote lib/raylib lib/raygui
 ```
 
 Generates bindings, builds natives for whatever os you are on etc:
