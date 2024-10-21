@@ -4,6 +4,12 @@ Initializes submodules:
 git submodule update --init --recursive
 ```
 
+Updates submodules:
+
+```sh
+git submodule update --recursive --remote
+```
+
 Generates bindings, builds natives for whatever os you are on etc:
 
 ```sh
