@@ -24,6 +24,17 @@ dotnet build -r win-x64
 dotnet build -r win-x86
 dotnet build -r linux-x64
 dotnet build -r osx-x64
+dotnet build -r browser-wasm
+```
+
+`browser-wasm` requires `EMSDK`:
+
+```sh
+git clone https://github.com/emscripten-core/emsdk
+cd emsdk
+./emsdk install latest
+./emsdk activate latest
+export $EMSDK=$PWD
 ```
 
 ### Use as dependency
