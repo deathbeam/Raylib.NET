@@ -120,6 +120,7 @@
         <Content Include="$(OutputPath)runtimes/**/**" Link="%(Filename)%(Extension)">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
             <PackagePath>runtimes/</PackagePath>
+            <CopyToPublishDirectory Condition="'$(SkipRuntimes)' == 'true'">Never</CopyToPublishDirectory>
         </Content>
     </ItemGroup>
 
