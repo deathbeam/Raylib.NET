@@ -60,6 +60,11 @@ jobs:
               libwayland-dev \
               libxkbcommon-dev
 
+      - name: Install wasm-tools
+        if: matrix.runtime == 'browser-wasm'
+        run: |
+          dotnet workload install wasm-tools
+
       - name: Setup EMSDK
         if: matrix.runtime == 'browser-wasm'
         uses: mymindstorm/setup-emsdk@v14
