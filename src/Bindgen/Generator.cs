@@ -12,8 +12,8 @@ public class Generator
     private readonly string OutputPath;
     private readonly string LibraryName;
     private readonly string FilePath;
-    private readonly Func<string, string, string> TransformIdentifier;
-    private readonly Dictionary<string, string> ExistingIdentifiers;
+    private readonly Func<string, string, string> TransformType;
+    private readonly Dictionary<string, string> ExistingTypes;
 
     private readonly string FileContent;
     private readonly CppParserOptions Options;
@@ -29,8 +29,8 @@ public class Generator
         string[] systemIncludeFolders,
         string[] includeFolders,
         string[] defines,
-        Func<string, string, string> transformIdentifier,
-        Dictionary<string, string> existingIdentifiers
+        Func<string, string, string> transformType,
+        Dictionary<string, string> existingTypes
     )
     {
         GeneratedNamespace = generatedNamespace;
@@ -38,8 +38,8 @@ public class Generator
         OutputPath = outputPath;
         LibraryName = libraryName;
         FilePath = filePath;
-        TransformIdentifier = transformIdentifier;
-        ExistingIdentifiers = existingIdentifiers;
+        TransformType = transformType;
+        ExistingTypes = existingTypes;
         FileContent = File.ReadAllText(FilePath);
 
         Options = new CppParserOptions
@@ -79,7 +79,7 @@ public class Generator
         builder.AppendLine("using System.Runtime.InteropServices;");
         builder.AppendLine("using Bindgen.Interop;");
 
-        foreach (var import in ExistingIdentifiers.Values.Distinct())
+        foreach (var import in ExistingTypes.Values.Distinct())
         {
             builder.AppendLine($"using {import};");
         }
@@ -153,7 +153,7 @@ public class Generator
             generate += "using System.Runtime.InteropServices;\n";
             generate += "using Bindgen.Interop;\n";
 
-            foreach (var import in ExistingIdentifiers.Values.Distinct())
+            foreach (var import in ExistingTypes.Values.Distinct())
             {
                 generate += "using " + import + ";\n";
             }
@@ -236,7 +236,7 @@ public class Generator
 
     private String GenerateEnum(CppEnum cppEnum, out String output)
     {
-        string enumName = MapIdentifier(cppEnum.Name, cppEnum.Name);
+        string enumName = MapType(cppEnum.Name, cppEnum.Name);
 
         output = "";
         output += $"public enum {enumName}\n";
@@ -265,11 +265,11 @@ public class Generator
 
     private String GenerateStruct(CppClass cppStruct, out String output)
     {
-        string structName = MapIdentifier(cppStruct.Name, cppStruct.Name);
+        string structName = MapType(cppStruct.Name, cppStruct.Name);
 
         output = "";
 
-        if (ExistingIdentifiers.ContainsKey(structName))
+        if (ExistingTypes.ContainsKey(structName))
         {
             return "";
         }
@@ -300,7 +300,7 @@ public class Generator
 
             var pointerCount = 0;
             string fieldType = ConvertCppTypeToCSharp(field.Name, field.Type, ref pointerCount, out var arraySize);
-            string fieldName = MapIdentifier(field.Name, field.Name, true);
+            string fieldName = MapType(field.Name, field.Name, true);
 
             if (arraySize > 0)
             {
@@ -341,7 +341,7 @@ public class Generator
             {
                 var pointerCount = 0;
                 string fieldType = ConvertCppTypeToCSharp(field.Name, field.Type, ref pointerCount, out var arraySize);
-                string fieldName = ToCamelCase(MapIdentifier(field.Name, field.Name, true));
+                string fieldName = ToCamelCase(MapType(field.Name, field.Name, true));
 
                 if (!first)
                 {
@@ -363,7 +363,7 @@ public class Generator
 
             foreach (var field in cppStruct.Fields)
             {
-                string fieldName = MapIdentifier(field.Name, field.Name, true);
+                string fieldName = MapType(field.Name, field.Name, true);
                 output += $"        this.{fieldName} = {ToCamelCase(fieldName)};\n";
             }
             output += "    }\n";
@@ -385,7 +385,7 @@ public class Generator
         string returnType = ConvertCppTypeToCSharp(function.Name, function.ReturnType, ref pointerCount, out _);
         returnType = AppendPointer(returnType, pointerCount);
 
-        string functionName = MapIdentifier(function.Name, function.Name);
+        string functionName = MapType(function.Name, function.Name);
         List<string> parameters = new List<string>();
         bool isUnsafe = pointerCount > 0;
 
@@ -402,7 +402,7 @@ public class Generator
             // }
 
             paramType = AppendPointer(paramType, paramPointerCount);
-            string paramName = MapIdentifier(parameter.Name, parameter.Name);
+            string paramName = MapType(parameter.Name, parameter.Name);
 
             if (paramPointerCount > 0)
             {
@@ -489,7 +489,7 @@ public class Generator
         switch (cppType)
         {
             case CppPrimitiveType primitiveType:
-                return MapIdentifier(cppName, primitiveType.Kind switch
+                return MapType(cppName, primitiveType.Kind switch
                 {
                     CppPrimitiveKind.Void => "void",
                     CppPrimitiveKind.Bool => skipHighOrder ? "sbyte" : "NativeBool",
@@ -540,9 +540,9 @@ public class Generator
             case CppTypedef typedefType:
                 return ConvertCppTypeToCSharp(cppName, typedefType.ElementType, ref pointerCount, out _, skipHighOrder);
             case CppClass cppClass:
-                return MapIdentifier(cppName, cppClass.Name);
+                return MapType(cppName, cppClass.Name);
             case CppEnum cppEnum:
-                return MapIdentifier(cppName, cppEnum.Name);
+                return MapType(cppName, cppEnum.Name);
             case CppFunctionType cppFunctionType:
                 var returnPointerCount = 0;
                 string returnType = ConvertCppTypeToCSharp(
@@ -570,9 +570,9 @@ public class Generator
         }
     }
 
-    private string MapIdentifier(string name, string identifier, bool toPascalCase = false, bool isPrimitive = false)
+    private string MapType(string name, string type, bool toPascalCase = false, bool isPrimitive = false)
     {
-        var o = toPascalCase ? ToPascalCase(identifier) : identifier;
+        var o = toPascalCase ? ToPascalCase(type) : type;
 
         if (!isPrimitive && ReservedKeywords.Contains(o))
         {
@@ -589,7 +589,7 @@ public class Generator
             "uint8_t" => "byte",
             "int64_t" => "long",
             "uint64_t" => "ulong",
-            _ => TransformIdentifier(name, o),
+            _ => TransformType(name, o),
         };
     }
 

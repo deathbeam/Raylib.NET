@@ -1,7 +1,7 @@
 using System.Text.RegularExpressions;
 using Bindgen;
 
-var transformIdentifier = (string name, string type) =>
+var transformType = (string name, string type) =>
     type switch
     {
         "Matrix" => "Matrix4x4",
@@ -10,7 +10,7 @@ var transformIdentifier = (string name, string type) =>
         _ => Regex.Replace(type, @"\brl", ""),
     };
 
-var existingIdentifiers = new Dictionary<string, string>
+var existingTypes = new Dictionary<string, string>
 {
     { "Vector2", "System.Numerics" },
     { "Vector3", "System.Numerics" },
@@ -42,8 +42,8 @@ new Generator(
     systemIncludeFolders: systemIncludeFolders,
     includeFolders: includeFolders,
     defines: defines,
-    transformIdentifier: transformIdentifier,
-    existingIdentifiers: existingIdentifiers
+    transformType: transformType,
+    existingTypes: existingTypes
 ).Generate();
 
 new Generator(
@@ -55,8 +55,8 @@ new Generator(
     systemIncludeFolders: systemIncludeFolders,
     includeFolders: includeFolders,
     defines: defines,
-    transformIdentifier: transformIdentifier,
-    existingIdentifiers: existingIdentifiers
+    transformType: transformType,
+    existingTypes: existingTypes
 ).Generate();
 
 new Generator(
@@ -68,8 +68,8 @@ new Generator(
     systemIncludeFolders: systemIncludeFolders,
     includeFolders: includeFolders,
     defines: defines,
-    transformIdentifier: transformIdentifier,
-    existingIdentifiers: existingIdentifiers
+    transformType: transformType,
+    existingTypes: existingTypes
 ).Generate();
 
 new Generator(
@@ -81,6 +81,6 @@ new Generator(
     systemIncludeFolders: systemIncludeFolders,
     includeFolders: includeFolders,
     defines: defines,
-    transformIdentifier: transformIdentifier,
-    existingIdentifiers: existingIdentifiers
+    transformType: transformType,
+    existingTypes: existingTypes
 ).Generate();
