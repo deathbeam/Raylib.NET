@@ -25,7 +25,7 @@ jobs:
         run: dotnet build -c Release src/Raylib.NET.Bindgen
 
       - name: Build
-        run: dotnet build -c Release
+        run: dotnet build -c Release -p:SkipCompileNatives=true
 
       - name: Push Changes
         run: |
