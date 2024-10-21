@@ -1,5 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
+        <OutputType>Library</OutputType>
         <TargetFramework>net8.0</TargetFramework>
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
@@ -100,6 +101,11 @@
         <When Condition="$(RuntimeIdentifier) == 'osx-arm64'">
             <PropertyGroup>
                 <ZigIdentifier>aarch64-macos</ZigIdentifier>
+            </PropertyGroup>
+        </When>
+        <When Condition="$(RuntimeIdentifier) == 'browser-wasm'">
+            <PropertyGroup>
+                <ZigIdentifier>wasm32-emscripten</ZigIdentifier>
             </PropertyGroup>
         </When>
         <Otherwise>
