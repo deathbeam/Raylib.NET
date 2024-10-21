@@ -12,7 +12,7 @@ public class Generator
     private readonly string OutputPath;
     private readonly string LibraryName;
     private readonly string FilePath;
-    private readonly Func<string, string> TransformIdentifier;
+    private readonly Func<string, string, string> TransformIdentifier;
     private readonly Dictionary<string, string> ExistingIdentifiers;
 
     private readonly string FileContent;
@@ -29,7 +29,7 @@ public class Generator
         string[] systemIncludeFolders,
         string[] includeFolders,
         string[] defines,
-        Func<string, string> transformIdentifier,
+        Func<string, string, string> transformIdentifier,
         Dictionary<string, string> existingIdentifiers
     )
     {
@@ -236,7 +236,7 @@ public class Generator
 
     private String GenerateEnum(CppEnum cppEnum, out String output)
     {
-        string enumName = MapIdentifier(cppEnum.Name);
+        string enumName = MapIdentifier(cppEnum.Name, cppEnum.Name);
 
         output = "";
         output += $"public enum {enumName}\n";
@@ -265,7 +265,7 @@ public class Generator
 
     private String GenerateStruct(CppClass cppStruct, out String output)
     {
-        string structName = MapIdentifier(cppStruct.Name);
+        string structName = MapIdentifier(cppStruct.Name, cppStruct.Name);
 
         output = "";
 
@@ -299,8 +299,8 @@ public class Generator
             GenerateComments(field, ref output);
 
             var pointerCount = 0;
-            string fieldType = ConvertCppTypeToCSharp(field.Type, ref pointerCount, out var arraySize);
-            string fieldName = MapIdentifier(field.Name, true);
+            string fieldType = ConvertCppTypeToCSharp(field.Name, field.Type, ref pointerCount, out var arraySize);
+            string fieldName = MapIdentifier(field.Name, field.Name, true);
 
             if (arraySize > 0)
             {
@@ -340,8 +340,8 @@ public class Generator
             foreach (var field in cppStruct.Fields)
             {
                 var pointerCount = 0;
-                string fieldType = ConvertCppTypeToCSharp(field.Type, ref pointerCount, out var arraySize);
-                string fieldName = ToCamelCase(MapIdentifier(field.Name, true));
+                string fieldType = ConvertCppTypeToCSharp(field.Name, field.Type, ref pointerCount, out var arraySize);
+                string fieldName = ToCamelCase(MapIdentifier(field.Name, field.Name, true));
 
                 if (!first)
                 {
@@ -363,7 +363,7 @@ public class Generator
 
             foreach (var field in cppStruct.Fields)
             {
-                string fieldName = MapIdentifier(field.Name, true);
+                string fieldName = MapIdentifier(field.Name, field.Name, true);
                 output += $"        this.{fieldName} = {ToCamelCase(fieldName)};\n";
             }
             output += "    }\n";
@@ -382,17 +382,17 @@ public class Generator
         }
 
         var pointerCount = 0;
-        string returnType = ConvertCppTypeToCSharp(function.ReturnType, ref pointerCount, out _);
+        string returnType = ConvertCppTypeToCSharp(function.Name, function.ReturnType, ref pointerCount, out _);
         returnType = AppendPointer(returnType, pointerCount);
 
-        string functionName = MapIdentifier(function.Name);
+        string functionName = MapIdentifier(function.Name, function.Name);
         List<string> parameters = new List<string>();
         bool isUnsafe = pointerCount > 0;
 
         foreach (var parameter in function.Parameters)
         {
             var paramPointerCount = 0;
-            string paramType = ConvertCppTypeToCSharp(parameter.Type, ref paramPointerCount, out _);
+            string paramType = ConvertCppTypeToCSharp(parameter.Name, parameter.Type, ref paramPointerCount, out _);
 
             // TODO: Guess arrays maybe? Its a mess, doesnt work 100%
             // if (paramPointerCount > 0 && IsNotArray(function, parameter))
@@ -402,7 +402,7 @@ public class Generator
             // }
 
             paramType = AppendPointer(paramType, paramPointerCount);
-            string paramName = MapIdentifier(parameter.Name);
+            string paramName = MapIdentifier(parameter.Name, parameter.Name);
 
             if (paramPointerCount > 0)
             {
@@ -478,6 +478,7 @@ public class Generator
     }
 
     private string ConvertCppTypeToCSharp(
+        string cppName,
         CppType cppType,
         ref int pointerCount,
         out int arraySize,
@@ -488,7 +489,7 @@ public class Generator
         switch (cppType)
         {
             case CppPrimitiveType primitiveType:
-                return MapIdentifier(primitiveType.Kind switch
+                return MapIdentifier(cppName, primitiveType.Kind switch
                 {
                     CppPrimitiveKind.Void => "void",
                     CppPrimitiveKind.Bool => skipHighOrder ? "sbyte" : "NativeBool",
@@ -527,24 +528,25 @@ public class Generator
                 }
 
                 pointerCount++;
-                return ConvertCppTypeToCSharp(pointerType.ElementType, ref pointerCount, out _, skipHighOrder);
+                return ConvertCppTypeToCSharp(cppName, pointerType.ElementType, ref pointerCount, out _, skipHighOrder);
             case CppReferenceType referenceType:
                 pointerCount++;
-                return ConvertCppTypeToCSharp(referenceType.ElementType, ref pointerCount, out _, skipHighOrder);
+                return ConvertCppTypeToCSharp(cppName, referenceType.ElementType, ref pointerCount, out _, skipHighOrder);
             case CppArrayType arrayType:
                 arraySize = arrayType.Size;
-                return ConvertCppTypeToCSharp(arrayType.ElementType, ref pointerCount, out _, skipHighOrder);
+                return ConvertCppTypeToCSharp(cppName, arrayType.ElementType, ref pointerCount, out _, skipHighOrder);
             case CppQualifiedType qualifiedType:
-                return ConvertCppTypeToCSharp(qualifiedType.ElementType, ref pointerCount, out _, skipHighOrder);
+                return ConvertCppTypeToCSharp(cppName, qualifiedType.ElementType, ref pointerCount, out _, skipHighOrder);
             case CppTypedef typedefType:
-                return ConvertCppTypeToCSharp(typedefType.ElementType, ref pointerCount, out _, skipHighOrder);
+                return ConvertCppTypeToCSharp(cppName, typedefType.ElementType, ref pointerCount, out _, skipHighOrder);
             case CppClass cppClass:
-                return MapIdentifier(cppClass.Name);
+                return MapIdentifier(cppName, cppClass.Name);
             case CppEnum cppEnum:
-                return MapIdentifier(cppEnum.Name);
+                return MapIdentifier(cppName, cppEnum.Name);
             case CppFunctionType cppFunctionType:
                 var returnPointerCount = 0;
                 string returnType = ConvertCppTypeToCSharp(
+                    cppName,
                     cppFunctionType.ReturnType,
                     ref returnPointerCount,
                     out _,
@@ -556,7 +558,7 @@ public class Generator
                 foreach (var parameter in cppFunctionType.Parameters)
                 {
                     var paramPointerCount = 0;
-                    string paramType = ConvertCppTypeToCSharp(parameter.Type, ref paramPointerCount, out _, true);
+                    string paramType = ConvertCppTypeToCSharp(parameter.Name, parameter.Type, ref paramPointerCount, out _, true);
                     paramType = AppendPointer(paramType, paramPointerCount);
                     parameters.Add(paramType);
                 }
@@ -568,7 +570,7 @@ public class Generator
         }
     }
 
-    private string MapIdentifier(string identifier, bool toPascalCase = false, bool isPrimitive = false)
+    private string MapIdentifier(string name, string identifier, bool toPascalCase = false, bool isPrimitive = false)
     {
         var o = toPascalCase ? ToPascalCase(identifier) : identifier;
 
@@ -587,7 +589,7 @@ public class Generator
             "uint8_t" => "byte",
             "int64_t" => "long",
             "uint64_t" => "ulong",
-            _ => TransformIdentifier(o),
+            _ => TransformIdentifier(name, o),
         };
     }
 

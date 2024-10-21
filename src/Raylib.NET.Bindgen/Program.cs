@@ -1,13 +1,13 @@
 using System.Text.RegularExpressions;
 using Bindgen;
 
-var transformIdentifier = (string identifier) =>
-    identifier switch
+var transformIdentifier = (string name, string type) =>
+    type switch
     {
         "Matrix" => "Matrix4x4",
         "Rectangle" => "Vector4",
         "va_list" => "IntPtr",
-        _ => Regex.Replace(identifier, @"\brl", ""),
+        _ => Regex.Replace(type, @"\brl", ""),
     };
 
 var existingIdentifiers = new Dictionary<string, string>
