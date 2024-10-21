@@ -20,7 +20,13 @@ jobs:
             os: ubuntu-latest
           - runtime: osx-x64
             os: macos-latest
+          - runtime: osx-arm64
+            os: macos-latest
           - runtime: win-x64
+            os: windows-latest
+          - runtime: win-x86
+            os: windows-latest
+          - runtime: win-arm64
             os: windows-latest
     runs-on: ${{ matrix.os }}
     steps:
