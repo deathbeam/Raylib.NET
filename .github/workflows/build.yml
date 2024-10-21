@@ -100,11 +100,11 @@ jobs:
       - name: Generate Version Info
         id: package-info
         run: |
-          echo "version=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+          echo "::set-output name=version::$(git rev-parse --short HEAD)"
 
       - name: Print Version Info
         run: |
-          echo "Version: ${{ steps.package-info.outputs.version }}"
+          echo ${{ steps.package-info.outputs.version }}
 
   build-and-upload:
     permissions:
