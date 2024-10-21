@@ -120,11 +120,10 @@
         <Content Include="$(OutputPath)runtimes/**/**" Link="%(Filename)%(Extension)">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
             <PackagePath>runtimes/</PackagePath>
-            <CopyToPublishDirectory Condition="'$(SkipRuntimes)' == 'true'">Never</CopyToPublishDirectory>
         </Content>
     </ItemGroup>
 
-    <Target Name="CompileNatives" BeforeTargets="Build" Condition="'$(SkipNatives)' != 'true'">
+    <Target Name="CompileNatives" AfterTargets="Build" Condition="'$(SkipNatives)' != 'true'">
         <Message Importance="High" Text="Build Target: $(RuntimeIdentifier) $(Configuration)"/>
         <Message Importance="High" Text="Build Zig Target: $(ZigIdentifier) $(ZigConfiguration)"/>
         <Exec Command="$(ZigExePath) build -Doptimize=$(ZigConfiguration) --prefix $(OutputPath)runtimes --prefix-lib-dir $(RuntimeIdentifier)/native -Dtarget=$(ZigIdentifier)"/>
