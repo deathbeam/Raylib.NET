@@ -62,7 +62,6 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - natives
-      - prepare-package-info
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
