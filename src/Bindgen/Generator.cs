@@ -357,7 +357,8 @@ public class Generator
                 }
             }
 
-            constructorOutput = "\n    public " + (unsafeDecl ? "unsafe " : "") + structName + "(" + constructorOutput + ")\n    {\n";
+            constructorOutput =
+                "\n    public " + (unsafeDecl ? "unsafe " : "") + structName + "(" + constructorOutput + ")\n    {\n";
             output += constructorOutput;
 
             foreach (var field in cppStruct.Fields)
@@ -410,7 +411,8 @@ public class Generator
 
         if (functionName != function.Name)
         {
-            output += $"    [LibraryImport(LIBRARY, EntryPoint = \"{function.Name}\", StringMarshalling = StringMarshalling.Utf8)]\n";
+            output +=
+                $"    [LibraryImport(LIBRARY, EntryPoint = \"{function.Name}\", StringMarshalling = StringMarshalling.Utf8)]\n";
         }
         else
         {
@@ -418,7 +420,8 @@ public class Generator
         }
 
         output += "    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]\n";
-        output += $"    public static {(isUnsafe ? "unsafe " : "")}partial {returnType} {functionName}({parametersString});";
+        output +=
+            $"    public static {(isUnsafe ? "unsafe " : "")}partial {returnType} {functionName}({parametersString});";
 
         return functionName;
     }
@@ -459,7 +462,12 @@ public class Generator
         return false;
     }
 
-    private string ConvertCppTypeToCSharp(CppType cppType, ref int pointerCount, out int arraySize, bool skipHighOrder = false)
+    private string ConvertCppTypeToCSharp(
+        CppType cppType,
+        ref int pointerCount,
+        out int arraySize,
+        bool skipHighOrder = false
+    )
     {
         arraySize = 0;
         switch (cppType)

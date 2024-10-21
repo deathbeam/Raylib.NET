@@ -19,15 +19,16 @@ var existingIdentifiers = new Dictionary<string, string>
     { "Matrix4x4", "System.Numerics" },
 };
 
-string[] defines = {};
+string[] defines = { };
 
 var generatedNamespace = "RaylibNET";
 var ouputPath = "../../src/Raylib.NET";
 var libPath = "../../lib";
 
-string[] systemIncludeFolders = {
+string[] systemIncludeFolders =
+{
     $"{libPath}/zig/lib/libc/include/generic-musl",
-    $"{libPath}/zig/lib/libc/include/x86-linux-musl"
+    $"{libPath}/zig/lib/libc/include/x86-linux-musl",
 };
 
 string[] includeFolders = { $"{libPath}/raylib/src" };

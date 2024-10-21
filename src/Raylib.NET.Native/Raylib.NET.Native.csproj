@@ -15,11 +15,13 @@
         <When Condition="'$(Configuration)' == 'Debug'">
             <PropertyGroup>
                 <PackageId>Raylib.NET.Native.Debug</PackageId>
+                <ZigConfiguration>Debug</ZigConfiguration>
             </PropertyGroup>
         </When>
         <When Condition="'$(Configuration)' == 'Release'">
             <PropertyGroup>
                 <PackageId>Raylib.NET.Native</PackageId>
+                <ZigConfiguration>ReleaseFast</ZigConfiguration>
             </PropertyGroup>
         </When>
     </Choose>
@@ -113,11 +115,6 @@
         </Otherwise>
     </Choose>
 
-    <PropertyGroup>
-        <ZigConfiguration Condition="'$(Configuration)' == 'Debug'">Debug</ZigConfiguration>
-        <ZigConfiguration Condition="'$(Configuration)' == 'Release'">ReleaseFast</ZigConfiguration>
-    </PropertyGroup>
-
     <ItemGroup>
         <PackageReference Include="Vezel.Zig.Toolsets.$(NativeId)" Version="0.13.0.1">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -133,6 +130,8 @@
     </ItemGroup>
 
     <Target Name="CompileNatives" BeforeTargets="Build" Condition="'$(SkipCompileNatives)' != 'true'">
+        <Message Importance="High" Text="Build Target: $(RuntimeIdentifier) $(Configuration)"/>
+        <Message Importance="High" Text="Build Zig Target: $(ZigIdentifier) $(ZigConfiguration)"/>
         <Exec Command="$(ZigExePath) build -Doptimize=$(ZigConfiguration) --prefix $(OutputPath)runtimes  --prefix-lib-dir $(RuntimeIdentifier)/native --prefix-exe-dir $(RuntimeIdentifier) -Dtarget=$(ZigIdentifier)"/>
     </Target>
 </Project>
