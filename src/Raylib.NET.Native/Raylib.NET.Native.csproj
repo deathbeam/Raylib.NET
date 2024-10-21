@@ -10,7 +10,6 @@
 
     <PropertyGroup>
         <HostArch>$([System.Runtime.InteropServices.RuntimeInformation]::ProcessArchitecture)</HostArch>
-        <EmSdk>$(EMSDK)</EmSdk>
     </PropertyGroup>
 
     <Choose>
@@ -107,7 +106,7 @@
         <When Condition="$(RuntimeIdentifier) == 'browser-wasm'">
             <PropertyGroup>
                 <ZigIdentifier>wasm32-emscripten</ZigIdentifier>
-                <ZigArgs>--sysroot "$(EmSdk)/upstream/emscripten"</ZigArgs>
+                <ZigArgs>--sysroot "$(EMSDK)/upstream/emscripten"</ZigArgs>
             </PropertyGroup>
         </When>
         <Otherwise>

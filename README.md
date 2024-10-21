@@ -34,7 +34,7 @@ git clone https://github.com/emscripten-core/emsdk
 cd emsdk
 ./emsdk install latest
 ./emsdk activate latest
-export $EMSDK=$PWD
+export EMSDK=$PWD
 ```
 
 ### Use as dependency
