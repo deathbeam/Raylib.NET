@@ -62,7 +62,7 @@ jobs:
           path: src/Raylib.NET.Native/bin/${{ matrix.config }}/runtimes/**
           if-no-files-found: error
 
-  build-and-upload:
+  upload-packages:
     permissions:
       packages: write
     runs-on: ubuntu-latest
