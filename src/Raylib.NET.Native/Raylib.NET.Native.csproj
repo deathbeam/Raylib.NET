@@ -126,6 +126,6 @@
     <Target Name="CompileNatives" AfterTargets="Build" Condition="'$(SkipNatives)' != 'true'">
         <Message Importance="High" Text="Build Target: $(RuntimeIdentifier) $(Configuration)"/>
         <Message Importance="High" Text="Build Zig Target: $(ZigIdentifier) $(ZigConfiguration)"/>
-        <Exec Command="$(ZigExePath) build -Doptimize=$(ZigConfiguration) --prefix $(OutputPath)runtimes --prefix-lib-dir $(RuntimeIdentifier)/native -Dtarget=$(ZigIdentifier)"/>
+        <Exec Command="$(ZigExePath) build -Doptimize=$(ZigConfiguration) --prefix $(OutputPath)runtimes --prefix-lib-dir $(RuntimeIdentifier)/native --prefix-exe-dir $(RuntimeIdentifier)/native -Dtarget=$(ZigIdentifier)"/>
     </Target>
 </Project>
