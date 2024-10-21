@@ -62,10 +62,9 @@ jobs:
           echo "version=dev-$(git rev-list --count HEAD)" >> $GITHUB_OUTPUT
 
       - name: Create NuGet Packages
-        run: dotnet pack -c Release --output nuget -p:SkipNatives=true -p:SkipBindgen=true -p:VersionSuffix=${{ steps.package-info.outputs.version }}
-
-      - name: Remove Native Packages
         run: |
+          dotnet pack -c Release --output nuget -p:SkipNatives=true -p:SkipBindgen=true -p:VersionSuffix=${{ steps.package-info.outputs.version }}
+          rm -rf nuget/Raylib.NET.Bindgen*
           rm -rf nuget/Raylib.NET.Native*
           rm -rf nuget/Raylib.NET.Test*
 
