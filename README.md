@@ -26,6 +26,13 @@ dotnet build -r linux-x64
 dotnet build -r osx-x64
 ```
 
+### Use as dependency
+
+```sh
+dotnet add package Raylib.NET --version '*-dev-*'
+dotnet add package Raylib.NET.Native --version '*-dev-*'
+```
+
 ### Stuff being done here
 
 Everything is 100% generated, Im not touching the generated stuff, only generator.

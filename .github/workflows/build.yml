@@ -59,7 +59,7 @@ jobs:
       - name: Generate NuGet Version
         id: package-info
         run: |
-          echo "version=dev-$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+          echo "version=dev-$(git rev-list --count HEAD)" >> $GITHUB_OUTPUT
 
       - name: Create NuGet Packages
         run: dotnet pack -c Release --output nuget -p:SkipCompileNatives=true -p:VersionSuffix=${{ steps.package-info.outputs.version }}
