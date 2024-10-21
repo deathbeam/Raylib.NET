@@ -33,7 +33,7 @@ jobs:
           git config --global user.email github-actions@github.com
           if [ -n "$(git status --porcelain)" ]; then
              git add .
-             git commit -m "Update bindings"
+             git commit -m "Update bindings [ci skip]"
              git push
           else
              echo "No changes to commit"
