@@ -393,6 +393,14 @@ public class Generator
         {
             var paramPointerCount = 0;
             string paramType = ConvertCppTypeToCSharp(parameter.Type, ref paramPointerCount, out _);
+
+            // TODO: Guess arrays maybe? Its a mess, doesnt work 100%
+            // if (paramPointerCount > 0 && IsNotArray(function, parameter))
+            // {
+            //     paramPointerCount--;
+            //     paramType = "ref " + paramType;
+            // }
+
             paramType = AppendPointer(paramType, paramPointerCount);
             string paramName = MapIdentifier(parameter.Name);
 
@@ -407,8 +415,8 @@ public class Generator
         if (function.Flags.HasFlag(CppFunctionFlags.Variadic))
         {
             // https://github.com/dotnet/runtime/issues/48796
-            Console.WriteLine($"- Unsupported function param: {functionName} (variadic)");
             // parameters.Add("__arglist");
+            Console.WriteLine($"- Unsupported function param: {functionName} (variadic)");
         }
 
         string parametersString = string.Join(", ", parameters);
@@ -596,6 +604,25 @@ public class Generator
     private static bool IsNotPrimitive(string identifier)
     {
         return identifier[0].ToString().ToLower() != identifier[0].ToString();
+    }
+
+    private static bool IsNotArray(CppFunction fn, CppParameter param)
+    {
+        var name = param.Name;
+        var baseName = name.EndsWith("s") ? name.Substring(0, name.Length - 1) : name;
+        var possibleSuffixes = new List<string> { "Count", "Length", "sCount", "sLength" };
+
+        foreach (var p in fn.Parameters)
+        {
+            foreach (var suffix in possibleSuffixes)
+            {
+                if (p.Name == baseName + suffix)
+                {
+                    return false; // It's an array
+                }
+            }
+        }
+        return true; // It's not an array
     }
 
     private static string ToPascalCase(string value)
