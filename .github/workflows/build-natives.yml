@@ -91,7 +91,7 @@ jobs:
       - name: Generate NuGet Version
         id: package-info
         run: |
-          echo "version=dev-${{ github.run_number }}" >> $GITHUB_OUTPUT
+          echo "version=dev-$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
       - name: Create NuGet Debug Packages
         run: dotnet pack src/Raylib.NET.Native -c Debug --output nuget -p:SkipCompileNatives=true -p:VersionSuffix=${{ steps.package-info.outputs.version }}
