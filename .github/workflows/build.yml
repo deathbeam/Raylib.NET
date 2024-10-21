@@ -96,13 +96,11 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-        with:
-          submodules: true
 
       - name: Generate Version Info
         id: package-info
         run: |
-          echo version=$(git rev-parse --short HEAD) >> $env:GITHUB_OUTPUT
+          echo "version=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
 
       - name: Print Version Info
         run: |
