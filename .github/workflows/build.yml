@@ -100,7 +100,7 @@ jobs:
       - name: Generate Version Info
         id: package-info
         run: |
-          echo "::set-output name=version::$(git rev-parse --short HEAD)"
+          echo "version=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
       - name: Print Version Info
         run: |
