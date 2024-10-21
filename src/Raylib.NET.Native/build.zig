@@ -46,6 +46,9 @@ pub fn build(b: *std.Build) !void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
 
-    b.installArtifact(compileRaylib(b, target, optimize, true));
+    if (target.result.os.tag != .emscripten) {
+        b.installArtifact(compileRaylib(b, target, optimize, true));
+    }
+
     b.installArtifact(compileRaylib(b, target, optimize, false));
 }

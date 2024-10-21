@@ -13,10 +13,12 @@ jobs:
     strategy:
       matrix:
         # TODO: add linx-arm64, probs needs separate runner
-        runtime: [linux-x64, osx-x64, osx-arm64, win-x64, win-x86, win-arm64]
+        runtime: [linux-x64, browser-wasm, osx-x64, osx-arm64, win-x64, win-x86, win-arm64]
         config: [Debug, Release]
         include:
           - runtime: linux-x64
+            os: ubuntu-latest
+          - runtime: browser-wasm
             os: ubuntu-latest
           - runtime: osx-x64
             os: macos-latest
@@ -57,6 +59,12 @@ jobs:
               libxinerama-dev \
               libwayland-dev \
               libxkbcommon-dev
+
+      - name: Setup EMSDK
+        if: matrix.runtime == 'browser-wasm'
+        uses: mymindstorm/setup-emsdk@v14
+        with:
+          no-install: true
 
       - name: Build Natives
         run: dotnet build -c ${{ matrix.config }} -r ${{ matrix.runtime }}

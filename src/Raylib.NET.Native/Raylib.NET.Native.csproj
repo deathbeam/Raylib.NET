@@ -10,6 +10,7 @@
 
     <PropertyGroup>
         <HostArch>$([System.Runtime.InteropServices.RuntimeInformation]::ProcessArchitecture)</HostArch>
+        <EmSdk>$(EMSDK)</EmSdk>
     </PropertyGroup>
 
     <Choose>
@@ -106,6 +107,7 @@
         <When Condition="$(RuntimeIdentifier) == 'browser-wasm'">
             <PropertyGroup>
                 <ZigIdentifier>wasm32-emscripten</ZigIdentifier>
+                <ZigArgs>--sysroot "$(EmSdk)/upstream/emscripten"</ZigArgs>
             </PropertyGroup>
         </When>
         <Otherwise>
@@ -132,6 +134,7 @@
     <Target Name="CompileNatives" AfterTargets="Build" Condition="'$(SkipNatives)' != 'true'">
         <Message Importance="High" Text="Build Target: $(RuntimeIdentifier) $(Configuration)"/>
         <Message Importance="High" Text="Build Zig Target: $(ZigIdentifier) $(ZigConfiguration)"/>
-        <Exec Command="$(ZigExePath) build -Doptimize=$(ZigConfiguration) --prefix $(OutputPath)runtimes --prefix-lib-dir $(RuntimeIdentifier)/native --prefix-exe-dir $(RuntimeIdentifier)/native -Dtarget=$(ZigIdentifier)"/>
+        <Message Importance="High" Text="Build Zig Args: $(ZigArgs)"/>
+        <Exec Command="$(ZigExePath) build -Doptimize=$(ZigConfiguration) --prefix $(OutputPath)runtimes --prefix-lib-dir $(RuntimeIdentifier)/native --prefix-exe-dir $(RuntimeIdentifier)/native -Dtarget=$(ZigIdentifier) $(ZigArgs)"/>
     </Target>
 </Project>
