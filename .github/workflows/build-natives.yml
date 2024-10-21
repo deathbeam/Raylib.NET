@@ -12,7 +12,8 @@ jobs:
   natives:
     strategy:
       matrix:
-        runtime: [linux-x64, osx-x64, win-x64]
+        # TODO: add linx-arm64, probs needs separate runner
+        runtime: [linux-x64, osx-x64, osx-arm64, win-x64, win-x86, win-arm64]
         config: [Debug, Release]
         include:
           - runtime: linux-x64
