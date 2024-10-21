@@ -36,8 +36,19 @@ jobs:
              echo "No changes to commit"
           fi
 
-  natives-linux:
-    runs-on: ubuntu-latest
+  natives:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        config: [Debug, Release]
+        include:
+          - os: ubuntu-latest
+            runtime: linux-x64
+          - os: macos-latest
+            runtime: osx-x64
+          - os: windows-latest
+            runtime: win-x64
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -50,6 +61,7 @@ jobs:
           dotnet-version: 8.0.x
 
       - name: Setup Environment
+        if: matrix.os == 'ubuntu-latest'
         shell: bash
         run: |
           sudo apt-get update -qq
@@ -67,72 +79,42 @@ jobs:
               libxkbcommon-dev
 
       - name: Build Natives
-        run: dotnet build -c Release -r linux-x64
+        run: dotnet build -c ${{ matrix.config }} -r ${{ matrix.runtime }}
         working-directory: src/Raylib.NET.Native
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: natives-linux-x64
-          path: src/Raylib.NET.Native/bin/Release/runtimes/linux-x64/native/*
+          name: natives-${{ matrix.config }}-${{ matrix.runtime }}
+          path: src/Raylib.NET.Native/bin/${{ matrix.config }}/runtimes/**
           if-no-files-found: error
 
-  natives-osx:
-    runs-on: macos-latest
+  prepare-package-info:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.package-info.outputs.version }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
           submodules: true
 
-      - name: Setup .NET 8
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: 8.0.x
+      - name: Generate Version Info
+        id: package-info
+        run: |
+          echo "version=$(git rev-parse --short HEAD) >> $env:GITHUB_OUTPUT"
 
-      - name: Build Natives
-        run: dotnet build -c Release -r osx-x64
-        working-directory: src/Raylib.NET.Native
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: natives-osx-x64
-          path: src/Raylib.NET.Native/bin/Release/runtimes/osx-x64/native/*
-          if-no-files-found: error
-
-  natives-windows:
-    runs-on: windows-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-        with:
-          submodules: true
-
-      - name: Setup .NET 8
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: 8.0.x
-
-      - name: Build Natives
-        run: dotnet build -c Release -r win-x64
-        working-directory: src/Raylib.NET.Native
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: natives-win-x64
-          path: src/Raylib.NET.Native/bin/Release/runtimes/win-x64/native/*
-          if-no-files-found: error
+      - name: Print Version Info
+        run: |
+          echo "Version: ${{ steps.package-info.outputs.version }}"
 
   build-and-upload:
     permissions:
       packages: write
     runs-on: ubuntu-latest
     needs:
-      - natives-linux
-      - natives-osx
-      - natives-windows
+      - natives
+      - prepare-package-info
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -144,33 +126,23 @@ jobs:
         with:
           dotnet-version: 8.0.x
 
-      - name: Download linux-x64 Natives
+      - name: Download Debug Natives
         uses: actions/download-artifact@v4
         with:
-          name: natives-linux-x64
-          path: src/Raylib.NET.Native/bin/Release/runtimes/linux-x64/native
+          pattern: natives-Debug-*
+          path: src/Raylib.NET.Native/bin/Debug/runtimes/
 
-      - name: Download osx-x64 Natives
+      - name: Download Release Natives
         uses: actions/download-artifact@v4
         with:
-          name: natives-osx-x64
-          path: src/Raylib.NET.Native/bin/Release/runtimes/osx-x64/native
-
-      - name: Download win-x64 Natives
-        uses: actions/download-artifact@v4
-        with:
-          name: natives-win-x64
-          path: src/Raylib.NET.Native/bin/Release/runtimes/win-x64/native
-
-      - name: Generate Version Suffix
-        id: version
-        run: echo "VERSION_SUFFIX=$(date +%Y%m%d%H%M%S)" >> $GITHUB_ENV
+          pattern: natives-Release-*
+          path: src/Raylib.NET.Native/bin/Debug/runtimes/
 
       - name: Create NuGet Debug Packages
-        run: dotnet pack -c Debug --output nuget -p:SkipCompileNatives=true -p:VersionSuffix=${{ env.VERSION_SUFFIX }}
+        run: dotnet pack -c Debug --output nuget -p:SkipCompileNatives=true -p:VersionSuffix=${{ needs.prepare-package-info.outputs.version }}
 
-      - name: Create NuGet Packages
-        run: dotnet pack -c Release --output nuget -p:SkipCompileNatives=true -p:VersionSuffix=${{ env.VERSION_SUFFIX }}
+      - name: Create NuGet Release Packages
+        run: dotnet pack -c Release --output nuget -p:SkipCompileNatives=true -p:VersionSuffix=${{ needs.prepare-package-info.outputs.version }}
 
       - name: Upload NuGet Packages As Artifacts
         uses: actions/upload-artifact@v4
