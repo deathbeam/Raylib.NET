@@ -15,7 +15,7 @@
         <ProjectReference Include="..\Bindgen\Bindgen.csproj" />
     </ItemGroup>
 
-    <Target Name="RunAfterBuild" AfterTargets="Build">
+    <Target Name="RunAfterBuild" AfterTargets="Build" Condition="'$(SkipBindgen)' != 'true'">
         <Exec Command="dotnet &quot;$(TargetDir)$(TargetFileName)&quot;" />
     </Target>
 </Project>

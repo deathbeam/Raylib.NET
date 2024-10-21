@@ -25,7 +25,7 @@ jobs:
         run: dotnet build -c Release src/Raylib.NET.Bindgen
 
       - name: Build
-        run: dotnet build -c Release -p:SkipCompileNatives=true
+        run: dotnet build -c Release -p:SkipNatives=true
 
       - name: Push Changes
         run: |
@@ -39,7 +39,7 @@ jobs:
              echo "No changes to commit"
           fi
 
-  build-and-upload:
+  upload-packages:
     permissions:
       packages: write
     runs-on: ubuntu-latest
@@ -49,7 +49,6 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
-          submodules: true
           fetch-depth: 0
 
       - name: Setup .NET 8
@@ -63,7 +62,7 @@ jobs:
           echo "version=dev-$(git rev-list --count HEAD)" >> $GITHUB_OUTPUT
 
       - name: Create NuGet Packages
-        run: dotnet pack -c Release --output nuget -p:SkipCompileNatives=true -p:VersionSuffix=${{ steps.package-info.outputs.version }}
+        run: dotnet pack -c Release --output nuget -p:SkipNatives=true -p:SkipBindgen=true -p:VersionSuffix=${{ steps.package-info.outputs.version }}
 
       - name: Remove Native Packages
         run: |
