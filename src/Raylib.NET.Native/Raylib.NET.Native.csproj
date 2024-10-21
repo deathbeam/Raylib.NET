@@ -8,7 +8,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <NativeArch>$([System.Runtime.InteropServices.RuntimeInformation]::ProcessArchitecture)</NativeArch>
+        <HostArch>$([System.Runtime.InteropServices.RuntimeInformation]::ProcessArchitecture)</HostArch>
     </PropertyGroup>
 
     <Choose>
@@ -29,32 +29,26 @@
     <Choose>
         <When Condition="$([MSBuild]::IsOSPlatform('Windows'))">
             <PropertyGroup>
-                <NativeExt>dll</NativeExt>
-                <NativePre>$(Configuration)/</NativePre>
-                <NativeId Condition="'$(NativeArch)' == 'X64'">win-x64</NativeId>
-                <NativeId Condition="'$(NativeArch)' == 'Arm64'">win-arm64</NativeId>
+                <HostRuntime Condition="'$(HostArch)' == 'X64'">win-x64</HostRuntime>
+                <HostRuntime Condition="'$(HostArch)' == 'Arm64'">win-arm64</HostRuntime>
             </PropertyGroup>
         </When>
         <When Condition="$([MSBuild]::IsOSPlatform('Linux'))">
             <PropertyGroup>
-                <NativeExt>so</NativeExt>
-                <NativePre>lib</NativePre>
-                <NativeId Condition="'$(NativeArch)' == 'X64'">linux-x64</NativeId>
-                <NativeId Condition="'$(NativeArch)' == 'Arm64'">linux-arm64</NativeId>
+                <HostRuntime Condition="'$(HostArch)' == 'X64'">linux-x64</HostRuntime>
+                <HostRuntime Condition="'$(HostArch)' == 'Arm64'">linux-arm64</HostRuntime>
             </PropertyGroup>
         </When>
         <When Condition="$([MSBuild]::IsOSPlatform('OSX'))">
             <PropertyGroup>
-                <NativeExt>dylib</NativeExt>
-                <NativePre>lib</NativePre>
-                <NativeId Condition="'$(NativeArch)' == 'X64'">osx-x64</NativeId>
-                <NativeId Condition="'$(NativeArch)' == 'Arm64'">osx-arm64</NativeId>
+                <HostRuntime Condition="'$(HostArch)' == 'X64'">osx-x64</HostRuntime>
+                <HostRuntime Condition="'$(HostArch)' == 'Arm64'">osx-arm64</HostRuntime>
             </PropertyGroup>
         </When>
     </Choose>
 
     <PropertyGroup>
-        <RuntimeIdentifier Condition="'$(RuntimeIdentifier)' == ''">$(NativeId)</RuntimeIdentifier>
+        <RuntimeIdentifier Condition="'$(RuntimeIdentifier)' == ''">$(HostRuntime)</RuntimeIdentifier>
     </PropertyGroup>
 
     <Choose>
@@ -116,7 +110,7 @@
     </Choose>
 
     <ItemGroup>
-        <PackageReference Include="Vezel.Zig.Toolsets.$(NativeId)" Version="0.13.0.1">
+        <PackageReference Include="Vezel.Zig.Toolsets.$(HostRuntime)" Version="0.13.0.1">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
@@ -132,6 +126,6 @@
     <Target Name="CompileNatives" BeforeTargets="Build" Condition="'$(SkipNatives)' != 'true'">
         <Message Importance="High" Text="Build Target: $(RuntimeIdentifier) $(Configuration)"/>
         <Message Importance="High" Text="Build Zig Target: $(ZigIdentifier) $(ZigConfiguration)"/>
-        <Exec Command="$(ZigExePath) build -Doptimize=$(ZigConfiguration) --prefix $(OutputPath)runtimes  --prefix-lib-dir $(RuntimeIdentifier)/native --prefix-exe-dir $(RuntimeIdentifier) -Dtarget=$(ZigIdentifier)"/>
+        <Exec Command="$(ZigExePath) build -Doptimize=$(ZigConfiguration) --prefix $(OutputPath)runtimes --prefix-lib-dir $(RuntimeIdentifier)/native -Dtarget=$(ZigIdentifier)"/>
     </Target>
 </Project>
