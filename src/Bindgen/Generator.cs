@@ -488,7 +488,7 @@ public class Generator
         switch (cppType)
         {
             case CppPrimitiveType primitiveType:
-                return primitiveType.Kind switch
+                return MapIdentifier(primitiveType.Kind switch
                 {
                     CppPrimitiveKind.Void => "void",
                     CppPrimitiveKind.Bool => skipHighOrder ? "sbyte" : "NativeBool",
@@ -503,7 +503,7 @@ public class Generator
                     CppPrimitiveKind.UnsignedInt => "uint",
                     CppPrimitiveKind.UnsignedLong => "ulong",
                     _ => throw new NotSupportedException($"Unsupported primitive type: {primitiveType.Kind}"),
-                };
+                }, isPrimitive: true);
             case CppPointerType pointerType:
                 if (pointerCount == 0 && !skipHighOrder)
                 {
@@ -541,7 +541,7 @@ public class Generator
             case CppClass cppClass:
                 return MapIdentifier(cppClass.Name);
             case CppEnum cppEnum:
-                return cppEnum.Name;
+                return MapIdentifier(cppEnum.Name);
             case CppFunctionType cppFunctionType:
                 var returnPointerCount = 0;
                 string returnType = ConvertCppTypeToCSharp(
@@ -568,11 +568,11 @@ public class Generator
         }
     }
 
-    private string MapIdentifier(string identifier, bool toPascalCase = false)
+    private string MapIdentifier(string identifier, bool toPascalCase = false, bool isPrimitive = false)
     {
         var o = toPascalCase ? ToPascalCase(identifier) : identifier;
 
-        if (ReservedKeywords.Contains(o))
+        if (!isPrimitive && ReservedKeywords.Contains(o))
         {
             return "@" + o;
         }
