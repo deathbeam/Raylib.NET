@@ -1,6 +1,12 @@
 name: Build Natives
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - master
+    paths:
+      - lib/**
+      - src/Raylib.NET.Native/**
 
 jobs:
   natives:
