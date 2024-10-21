@@ -129,12 +129,14 @@ jobs:
         with:
           pattern: natives-Debug-*
           path: src/Raylib.NET.Native/bin/Debug/runtimes
+          merge-multiple: true
 
       - name: Download Release Natives
         uses: actions/download-artifact@v4
         with:
           pattern: natives-Release-*
           path: src/Raylib.NET.Native/bin/Release/runtimes
+          merge-multiple: true
 
       - name: Create NuGet Debug Packages
         run: dotnet pack -c Debug --output nuget -p:SkipCompileNatives=true -p:VersionSuffix=${{ needs.prepare-package-info.outputs.version }}
