@@ -128,13 +128,13 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           pattern: natives-Debug-*
-          path: src/Raylib.NET.Native/bin/Debug/runtimes/
+          path: src/Raylib.NET.Native/bin/Debug/runtimes
 
       - name: Download Release Natives
         uses: actions/download-artifact@v4
         with:
           pattern: natives-Release-*
-          path: src/Raylib.NET.Native/bin/Debug/runtimes/
+          path: src/Raylib.NET.Native/bin/Release/runtimes
 
       - name: Create NuGet Debug Packages
         run: dotnet pack -c Debug --output nuget -p:SkipCompileNatives=true -p:VersionSuffix=${{ needs.prepare-package-info.outputs.version }}
@@ -145,6 +145,7 @@ jobs:
       - name: Upload NuGet Packages As Artifacts
         uses: actions/upload-artifact@v4
         with:
+          name: nuget-packages
           path: nuget/*
 
       - name: Publish NuGet Packages to GitHub Packages
