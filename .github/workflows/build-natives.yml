@@ -69,7 +69,7 @@ jobs:
         if: matrix.runtime == 'browser-wasm'
         uses: mymindstorm/setup-emsdk@v14
         with:
-          no-install: true
+          actions-cache-folder: 'emsdk-cache'
 
       - name: Build Natives
         run: dotnet build -c ${{ matrix.config }} -r ${{ matrix.runtime }}
