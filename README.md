@@ -27,9 +27,11 @@ dotnet build -r osx-x64
 dotnet build -r browser-wasm
 ```
 
-`browser-wasm` requires `EMSDK`:
+`browser-wasm` requires `EMSDK` and `wasm-tools`:
 
 ```sh
+dotnet workload install wasm-tools
+
 git clone https://github.com/emscripten-core/emsdk
 cd emsdk
 ./emsdk install latest
