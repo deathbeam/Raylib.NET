@@ -21,5 +21,6 @@
   <ItemGroup>
     <DirectPInvoke Include="raylib"/>
     <NativeLibrary Include="$(OutputPath)libraylib.a"/>
+    <WasmExtraFilesToDeploy Include="index.html" />
   </ItemGroup>
 </Project>
