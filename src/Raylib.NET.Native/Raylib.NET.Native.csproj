@@ -132,11 +132,11 @@
         </Content>
         <Content Include="index.html" Link="index.html" Condition="'$(RuntimeIdentifier)' == 'browser-wasm'">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <PackagePath>runtimes/$(RuntimeIdentifier)/</PackagePath>
+            <PackagePath>runtimes/$(RuntimeIdentifier)/native</PackagePath>
         </Content>
         <Content Include="main.js" Link="main.js" Condition="'$(RuntimeIdentifier)' == 'browser-wasm'">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <PackagePath>runtimes/$(RuntimeIdentifier)/</PackagePath>
+            <PackagePath>runtimes/$(RuntimeIdentifier)/native</PackagePath>
         </Content>
         <None Pack="true" Include="buildTransitive/Raylib.NET.Native.props" PackagePath="buildTransitive/Raylib.NET.Native.props"/>
         <None Pack="true" Include="buildTransitive/Raylib.NET.Native.targets" PackagePath="buildTransitive/Raylib.NET.Native.targets"/>
