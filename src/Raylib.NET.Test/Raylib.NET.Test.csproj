@@ -13,13 +13,14 @@
   </PropertyGroup>
   <PropertyGroup>
     <WasmMainJSPath>main.js</WasmMainJSPath>
+    <WasmEnableExceptionHandling>false</WasmEnableExceptionHandling>
     <!-- <RunAOTCompilation>true</RunAOTCompilation> crashes for some reason -->
     <InvariantGlobalization>true</InvariantGlobalization>
     <WasmBuildNative>true</WasmBuildNative>
-    <WasmNativeStrip>true</WasmNativeStrip>
-    <EnableAggressiveTrimming>true</EnableAggressiveTrimming>
-    <PublishTrimmed>true</PublishTrimmed>
-    <TrimMode>full</TrimMode>
+    <!-- <WasmNativeStrip>true</WasmNativeStrip> -->
+    <!-- <EnableAggressiveTrimming>true</EnableAggressiveTrimming> -->
+    <!-- <PublishTrimmed>true</PublishTrimmed> -->
+    <!-- <TrimMode>full</TrimMode> -->
   </PropertyGroup>
   <Choose>
     <When Condition=" $(Configuration) == 'Debug' ">
