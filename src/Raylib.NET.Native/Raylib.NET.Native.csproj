@@ -2,18 +2,21 @@
     <PropertyGroup>
         <OutputType>Library</OutputType>
         <TargetFramework>net8.0</TargetFramework>
+
+        <!-- This is project for holding natives only so we dont really want to generate anything else -->
+        <NoWarn>$(NoWarn);CS2008</NoWarn>
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
         <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
         <IncludeSymbols>false</IncludeSymbols>
         <IncludeBuildFiles>false</IncludeBuildFiles>
-        <NoWarn>$(NoWarn);CS2008</NoWarn>
     </PropertyGroup>
 
     <PropertyGroup>
         <HostArch>$([System.Runtime.InteropServices.RuntimeInformation]::ProcessArchitecture)</HostArch>
     </PropertyGroup>
 
+    <!-- We want 2 separate natives packages for debug and release modes -->
     <Choose>
         <When Condition="'$(Configuration)' == 'Debug'">
             <PropertyGroup>
@@ -29,6 +32,7 @@
         </When>
     </Choose>
 
+    <!-- As we are cross-compiling, RID != host runtime so we need to determine it for later -->
     <Choose>
         <When Condition="$([MSBuild]::IsOSPlatform('Windows'))">
             <PropertyGroup>
@@ -50,10 +54,31 @@
         </When>
     </Choose>
 
+    <!-- Fallback to host runtime when not specified -->
     <PropertyGroup>
         <RuntimeIdentifier Condition="'$(RuntimeIdentifier)' == ''">$(HostRuntime)</RuntimeIdentifier>
     </PropertyGroup>
 
+    <!-- These files will be auto included based on platform in dependant projects -->
+    <ItemGroup>
+        <None Pack="true" Include="buildTransitive/Raylib.NET.Native.props" PackagePath="buildTransitive/$(PackageId).props"/>
+        <None Pack="true" Include="buildTransitive/Raylib.NET.Native.targets" PackagePath="buildTransitive/$(PackageId).targets"/>
+
+        <Content Include="$(OutputPath)runtimes/**/**" Link="%(Filename)%(Extension)">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <PackagePath>runtimes/</PackagePath>
+        </Content>
+        <Content Include="index.html">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <PackagePath>runtimes/browser-wasm/native/</PackagePath>
+        </Content>
+        <Content Include="main.js">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <PackagePath>runtimes/browser-wasm/native/</PackagePath>
+        </Content>
+    </ItemGroup>
+
+    <!-- Determine mapping between dotnet RID and zig targets -->
     <Choose>
         <When Condition="$(RuntimeIdentifier) == 'win-x64'">
             <PropertyGroup>
@@ -118,6 +143,7 @@
         </Otherwise>
     </Choose>
 
+    <!-- Here we need host not target toolset to compile/cross-compile -->
     <ItemGroup>
         <PackageReference Include="Vezel.Zig.Toolsets.$(HostRuntime)" Version="0.13.0.1">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -125,23 +151,7 @@
         </PackageReference>
     </ItemGroup>
 
-    <ItemGroup>
-        <Content Include="$(OutputPath)runtimes/**/**" Link="%(Filename)%(Extension)">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <PackagePath>runtimes/</PackagePath>
-        </Content>
-        <Content Include="index.html">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <PackagePath>runtimes/browser-wasm/native/</PackagePath>
-        </Content>
-        <Content Include="main.js">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <PackagePath>runtimes/browser-wasm/native/</PackagePath>
-        </Content>
-        <None Pack="true" Include="buildTransitive/Raylib.NET.Native.props" PackagePath="buildTransitive/$(PackageId).props"/>
-        <None Pack="true" Include="buildTransitive/Raylib.NET.Native.targets" PackagePath="buildTransitive/$(PackageId).targets"/>
-    </ItemGroup>
-
+    <!-- All the native code compile magic lives here -->
     <Target Name="CompileNatives" AfterTargets="Build" Condition="'$(SkipNatives)' != 'true'">
         <Message Importance="High" Text="Build Target: $(RuntimeIdentifier) $(Configuration)"/>
         <Message Importance="High" Text="Build Zig Target: $(ZigIdentifier) $(ZigConfiguration)"/>
@@ -149,6 +159,7 @@
         <Exec Command="$(ZigExePath) build -Doptimize=$(ZigConfiguration) --prefix $(OutputPath)runtimes --prefix-lib-dir $(RuntimeIdentifier)/native --prefix-exe-dir $(RuntimeIdentifier)/native -Dtarget=$(ZigIdentifier) $(ZigArgs)"/>
     </Target>
 
+    <!-- WASM expects for lib prefix to be gone so we fix it here -->
     <Target Name="FixupNatives" AfterTargets="CompileNatives" Condition="'$(RuntimeIdentifier)' == 'browser-wasm'">
         <Copy SourceFiles="$(OutputPath)runtimes/$(RuntimeIdentifier)/native/libraylib.a" DestinationFiles="$(OutputPath)runtimes/$(RuntimeIdentifier)/native/raylib.a"/>
         <Delete Files="$(OutputPath)runtimes/$(RuntimeIdentifier)/native/libraylib.a"/>
