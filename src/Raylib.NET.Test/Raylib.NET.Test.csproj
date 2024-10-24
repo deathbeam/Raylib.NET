@@ -13,31 +13,20 @@
   </PropertyGroup>
   <PropertyGroup>
     <WasmMainJSPath>main.js</WasmMainJSPath>
-    <WasmEnableExceptionHandling>false</WasmEnableExceptionHandling>
-    <!-- <RunAOTCompilation>true</RunAOTCompilation> crashes for some reason -->
-    <InvariantGlobalization>true</InvariantGlobalization>
     <WasmBuildNative>true</WasmBuildNative>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <!-- <RunAOTCompilation>true</RunAOTCompilation> -->
     <!-- <WasmNativeStrip>true</WasmNativeStrip> -->
     <!-- <EnableAggressiveTrimming>true</EnableAggressiveTrimming> -->
     <!-- <PublishTrimmed>true</PublishTrimmed> -->
     <!-- <TrimMode>full</TrimMode> -->
+    <WasmEnableExceptionHandling>false</WasmEnableExceptionHandling>
+    <EmccFlags>-s USE_GLFW=3 -sASYNCIFY=1 -O3</EmccFlags>
   </PropertyGroup>
-  <Choose>
-    <When Condition=" $(Configuration) == 'Debug' ">
-      <PropertyGroup>
-        <WasmEmitSymbolMap>true</WasmEmitSymbolMap>
-        <EmccFlags>-sUSE_GLFW=3 -sASYNCIFY=1 -sVERBOSE=1 -Wbad-function-cast -Wcast-function-type -O2 -g3 -sVERBOSE=1 -sINITIAL_MEMORY=128MB -sMAXIMUM_MEMORY=2048MB -sALLOW_MEMORY_GROWTH=1 -sASYNCIFY_STACK_SIZE=10000000</EmccFlags>
-      </PropertyGroup>
-    </When>
-    <When Condition=" $(Configuration) == 'Release' ">
-      <PropertyGroup>
-        <EmccFlags>-s USE_GLFW=3 -sASYNCIFY=1 -O3</EmccFlags>
-      </PropertyGroup>
-    </When>
-  </Choose>
   <ItemGroup>
-    <!-- <DirectPInvoke Include="raylib"/> -->
-    <NativeLibrary Include="$(OutputPath)libraylib.a"/>
+    <!-- <NativeFileReference Include="$(OutputPath)libraylib.a"/> -->
+    <!-- Fix this so i dont have to copy/paste -->
+    <NativeFileReference Include="raylib.a"/>
     <WasmExtraFilesToDeploy Include="index.html"/>
     <WasmExtraFilesToDeploy Include="main.js"/>
   </ItemGroup>

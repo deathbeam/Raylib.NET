@@ -1,4 +1,4 @@
-import { dotnet } from './dotnet.js'
+import { dotnet } from './_framework/dotnet.js'
 
 await dotnet
   .withDebugging(1)
