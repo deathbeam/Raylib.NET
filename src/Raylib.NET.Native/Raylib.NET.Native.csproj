@@ -5,6 +5,8 @@
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
         <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+        <IncludeSymbols>false</IncludeSymbols>
+        <IncludeBuildFiles>false</IncludeBuildFiles>
         <NoWarn>$(NoWarn);CS2008</NoWarn>
     </PropertyGroup>
 
@@ -136,4 +138,10 @@
         <Message Importance="High" Text="Build Zig Args: $(ZigArgs)"/>
         <Exec Command="$(ZigExePath) build -Doptimize=$(ZigConfiguration) --prefix $(OutputPath)runtimes --prefix-lib-dir $(RuntimeIdentifier)/native --prefix-exe-dir $(RuntimeIdentifier)/native -Dtarget=$(ZigIdentifier) $(ZigArgs)"/>
     </Target>
+
+    <Target Name="FixupNatives" AfterTargets="CompileNatives" Condition="'$(RuntimeIdentifier)' == 'browser-wasm'">
+        <Copy SourceFiles="$(OutputPath)runtimes/$(RuntimeIdentifier)/native/libraylib.a" DestinationFiles="$(OutputPath)runtimes/$(RuntimeIdentifier)/native/raylib.a"/>
+        <Delete Files="$(OutputPath)runtimes/$(RuntimeIdentifier)/native/libraylib.a"/>
+    </Target>
+
 </Project>
