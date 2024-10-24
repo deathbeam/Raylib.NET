@@ -46,6 +46,25 @@ dotnet add package Raylib.NET --version '*-dev-*'
 dotnet add package Raylib.NET.Native --version '*-dev-*'
 ```
 
+### Try the example
+
+```sh
+cd src/Raylib.NET.Example
+
+# linux
+dotnet publish -r linux-x64 -c Release
+./bin/Release/net8.0/linux-x64/publish/Raylib.NET.Example
+
+# windows
+dotnet publish -r win-x64 -c Release
+wine bin/Release/net8.0/win-x64/publish/Raylib.NET.Example.exe
+
+# wasm
+dotnet publish -r browser-wasm -c Release
+cd bin/Release/net8.0/browser-wasm/AppBundle
+open index.html
+```
+
 ### Stuff being done here
 
 Everything is 100% generated, Im not touching the generated stuff, only generator.
