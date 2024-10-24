@@ -15,7 +15,7 @@ public static unsafe partial class Raylib
 
     public const int RAYLIB_VERSION_PATCH = 0;
 
-    public const string RAYLIB_VERSION = "5.5-dev";
+    public const string RAYLIB_VERSION = "5.5";
 
     public const float PI = 3.14159265358979323846f;
 
@@ -59,28 +59,28 @@ public static unsafe partial class Raylib
     public static partial NativeBool IsWindowFullscreen();
 
     /// <summary>
-    /// Check if window is currently hidden (only PLATFORM_DESKTOP)
+    /// Check if window is currently hidden
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial NativeBool IsWindowHidden();
 
     /// <summary>
-    /// Check if window is currently minimized (only PLATFORM_DESKTOP)
+    /// Check if window is currently minimized
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial NativeBool IsWindowMinimized();
 
     /// <summary>
-    /// Check if window is currently maximized (only PLATFORM_DESKTOP)
+    /// Check if window is currently maximized
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial NativeBool IsWindowMaximized();
 
     /// <summary>
-    /// Check if window is currently focused (only PLATFORM_DESKTOP)
+    /// Check if window is currently focused
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -101,7 +101,7 @@ public static unsafe partial class Raylib
     public static partial NativeBool IsWindowState(uint flag);
 
     /// <summary>
-    /// Set window configuration state using flags (only PLATFORM_DESKTOP)
+    /// Set window configuration state using flags
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -115,63 +115,63 @@ public static unsafe partial class Raylib
     public static partial void ClearWindowState(uint flags);
 
     /// <summary>
-    /// Toggle window state: fullscreen/windowed [resizes monitor to match window resolution] (only PLATFORM_DESKTOP)
+    /// Toggle window state: fullscreen/windowed, resizes monitor to match window resolution
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial void ToggleFullscreen();
 
     /// <summary>
-    /// Toggle window state: borderless windowed [resizes window to match monitor resolution] (only PLATFORM_DESKTOP)
+    /// Toggle window state: borderless windowed, resizes window to match monitor resolution
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial void ToggleBorderlessWindowed();
 
     /// <summary>
-    /// Set window state: maximized, if resizable (only PLATFORM_DESKTOP)
+    /// Set window state: maximized, if resizable
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial void MaximizeWindow();
 
     /// <summary>
-    /// Set window state: minimized, if resizable (only PLATFORM_DESKTOP)
+    /// Set window state: minimized, if resizable
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial void MinimizeWindow();
 
     /// <summary>
-    /// Set window state: not minimized/maximized (only PLATFORM_DESKTOP)
+    /// Set window state: not minimized/maximized
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial void RestoreWindow();
 
     /// <summary>
-    /// Set icon for window (single image, RGBA 32bit, only PLATFORM_DESKTOP)
+    /// Set icon for window (single image, RGBA 32bit)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial void SetWindowIcon(Image image);
 
     /// <summary>
-    /// Set icon for window (multiple images, RGBA 32bit, only PLATFORM_DESKTOP)
+    /// Set icon for window (multiple images, RGBA 32bit)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static unsafe partial void SetWindowIcons(Image* images, int count);
 
     /// <summary>
-    /// Set title for window (only PLATFORM_DESKTOP and PLATFORM_WEB)
+    /// Set title for window
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial void SetWindowTitle(string title);
 
     /// <summary>
-    /// Set window position on screen (only PLATFORM_DESKTOP)
+    /// Set window position on screen
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -206,14 +206,14 @@ public static unsafe partial class Raylib
     public static partial void SetWindowSize(int width, int height);
 
     /// <summary>
-    /// Set window opacity [0.0f..1.0f] (only PLATFORM_DESKTOP)
+    /// Set window opacity [0.0f..1.0f]
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial void SetWindowOpacity(float opacity);
 
     /// <summary>
-    /// Set window focused (only PLATFORM_DESKTOP)
+    /// Set window focused
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -262,7 +262,7 @@ public static unsafe partial class Raylib
     public static partial int GetMonitorCount();
 
     /// <summary>
-    /// Get current connected monitor
+    /// Get current monitor where window is placed
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -1144,7 +1144,7 @@ public static unsafe partial class Raylib
     public static partial NativeBool IsKeyPressed(int key);
 
     /// <summary>
-    /// Check if a key has been pressed again (Only PLATFORM_DESKTOP)
+    /// Check if a key has been pressed again
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -1879,6 +1879,13 @@ public static unsafe partial class Raylib
     public static partial NativeBool CheckCollisionCircleRec(Vector2 center, float radius, Vector4 rec);
 
     /// <summary>
+    /// Check if circle collides with a line created betweeen two points [p1] and [p2]
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial NativeBool CheckCollisionCircleLine(Vector2 center, float radius, Vector2 p1, Vector2 p2);
+
+    /// <summary>
     /// Check if point is inside rectangle
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
@@ -1900,6 +1907,13 @@ public static unsafe partial class Raylib
     public static partial NativeBool CheckCollisionPointTriangle(Vector2 point, Vector2 p1, Vector2 p2, Vector2 p3);
 
     /// <summary>
+    /// Check if point belongs to line created between two points [p1] and [p2] with defined margin in pixels [threshold]
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial NativeBool CheckCollisionPointLine(Vector2 point, Vector2 p1, Vector2 p2, int threshold);
+
+    /// <summary>
     /// Check if point is within a polygon described by array of vertices
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
@@ -1912,20 +1926,6 @@ public static unsafe partial class Raylib
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static unsafe partial NativeBool CheckCollisionLines(Vector2 startPos1, Vector2 endPos1, Vector2 startPos2, Vector2 endPos2, Vector2* collisionPoint);
-
-    /// <summary>
-    /// Check if point belongs to line created between two points [p1] and [p2] with defined margin in pixels [threshold]
-    /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
-    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial NativeBool CheckCollisionPointLine(Vector2 point, Vector2 p1, Vector2 p2, int threshold);
-
-    /// <summary>
-    /// Check if circle collides with a line created betweeen two points [p1] and [p2]
-    /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
-    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial NativeBool CheckCollisionCircleLine(Vector2 center, float radius, Vector2 p1, Vector2 p2);
 
     /// <summary>
     /// Get collision rectangle for two rectangles collision
@@ -3531,11 +3531,18 @@ public static unsafe partial class Raylib
     public static unsafe partial ModelAnimation* LoadModelAnimations(string fileName, int* animCount);
 
     /// <summary>
-    /// Update model animation pose
+    /// Update model animation pose (CPU)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial void UpdateModelAnimation(Model model, ModelAnimation anim, int frame);
+
+    /// <summary>
+    /// Update model animation mesh bone matrices (GPU skinning)
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void UpdateModelAnimationBoneMatrices(Model model, ModelAnimation anim, int frame);
 
     /// <summary>
     /// Unload animation data
@@ -3557,13 +3564,6 @@ public static unsafe partial class Raylib
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial NativeBool IsModelAnimationValid(Model model, ModelAnimation anim);
-
-    /// <summary>
-    /// Update model animation mesh bone matrices (Note GPU skinning does not work on Mac)
-    /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
-    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void UpdateModelAnimationBoneMatrices(Model model, ModelAnimation anim, int frame);
 
     /// <summary>
     /// Check collision between two spheres

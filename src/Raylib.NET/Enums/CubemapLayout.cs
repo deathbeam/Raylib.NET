@@ -22,8 +22,4 @@ public enum CubemapLayout
     /// Layout is defined by a 4x3 cross with cubemap faces
     /// </summary>
     CUBEMAP_LAYOUT_CROSS_FOUR_BY_THREE,
-    /// <summary>
-    /// Layout is defined by a panorama image (equirrectangular map)
-    /// </summary>
-    CUBEMAP_LAYOUT_PANORAMA,
 }
