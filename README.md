@@ -42,8 +42,8 @@ export EMSDK=$PWD
 ### Use as dependency
 
 ```sh
-dotnet add package Raylib.NET --version '*-dev-*'
-dotnet add package Raylib.NET.Native --version '*-dev-*'
+dotnet add package Raylib.NET --version '*-build.*'
+dotnet add package Raylib.NET.Native --version '*-build.*'
 ```
 
 ### Try the example
