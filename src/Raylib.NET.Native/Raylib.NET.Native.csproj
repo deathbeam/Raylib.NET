@@ -130,7 +130,7 @@
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
             <PackagePath>runtimes/</PackagePath>
         </Content>
-        <Content Include="index.html"">
+        <Content Include="index.html">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
             <PackagePath>runtimes/browser-wasm/native/</PackagePath>
         </Content>
