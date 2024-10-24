@@ -59,7 +59,7 @@ jobs:
       - name: Generate NuGet Version
         id: package-info
         run: |
-          version="dev-$(printf "%05d" $(git rev-list --count HEAD))"
+          version="build.$(git rev-list --count HEAD)"
           echo "version=$version" >> $GITHUB_OUTPUT
 
       - name: Create NuGet Packages
