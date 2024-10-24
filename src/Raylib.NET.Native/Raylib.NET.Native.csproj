@@ -130,16 +130,16 @@
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
             <PackagePath>runtimes/</PackagePath>
         </Content>
-        <Content Include="index.html" Link="index.html" Condition="'$(RuntimeIdentifier)' == 'browser-wasm'">
+        <Content Include="index.html"">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <PackagePath>runtimes/$(RuntimeIdentifier)/native</PackagePath>
+            <PackagePath>runtimes/browser-wasm/native/</PackagePath>
         </Content>
-        <Content Include="main.js" Link="main.js" Condition="'$(RuntimeIdentifier)' == 'browser-wasm'">
+        <Content Include="main.js">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <PackagePath>runtimes/$(RuntimeIdentifier)/native</PackagePath>
+            <PackagePath>runtimes/browser-wasm/native/</PackagePath>
         </Content>
-        <None Pack="true" Include="buildTransitive/Raylib.NET.Native.props" PackagePath="buildTransitive/Raylib.NET.Native.props"/>
-        <None Pack="true" Include="buildTransitive/Raylib.NET.Native.targets" PackagePath="buildTransitive/Raylib.NET.Native.targets"/>
+        <None Pack="true" Include="buildTransitive/Raylib.NET.Native.props" PackagePath="buildTransitive/$(PackageId).props"/>
+        <None Pack="true" Include="buildTransitive/Raylib.NET.Native.targets" PackagePath="buildTransitive/$(PackageId).targets"/>
     </ItemGroup>
 
     <Target Name="CompileNatives" AfterTargets="Build" Condition="'$(SkipNatives)' != 'true'">
