@@ -1,15 +1,15 @@
 <Project>
   <ItemGroup Condition="'$(RuntimeIdentifier)' == 'browser-wasm'">
     <!-- WASM way of statically linking raylib -->
-    <NativeFileReference Include="$(StaticPath)raylib.a"/>
+    <NativeFileReference Include="$(RaylibStaticPath)raylib.a"/>
     <!-- Auto include index.html and main.js for OOB experience -->
-    <WasmExtraFilesToDeploy Include="$(StaticPath)index.html"/>
-    <WasmExtraFilesToDeploy Include="$(StaticPath)main.js"/>
+    <WasmExtraFilesToDeploy Include="$(RaylibStaticPath)index.html"/>
+    <WasmExtraFilesToDeploy Include="$(RaylibStaticPath)main.js"/>
   </ItemGroup>
   <ItemGroup Condition="'$(PublishAot)' == 'true'">
     <!-- NativeAOT way of statically linking raylib -->
     <DirectPInvoke Include="raylib"/>
-    <NativeLibrary Condition="'$(IsWindowsRuntime)' == 'true'" Include="$(StaticPath)raylib.lib"/>
-    <NativeLibrary Condition="'$(IsWindowsRuntime)' != 'true'" Include="$(StaticPath)libraylib.a"/>
+    <NativeLibrary Condition="'$(IsWindowsRuntime)' == 'true'" Include="$(RaylibStaticPath)raylib.lib"/>
+    <NativeLibrary Condition="'$(IsWindowsRuntime)' != 'true'" Include="$(RaylibStaticPath)libraylib.a"/>
   </ItemGroup>
 </Project>

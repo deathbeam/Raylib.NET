@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <StaticPath>$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)../static/$(RuntimeIdentifier)/native/'))</StaticPath>
+    <RaylibStaticPath>$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)../static/$(RuntimeIdentifier)/native/'))</RaylibStaticPath>
     <IsWindowsRuntime Condition="'$(RuntimeIdentifier)' != '' and $(RuntimeIdentifier.StartsWith('win-'))">true</IsWindowsRuntime>
   </PropertyGroup>
   <PropertyGroup Condition="'$(RuntimeIdentifier)' == 'browser-wasm'">
