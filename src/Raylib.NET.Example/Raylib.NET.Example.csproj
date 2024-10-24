@@ -8,7 +8,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Raylib.NET" Version="1.0.0-dev-133" />
-    <PackageReference Include="Raylib.NET.Native" Version="1.0.0-dev-133" />
+    <PackageReference Include="Raylib.NET" Version="1.0.0-dev-139" />
+    <PackageReference Include="Raylib.NET.Native" Version="1.0.0-dev-139" />
   </ItemGroup>
 </Project>
