@@ -24,7 +24,6 @@
     <EmccFlags>-s USE_GLFW=3 -sASYNCIFY=1 -O3</EmccFlags>
   </PropertyGroup>
   <ItemGroup>
-    <!-- TODO: Need to change libraylib.a to raylib.a for browser-wasm zig build -->
     <NativeFileReference Include="$(OutputPath)raylib.a"/>
     <WasmExtraFilesToDeploy Include="index.html"/>
     <WasmExtraFilesToDeploy Include="main.js"/>
