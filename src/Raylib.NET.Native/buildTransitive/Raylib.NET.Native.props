@@ -1,6 +1,7 @@
 <Project>
   <PropertyGroup>
     <StaticPath>$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)../static/$(RuntimeIdentifier)/native/'))</StaticPath>
+    <IsWindowsRuntime Condition="'$(RuntimeIdentifier)' != '' and $(RuntimeIdentifier.StartsWith('win-'))">true</IsWindowsRuntime>
   </PropertyGroup>
   <PropertyGroup Condition="'$(RuntimeIdentifier)' == 'browser-wasm'">
     <!-- Build native code for WASM -->

@@ -9,7 +9,7 @@
   <ItemGroup Condition="'$(PublishAot)' == 'true'">
     <!-- NativeAOT way of statically linking raylib -->
     <DirectPInvoke Include="raylib"/>
-    <NativeLibrary Condition="StartsWith('$(RuntimeIdentifier)', 'win-')" Include="$(StaticPath)raylib.lib"/>
-    <NativeLibrary Condition="!StartsWith('$(RuntimeIdentifier)', 'win-')" Include="$(StaticPath)libraylib.a"/>
+    <NativeLibrary Condition="'$(IsWindowsRuntime)' == 'true'" Include="$(StaticPath)raylib.lib"/>
+    <NativeLibrary Condition="'$(IsWindowsRuntime)' != 'true'" Include="$(StaticPath)libraylib.a"/>
   </ItemGroup>
 </Project>
