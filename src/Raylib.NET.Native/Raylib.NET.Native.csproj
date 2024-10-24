@@ -64,22 +64,13 @@
         <None Pack="true" Include="buildTransitive/Raylib.NET.Native.props" PackagePath="buildTransitive/$(PackageId).props"/>
         <None Pack="true" Include="buildTransitive/Raylib.NET.Native.targets" PackagePath="buildTransitive/$(PackageId).targets"/>
 
-        <Content Include="$(OutputPath)runtimes/**/**" Link="%(Filename)%(Extension)" >
-            <Exclude>$(OutputPath)runtimes/**/*.a</Exclude>
+        <None Pack="true" Include="$(OutputPath)runtimes/**/*.a" PackagePath="static/" />
+        <None Pack="true" Include="index.html" PackagePath="static/browser-wasm/native/" />
+        <None Pack="true" Include="main.js" PackagePath="static/browser-wasm/native/" />
+
+        <Content Include="$(OutputPath)runtimes/**/**" Exclude="$(OutputPath)runtimes/**/*.a" Link="%(Filename)%(Extension)" >
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
             <PackagePath>runtimes/</PackagePath>
-        </Content>
-        <Content Include="$(OutputPath)runtimes/**/*.a" Link="%(Filename)%(Extension)" >
-            <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-            <PackagePath>runtimes/</PackagePath>
-        </Content>
-        <Content Include="index.html">
-            <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-            <PackagePath>runtimes/browser-wasm/native/</PackagePath>
-        </Content>
-        <Content Include="main.js">
-            <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-            <PackagePath>runtimes/browser-wasm/native/</PackagePath>
         </Content>
     </ItemGroup>
 
