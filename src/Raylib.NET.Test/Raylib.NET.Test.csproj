@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
 <Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\Raylib.NET.Native\buildTransitive\Raylib.NET.Native.props"/>
+  <Import Project="..\Raylib.NET.Native\buildTransitive\Raylib.NET.Native.targets"/>
   <ItemGroup>
     <ProjectReference Include="..\Raylib.NET.Native\Raylib.NET.Native.csproj"/>
     <ProjectReference Include="..\Raylib.NET\Raylib.NET.csproj"/>
@@ -11,21 +13,4 @@
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
-  <PropertyGroup>
-    <WasmMainJSPath>main.js</WasmMainJSPath>
-    <WasmBuildNative>true</WasmBuildNative>
-    <InvariantGlobalization>true</InvariantGlobalization>
-    <!-- <RunAOTCompilation>true</RunAOTCompilation> -->
-    <!-- <WasmNativeStrip>true</WasmNativeStrip> -->
-    <!-- <EnableAggressiveTrimming>true</EnableAggressiveTrimming> -->
-    <!-- <PublishTrimmed>true</PublishTrimmed> -->
-    <!-- <TrimMode>full</TrimMode> -->
-    <WasmEnableExceptionHandling>false</WasmEnableExceptionHandling>
-    <EmccFlags>-s USE_GLFW=3 -sASYNCIFY=1 -O3</EmccFlags>
-  </PropertyGroup>
-  <ItemGroup>
-    <NativeFileReference Include="$(OutputPath)raylib.a"/>
-    <WasmExtraFilesToDeploy Include="index.html"/>
-    <WasmExtraFilesToDeploy Include="main.js"/>
-  </ItemGroup>
 </Project>

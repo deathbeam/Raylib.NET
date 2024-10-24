@@ -130,6 +130,16 @@
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
             <PackagePath>runtimes/</PackagePath>
         </Content>
+        <Content Include="index.html" Link="index.html" Condition="'$(RuntimeIdentifier)' == 'browser-wasm'">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <PackagePath>runtimes/$(RuntimeIdentifier)/</PackagePath>
+        </Content>
+        <Content Include="main.js" Link="main.js" Condition="'$(RuntimeIdentifier)' == 'browser-wasm'">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <PackagePath>runtimes/$(RuntimeIdentifier)/</PackagePath>
+        </Content>
+        <None Pack="true" Include="buildTransitive/Raylib.NET.Native.props" PackagePath="buildTransitive/Raylib.NET.Native.props"/>
+        <None Pack="true" Include="buildTransitive/Raylib.NET.Native.targets" PackagePath="buildTransitive/Raylib.NET.Native.targets"/>
     </ItemGroup>
 
     <Target Name="CompileNatives" AfterTargets="Build" Condition="'$(SkipNatives)' != 'true'">
@@ -143,5 +153,4 @@
         <Copy SourceFiles="$(OutputPath)runtimes/$(RuntimeIdentifier)/native/libraylib.a" DestinationFiles="$(OutputPath)runtimes/$(RuntimeIdentifier)/native/raylib.a"/>
         <Delete Files="$(OutputPath)runtimes/$(RuntimeIdentifier)/native/libraylib.a"/>
     </Target>
-
 </Project>

@@ -1,0 +1,14 @@
+<Project>
+  <PropertyGroup Condition="'$(RuntimeIdentifier)' == 'browser-wasm'">
+    <WasmBuildNative>true</WasmBuildNative>
+
+    <!-- Reduces file size by a lot -->
+    <InvariantGlobalization>true</InvariantGlobalization>
+
+    <!-- ASYNCIFY and exception handling dont rly work together -->
+    <WasmEnableExceptionHandling>false</WasmEnableExceptionHandling>
+
+    <!-- Enable ASYNCIFY, needed for main loop -->
+    <EmccFlags>-s USE_GLFW=3 -sASYNCIFY=1 -O3</EmccFlags>
+  </PropertyGroup>
+</Project>
