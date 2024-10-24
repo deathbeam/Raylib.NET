@@ -64,11 +64,11 @@
         <None Pack="true" Include="buildTransitive/Raylib.NET.Native.props" PackagePath="buildTransitive/$(PackageId).props"/>
         <None Pack="true" Include="buildTransitive/Raylib.NET.Native.targets" PackagePath="buildTransitive/$(PackageId).targets"/>
 
-        <None Pack="true" Include="$(OutputPath)runtimes/**/*.a" PackagePath="static/" />
+        <None Pack="true" Include="$(OutputPath)runtimes/**/*.a;$(OutputPath)runtimes/**/*.lib" PackagePath="static/" />
         <None Pack="true" Include="index.html" PackagePath="static/browser-wasm/native/" />
         <None Pack="true" Include="main.js" PackagePath="static/browser-wasm/native/" />
 
-        <Content Include="$(OutputPath)runtimes/**/**" Exclude="$(OutputPath)runtimes/**/*.a" Link="%(Filename)%(Extension)" >
+        <Content Include="$(OutputPath)runtimes/**/**" Exclude="$(OutputPath)runtimes/**/*.a;$(OutputPath)runtimes/**/*.lib" Link="%(Filename)%(Extension)" >
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
             <PackagePath>runtimes/</PackagePath>
         </Content>

@@ -4,7 +4,7 @@ using static RaylibNET.Raygui;
 
 bool showMessageBox = false;
 
-InitWindow(640, 480, "Raylib.NET - Example");
+InitWindow(800, 600, "Raylib.NET - Example");
 
 while (!WindowShouldClose())
 {
