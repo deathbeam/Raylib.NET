@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<Project>
   <ItemGroup Condition="'$(RuntimeIdentifier)' == 'browser-wasm'">
     <NativeFileReference Include="$(OutputPath)raylib.a"/>
     <WasmExtraFilesToDeploy Include="$(OutputPath)index.html"/>
