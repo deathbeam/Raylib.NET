@@ -9,6 +9,7 @@
         <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
         <IncludeSymbols>false</IncludeSymbols>
         <IncludeBuildFiles>false</IncludeBuildFiles>
+        <IncludeBuildOutput>false</IncludeBuildOutput>
     </PropertyGroup>
 
     <PropertyGroup>
