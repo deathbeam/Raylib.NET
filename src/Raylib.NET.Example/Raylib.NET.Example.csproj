@@ -15,6 +15,7 @@
 
   <Choose>
     <When Condition="'$(RuntimeIdentifier)' == 'browser-wasm'">
+      <!-- Include all web-related configuration here -->
       <ItemGroup>
         <LinkerArg Include="--preload-file assets"/>
         <PackageReference Include="Microsoft.DotNet.ILCompiler.LLVM" Version="9.0.0-*"/>
@@ -22,6 +23,10 @@
       </ItemGroup>
     </When>
     <Otherwise>
+      <!-- Include all desktop-related configuration here -->
+      <PropertyGroup>
+        <PublishAot>true</PublishAot>
+      </PropertyGroup>
       <ItemGroup>
         <Content Include="assets/**/*.*">
           <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
