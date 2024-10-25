@@ -4,6 +4,8 @@
     <IsWindowsRuntime Condition="'$(RuntimeIdentifier)' != '' and $(RuntimeIdentifier.StartsWith('win-'))">true</IsWindowsRuntime>
   </PropertyGroup>
   <PropertyGroup Condition="'$(RuntimeIdentifier)' == 'browser-wasm'">
+    <!-- Specify the path to the main.js file -->
+    <WasmMainJSPath>$(RaylibStaticPath)main.js</WasmMainJSPath>
     <!-- Build native code for WASM -->
     <WasmBuildNative>true</WasmBuildNative>
     <!-- Reduces file size by a lot -->
