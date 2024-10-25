@@ -10,6 +10,7 @@
         <IncludeSymbols>false</IncludeSymbols>
         <IncludeBuildFiles>false</IncludeBuildFiles>
         <IncludeBuildOutput>false</IncludeBuildOutput>
+        <MSBuildEnableWorkloadResolver>false</MSBuildEnableWorkloadResolver>
     </PropertyGroup>
 
     <PropertyGroup>
