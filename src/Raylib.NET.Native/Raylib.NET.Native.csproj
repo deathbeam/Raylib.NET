@@ -11,6 +11,7 @@
         <IncludeBuildFiles>false</IncludeBuildFiles>
         <IncludeBuildOutput>false</IncludeBuildOutput>
         <MSBuildEnableWorkloadResolver>false</MSBuildEnableWorkloadResolver>
+        <NoWarn>$(NoWarn);CS2008</NoWarn>
     </PropertyGroup>
 
     <PropertyGroup>
