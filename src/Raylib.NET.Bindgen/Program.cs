@@ -33,10 +33,6 @@ var options = new GeneratorOptions
     IncludeFolders = new[] { $"{libPath}/raylib/src" },
 };
 
-options.GeneratedClass = "Raygui";
-options.FilePath = $"{libPath}/raygui/src/raygui.h";
-new Generator(options).Generate();
-
 options.GeneratedClass = "Rlgl";
 options.FilePath = $"{libPath}/raylib/src/rlgl.h";
 new Generator(options).Generate();
@@ -49,3 +45,6 @@ options.GeneratedClass = "Raylib";
 options.FilePath = $"{libPath}/raylib/src/raylib.h";
 new Generator(options).Generate();
 
+options.GeneratedClass = "Raygui";
+options.FilePath = $"{libPath}/raygui/src/raygui.h";
+new Generator(options).Generate();

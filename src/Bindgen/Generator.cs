@@ -257,6 +257,12 @@ public class Generator
 
     private String GenerateEnum(CppEnum cppEnum, out String output)
     {
+        if (cppEnum.Span.Start.File != "cppast.input")
+        {
+            output = "";
+            return "";
+        }
+
         string enumName = MapType(cppEnum.Name, cppEnum.Name);
 
         output = "";
@@ -286,6 +292,12 @@ public class Generator
 
     private String GenerateStruct(CppClass cppStruct, out String output)
     {
+        if (cppStruct.Span.Start.File != "cppast.input")
+        {
+            output = "";
+            return "";
+        }
+
         string structName = MapType(cppStruct.Name, cppStruct.Name);
 
         output = "";
