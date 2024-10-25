@@ -4,7 +4,6 @@
         <TargetFramework>net8.0</TargetFramework>
 
         <!-- This is project for holding natives only so we dont really want to generate anything else -->
-        <NoWarn>$(NoWarn);CS2008</NoWarn>
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
         <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
