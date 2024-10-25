@@ -8,5 +8,7 @@
     <PublishTrimmed>true</PublishTrimmed>
     <SelfContained>true</SelfContained>
     <MSBuildEnableWorkloadResolver>false</MSBuildEnableWorkloadResolver>
+    <WasmEnableExceptionHandling>false</WasmEnableExceptionHandling>
+    <EmccFlags>-s USE_GLFW=3 -s ASYNCIFY=1 -O3</EmccFlags>
   </PropertyGroup>
 </Project>
