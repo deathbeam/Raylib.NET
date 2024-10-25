@@ -36,10 +36,12 @@ pub fn compileRaylib(b: *std.Build, target: std.Build.ResolvedTarget, optimize: 
     lib.installHeader(raygui.path("src/raygui.h"), "raygui.h");
 
     // Idk why this is needed
-    lib.addLibraryPath(.{ .cwd_relative = "/usr/lib" });
-    lib.addIncludePath(.{ .cwd_relative = "/usr/include" });
-    lib.addLibraryPath(.{ .cwd_relative = "/usr/lib/x86_64-linux-gnu/" });
-    lib.addIncludePath(.{ .cwd_relative = "/usr/include/x86_64-linux-gnu/" });
+    if (target.result.os.tag == .linux) {
+        lib.addLibraryPath(.{ .cwd_relative = "/usr/lib" });
+        lib.addIncludePath(.{ .cwd_relative = "/usr/include" });
+        lib.addLibraryPath(.{ .cwd_relative = "/usr/lib/x86_64-linux-gnu/" });
+        lib.addIncludePath(.{ .cwd_relative = "/usr/include/x86_64-linux-gnu/" });
+    }
 
     return lib;
 }
