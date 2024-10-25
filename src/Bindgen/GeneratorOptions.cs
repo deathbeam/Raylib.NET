@@ -5,6 +5,7 @@ public struct GeneratorOptions
     public string GeneratedNamespace = "";
     public string GeneratedClass = "";
     public string OutputPath = "";
+    public string TestPath = "";
     public string LibraryName = "";
     public string FilePath = "";
     public string[] SystemIncludeFolders = { };

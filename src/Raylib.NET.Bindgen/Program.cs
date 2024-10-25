@@ -22,6 +22,7 @@ var options = new GeneratorOptions
         { "Matrix4x4", "System.Numerics" },
     },
     OutputPath = "../../src/Raylib.NET",
+    TestPath = "../../src/Raylib.NET.Test",
     GeneratedNamespace = "RaylibNET",
     LibraryName = "raylib",
     SystemIncludeFolders = new[]

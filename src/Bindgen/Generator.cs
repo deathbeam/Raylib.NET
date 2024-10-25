@@ -49,6 +49,7 @@ public class Generator
             Console.WriteLine(message);
         }
 
+        var types = new List<string>();
         var builder = new StringBuilder();
 
         builder.AppendLine("using System.Runtime.CompilerServices;");
@@ -109,6 +110,7 @@ public class Generator
                 continue;
             }
 
+            types.Add(name);
             generated = "namespace " + options.GeneratedNamespace + ";\n\n" + generated;
             var path = $"{options.OutputPath}/Enums/{name}.cs";
             Console.WriteLine($"- Generated: {name} - {path}");
@@ -125,6 +127,7 @@ public class Generator
                 continue;
             }
 
+            types.Add(name);
             var generate = "";
             generate += "using System.Runtime.InteropServices;\n";
             generate += "using Bindgen.Interop;\n";
@@ -148,6 +151,48 @@ public class Generator
         outPath = $"{options.OutputPath}/Interop.cs";
         Console.WriteLine($"> Generated: Interop - {outPath}");
         WriteFile(outPath, Interop.Generate());
+
+        if (!string.IsNullOrEmpty(options.TestPath))
+        {
+            outPath = $"{options.TestPath}/Test.cs";
+            Console.WriteLine($"> Generated: Test - {outPath}");
+            WriteFile(outPath, Test.Generate());
+
+
+            var testBuilder = new StringBuilder();
+            testBuilder.AppendLine("using Xunit;");
+            testBuilder.AppendLine("using Bindgen.Test;");
+            testBuilder.AppendLine();
+            testBuilder.AppendLine($"namespace {options.GeneratedNamespace}.Test;");
+            testBuilder.AppendLine();
+            testBuilder.AppendLine($"public class {options.GeneratedClass}Test");
+            testBuilder.AppendLine("{");
+
+            testBuilder.Append($$"""
+                private unsafe void CheckType<T>() where T : unmanaged
+                {
+                    Assert.True(BlittableHelper.IsBlittable<T>());
+                }
+            """);
+
+            testBuilder.AppendLine();
+            testBuilder.AppendLine();
+            testBuilder.AppendLine("    [Fact]");
+            testBuilder.AppendLine("    public void CheckTypes()");
+            testBuilder.AppendLine("    {");
+
+            foreach (var type in types)
+            {
+                testBuilder.AppendLine($"        CheckType<{type}>();");
+            }
+
+            testBuilder.AppendLine("    }");
+            testBuilder.AppendLine("}");
+
+            outPath = $"{options.TestPath}/{options.GeneratedClass}Test.cs";
+            Console.WriteLine($"> Generated: {options.GeneratedClass}Test - {outPath}");
+            WriteFile(outPath, testBuilder.ToString());
+        }
     }
 
     private String GenerateConstant(CppMacro macro, out String output)

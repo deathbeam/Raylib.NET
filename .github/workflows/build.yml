@@ -24,6 +24,9 @@ jobs:
       - name: Generate Bindings
         run: dotnet build -c Release src/Raylib.NET.Bindgen
 
+      - name: Test
+        run: dotnet test -p:SkipNatives=true -p:SkipBindgen=true
+
       - name: Build
         run: dotnet build -c Release -p:SkipNatives=true -p:SkipBindgen=true
 
