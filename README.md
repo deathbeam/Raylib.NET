@@ -27,11 +27,9 @@ dotnet build -r osx-x64
 dotnet build -r browser-wasm
 ```
 
-`browser-wasm` requires `EMSDK` and `wasm-tools`:
+`browser-wasm` requires `EMSDK`:
 
 ```sh
-dotnet workload install wasm-tools
-
 git clone https://github.com/emscripten-core/emsdk
 cd emsdk
 ./emsdk install latest
@@ -59,10 +57,10 @@ dotnet publish -r linux-x64 -c Release
 dotnet publish -r win-x64 -c Release
 wine bin/Release/net8.0/win-x64/publish/Raylib.NET.Example.exe
 
-# wasm
+# wasm (EMSDK still required, + wasm-tools)
+dotnet workload install wasm-tools
 dotnet publish -r browser-wasm -c Release
-cd bin/Release/net8.0/browser-wasm/AppBundle
-open index.html
+emrun --port 8080 bin/Release/net8.0/browser-wasm/native/Raylib.NET.Example.html
 ```
 
 ### Stuff being done here

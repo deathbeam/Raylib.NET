@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -8,8 +7,26 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
+
   <ItemGroup>
-    <PackageReference Include="Raylib.NET" Version="*-build.*" />
-    <PackageReference Include="Raylib.NET.Native" Version="*-build.*" />
+    <PackageReference Include="Raylib.NET.Native" Version="*-build.*"/>
+    <PackageReference Include="Raylib.NET" Version="*-build.*"/>
   </ItemGroup>
+
+  <Choose>
+    <When Condition="'$(RuntimeIdentifier)' == 'browser-wasm'">
+      <ItemGroup>
+        <LinkerArg Include="--preload-file assets"/>
+        <PackageReference Include="Microsoft.DotNet.ILCompiler.LLVM" Version="9.0.0-*"/>
+        <PackageReference Include="runtime.$(NETCoreSdkPortableRuntimeIdentifier).Microsoft.DotNet.ILCompiler.LLVM" Version="9.0.0-*"/>
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <Content Include="assets/**/*.*">
+          <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
 </Project>
