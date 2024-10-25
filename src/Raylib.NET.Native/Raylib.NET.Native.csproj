@@ -154,10 +154,4 @@
         <Message Importance="High" Text="Build Zig Args: $(ZigArgs)"/>
         <Exec Command="$(ZigExePath) build -Doptimize=$(ZigConfiguration) --prefix $(OutputPath)runtimes --prefix-lib-dir $(RuntimeIdentifier)/native --prefix-exe-dir $(RuntimeIdentifier)/native -Dtarget=$(ZigIdentifier) $(ZigArgs)"/>
     </Target>
-
-    <!-- WASM expects for lib prefix to be gone so we fix it here -->
-    <Target Name="FixupNatives" AfterTargets="CompileNatives" Condition="'$(RuntimeIdentifier)' == 'browser-wasm'">
-        <Copy SourceFiles="$(OutputPath)runtimes/$(RuntimeIdentifier)/native/libraylib.a" DestinationFiles="$(OutputPath)runtimes/$(RuntimeIdentifier)/native/raylib.a"/>
-        <Delete Files="$(OutputPath)runtimes/$(RuntimeIdentifier)/native/libraylib.a"/>
-    </Target>
 </Project>
