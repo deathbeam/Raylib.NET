@@ -18,8 +18,8 @@
       <!-- Include all web-related configuration here -->
       <ItemGroup>
         <LinkerArg Include="--preload-file assets"/>
-        <PackageReference Include="Microsoft.DotNet.ILCompiler.LLVM" Version="9.0.0-*"/>
-        <PackageReference Include="runtime.$(NETCoreSdkPortableRuntimeIdentifier).Microsoft.DotNet.ILCompiler.LLVM" Version="9.0.0-*"/>
+        <PackageReference Include="Microsoft.DotNet.ILCompiler.LLVM" Version="10.0.0-*"/>
+        <PackageReference Include="runtime.$(NETCoreSdkPortableRuntimeIdentifier).Microsoft.DotNet.ILCompiler.LLVM" Version="10.0.0-*"/>
       </ItemGroup>
     </When>
     <Otherwise>

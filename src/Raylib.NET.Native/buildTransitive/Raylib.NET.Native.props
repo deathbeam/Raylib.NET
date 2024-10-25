@@ -13,5 +13,6 @@
     <EmccFlags>-s USE_GLFW=3 -s ASYNCIFY=1 -O3</EmccFlags>
     <!-- Optimize wasm size -->
     <InvariantGlobalization>true</InvariantGlobalization>
+    <NativeDebugSymbols Condition="'$(Configuration)' == 'Release'">false</NativeDebugSymbols>
   </PropertyGroup>
 </Project>
