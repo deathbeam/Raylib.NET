@@ -1,5 +1,5 @@
 <Project>
-  <ItemGroup Condition="'$(PublishAot)' == 'true' or '$(RuntimeIdentifier)' == 'browser-wasm'">
+  <ItemGroup Condition="('$(PublishAot)' == 'true' Or '$(RuntimeIdentifier)' == 'browser-wasm') And Exists('$(RaylibStaticLibrary)')">
     <!-- Statically link library to both PublishAOT and PublishAOT-LLVM -->
     <DirectPInvoke Include="raylib"/>
     <NativeLibrary Include="$(RaylibStaticLibrary)"/>
