@@ -943,7 +943,7 @@ public static unsafe partial class Rlgl
     /// </summary>
     [LibraryImport(LIBRARY, EntryPoint = "rlLoadTextureCubemap", StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial uint LoadTextureCubemap(void* data, int size, int format);
+    public static unsafe partial uint LoadTextureCubemap(void* data, int size, int format, int mipmapCount);
 
     /// <summary>
     /// Update texture with new data on GPU
