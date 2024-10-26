@@ -8,11 +8,12 @@
     <PublishTrimmed>true</PublishTrimmed>
     <SelfContained>true</SelfContained>
     <MSBuildEnableWorkloadResolver>false</MSBuildEnableWorkloadResolver>
-    <!-- Disable exception handling and enable asyncify, need to go hand in hand -->
-    <WasmEnableExceptionHandling>false</WasmEnableExceptionHandling>
-    <EmccFlags>-s USE_GLFW=3 -s ASYNCIFY=1 -O3</EmccFlags>
     <!-- Optimize wasm size -->
     <InvariantGlobalization>true</InvariantGlobalization>
-    <NativeDebugSymbols Condition="'$(Configuration)' == 'Release'">false</NativeDebugSymbols>
+    <!-- Disable exception handling because of asyncify -->
+    <WasmEnableExceptionHandling>false</WasmEnableExceptionHandling>
+    <!-- Set emcc flags for debug and release builds -->
+    <EmccFlags Condition="$(Configuration) == 'Debug'">-sUSE_GLFW=3 -sASYNCIFY=1 -sVERBOSE=1 -Wbad-function-cast -Wcast-function-type -O2 -g3</EmccFlags>
+    <EmccFlags Condition="$(Configuration) == 'Release'">-sUSE_GLFW=3 -sASYNCIFY=1 -O3</EmccFlags>
   </PropertyGroup>
 </Project>
