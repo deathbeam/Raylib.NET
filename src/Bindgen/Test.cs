@@ -74,6 +74,6 @@ public class Test
                     public static readonly bool VALUE = IsBlittable(typeof(T));
                 }
             }
-        """;
+            """;
     }
 }
