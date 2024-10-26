@@ -1,19 +1,17 @@
-# Raylib.NET
-
-## Stuff being done here
+### Stuff being done here
 
 Everything is 100% generated, Im not touching the generated stuff, only generator.
 
-## Supported platforms
+### Supported platforms
 
 - Windows x64/x86/arm64
 - OSX x64/arm64
-- Linux x64
+- Linux x64/arm64 (arm64 currently not prebuilt)
 - Browser WASM
 
-## Use as dependency
+### Use as dependency
 
-### Add source
+#### Add source
 
 Needs GitHub credentials.
 
@@ -21,14 +19,14 @@ Needs GitHub credentials.
 dotnet nuget add source --name "raylib.net" --username "YOUR_GITHUB_USERNAME" --password "YOUR_GITHUB_TOKEN" --store-password-in-clear-text "https://nuget.pkg.github.com/deathbeam/index.json"
 ```
 
-### Use package
+#### Use package
 
 ```sh
 dotnet add package Raylib.NET --version '*-build.*'
 dotnet add package Raylib.NET.Native --version '*-build.*'
 ```
 
-## Try the example
+### Try the example
 
 ```sh
 cd src/Raylib.NET.Example
@@ -47,7 +45,7 @@ dotnet publish -r browser-wasm -c Release
 emrun --port 8080 bin/Release/net8.0/browser-wasm/native/Raylib.NET.Example.html
 ```
 
-## Local development
+### Local development
 
 Initializes submodules:
 
