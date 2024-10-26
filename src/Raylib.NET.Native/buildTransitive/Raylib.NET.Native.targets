@@ -2,7 +2,6 @@
   <ItemGroup Condition="'$(PublishAot)' == 'true' or '$(RuntimeIdentifier)' == 'browser-wasm'">
     <!-- Statically link library to both PublishAOT and PublishAOT-LLVM -->
     <DirectPInvoke Include="raylib"/>
-    <NativeLibrary Condition="'$(IsWindowsRuntime)' == 'true'" Include="$(RaylibStaticPath)raylib.lib"/>
-    <NativeLibrary Condition="'$(IsWindowsRuntime)' != 'true'" Include="$(RaylibStaticPath)libraylib.a"/>
+    <NativeLibrary Include="$(RaylibStaticLibrary)"/>
   </ItemGroup>
 </Project>

@@ -1,7 +1,9 @@
 <Project>
   <PropertyGroup>
-    <RaylibStaticPath>$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)../static/$(RuntimeIdentifier)/native/'))</RaylibStaticPath>
     <IsWindowsRuntime Condition="'$(RuntimeIdentifier)' != '' and $(RuntimeIdentifier.StartsWith('win-'))">true</IsWindowsRuntime>
+    <RaylibStaticPath>$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)../static/$(RuntimeIdentifier)/native/'))</RaylibStaticPath>
+    <RaylibStaticLibrary Condition="'$(IsWindowsRuntime)' == 'true'">$(RaylibStaticPath)raylib.lib</RaylibStaticLibrary>
+    <RaylibStaticLibrary Condition="'$(IsWindowsRuntime)' != 'true'">$(RaylibStaticPath)libraylib.a</RaylibStaticLibrary>
   </PropertyGroup>
   <PropertyGroup Condition="'$(RuntimeIdentifier)' == 'browser-wasm'">
     <!-- NativeAOT-LLVM build -->
