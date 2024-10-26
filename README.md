@@ -1,6 +1,8 @@
 ### Stuff being done here
 
 Everything is 100% generated, Im not touching the generated stuff, only generator.
+The goal is to eventually PR some of this stuff to [Raylib-cs](https://github.com/chrisdill/raylib-cs). Natives PR requires 5.5 update there first and generator is a lot of effort
+due to Raylib-cs project structure being quite difficult to work with.
 
 ### Supported platforms
 
