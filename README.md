@@ -99,4 +99,3 @@ export EMSDK=$PWD
 - [ ] String/NativeBool in delegates?
 - [ ] Bindgen order
 - [ ] Detect actual refs vs arrays and use ref for refs (C types are fake so unreliable)
-- [ ] WASM issues: https://github.com/stanoddly/DotnetRaylibWasm/issues/7 maybe something to do with LibraryImport i assume
