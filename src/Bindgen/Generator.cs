@@ -625,7 +625,7 @@ public class Generator
             "uint8_t" => "byte",
             "int64_t" => "long",
             "uint64_t" => "ulong",
-            _ => options.TransformType(parent, name, type),
+            _ => options.TransformType(parent, name, type) ?? type
         };
     }
 

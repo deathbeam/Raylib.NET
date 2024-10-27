@@ -3,57 +3,30 @@ using Bindgen;
 
 var libPath = "../../lib";
 
-var transformEnum = (string parent, string name, string type) => {
-    if (parent == "GuiGetStyle" || parent == "GuiSetStyle")
+var transformEnum = (string parent, string name) => parent switch
+{
+    "GuiGetStyle" or "GuiSetStyle" => name switch
     {
-        if (name == "control")
-        {
-            return "GuiControl";
-        }
-
-        if (name == "property")
-        {
-            return "GuiDefaultProperty";
-        }
-    }
-
-    if (parent == "IsKeyPressed"
-            || parent == "IsKeyPressedRepeat"
-            || parent == "IsKeyDown"
-            || parent == "IsKeyReleased"
-            || parent == "IsKeyUp"
-            || parent == "GetKeyPressed")
+        "control" => "GuiControl",
+        "property" => "GuiDefaultProperty",
+        _ => null
+    },
+    "IsKeyPressed" or "IsKeyPressedRepeat" or "IsKeyDown" or "IsKeyReleased" or "IsKeyUp" or "GetKeyPressed" => name switch
     {
-        if (name == "key" || name == "return")
-        {
-            return "KeyboardKey";
-        }
-    }
-
-    if (parent == "IsMouseButtonPressed"
-            || parent == "IsMouseButtonDown"
-            || parent == "IsMouseButtonReleased"
-            || parent == "IsMouseButtonUp")
+        "key" or "return" => "KeyboardKey",
+        _ => null
+    },
+    "IsMouseButtonPressed" or "IsMouseButtonDown" or "IsMouseButtonReleased" or "IsMouseButtonUp" => name switch
     {
-        if (name == "button")
-        {
-            return "MouseButton";
-        }
-    }
-
-    if (parent == "IsGampadButtonPressed"
-            || parent == "IsGamepadButtonDown"
-            || parent == "IsGamepadButtonReleased"
-            || parent == "IsGamepadButtonUp"
-            || parent == "GetGamepadButtonPressed")
+        "button" => "MouseButton",
+        _ => null
+    },
+    "IsGampadButtonPressed" or "IsGamepadButtonDown" or "IsGamepadButtonReleased" or "IsGamepadButtonUp" or "GetGamepadButtonPressed" => name switch
     {
-        if (name == "button" || name == "return")
-        {
-            return "GamepadButton";
-        }
-    }
-
-    return type;
+        "button" or "return" => "GamepadButton",
+        _ => null
+    },
+    _ => null
 };
 
 var options = new GeneratorOptions
@@ -64,7 +37,7 @@ var options = new GeneratorOptions
             "Matrix" => "Matrix4x4",
             "Rectangle" => "Vector4",
             "va_list" => "IntPtr",
-            "int" => transformEnum(parent, name, type),
+            "int" => transformEnum(parent, name),
             _ => Regex.Replace(type, @"\brl", ""),
         },
     ExistingTypes = new()
