@@ -3,12 +3,19 @@ using static RaylibNET.Raylib;
 using static RaylibNET.Raygui;
 
 InitWindow(800, 600, "Raylib.NET - Example");
+InitAudioDevice();
 
-var showMessageBox = false;
 var texture = LoadTexture("assets/cat.png");
+var music = LoadMusicStream("assets/country.mp3");
+var showMessageBox = false;
+
+SetTargetFPS(60);
+PlayMusicStream(music);
 
 while (!WindowShouldClose())
 {
+    UpdateMusicStream(music);
+
     BeginDrawing();
 
     ClearBackground(GetColor((uint)GuiGetStyle(GuiControl.DEFAULT, (int)GuiDefaultProperty.BACKGROUND_COLOR)));
@@ -40,4 +47,8 @@ while (!WindowShouldClose())
     EndDrawing();
 }
 
+UnloadMusicStream(music);
+UnloadTexture(texture);
+
+CloseAudioDevice();
 CloseWindow();
