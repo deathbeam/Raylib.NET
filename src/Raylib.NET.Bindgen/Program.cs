@@ -5,12 +5,6 @@ var libPath = "../../lib";
 
 var transformEnum = (string parent, string name) => parent switch
 {
-    "GuiGetStyle" or "GuiSetStyle" => name switch
-    {
-        "control" => "GuiControl",
-        "property" => "GuiDefaultProperty",
-        _ => null
-    },
     "IsKeyPressed" or "IsKeyPressedRepeat" or "IsKeyDown" or "IsKeyReleased" or "IsKeyUp" or "GetKeyPressed" => name switch
     {
         "key" or "return" => "KeyboardKey",
@@ -24,6 +18,11 @@ var transformEnum = (string parent, string name) => parent switch
     "IsGampadButtonPressed" or "IsGamepadButtonDown" or "IsGamepadButtonReleased" or "IsGamepadButtonUp" or "GetGamepadButtonPressed" => name switch
     {
         "button" or "return" => "GamepadButton",
+        _ => null
+    },
+    "GuiGetStyle" or "GuiSetStyle" => name switch
+    {
+        "control" => "GuiControl",
         _ => null
     },
     _ => null
