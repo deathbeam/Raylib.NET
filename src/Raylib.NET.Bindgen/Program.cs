@@ -37,7 +37,7 @@ var options = new GeneratorOptions
             "Rectangle" => "Vector4",
             "va_list" => "IntPtr",
             "int" => transformEnum(parent, name),
-            _ => Regex.Replace(type, @"\b(rres|rl)", ""),
+            _ => Regex.Replace(type, @"\b(rres|rl|r)", ""),
         },
     ExistingTypes = new()
     {

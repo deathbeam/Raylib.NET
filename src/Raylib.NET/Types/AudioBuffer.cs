@@ -6,6 +6,6 @@ using System.Numerics;
 namespace RaylibNET;
 
 [StructLayout(LayoutKind.Sequential)]
-public partial struct rAudioBuffer
+public partial struct AudioBuffer
 {
 }

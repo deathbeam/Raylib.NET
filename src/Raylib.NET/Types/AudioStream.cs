@@ -11,11 +11,11 @@ public partial struct AudioStream
     /// <summary>
     /// Pointer to internal data used by the audio system
     /// </summary>
-    public unsafe rAudioBuffer* Buffer;
+    public unsafe AudioBuffer* Buffer;
     /// <summary>
     /// Pointer to internal data processor, useful for audio effects
     /// </summary>
-    public unsafe rAudioProcessor* Processor;
+    public unsafe AudioProcessor* Processor;
     /// <summary>
     /// Frequency (samples per second)
     /// </summary>
@@ -29,7 +29,7 @@ public partial struct AudioStream
     /// </summary>
     public uint Channels;
 
-    public unsafe AudioStream(rAudioBuffer* buffer, rAudioProcessor* processor, uint sampleRate, uint sampleSize, uint channels)
+    public unsafe AudioStream(AudioBuffer* buffer, AudioProcessor* processor, uint sampleRate, uint sampleSize, uint channels)
     {
         this.Buffer = buffer;
         this.Processor = processor;

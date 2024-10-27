@@ -56,8 +56,8 @@ public class RaylibTest
         CheckType<RayCollision>();
         CheckType<BoundingBox>();
         CheckType<Wave>();
-        CheckType<rAudioBuffer>();
-        CheckType<rAudioProcessor>();
+        CheckType<AudioBuffer>();
+        CheckType<AudioProcessor>();
         CheckType<AudioStream>();
         CheckType<Sound>();
         CheckType<Music>();
