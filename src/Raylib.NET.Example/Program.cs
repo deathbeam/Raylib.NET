@@ -13,7 +13,6 @@ while (!WindowShouldClose())
 
     ClearBackground(GetColor((uint)GuiGetStyle((int)GuiControl.DEFAULT, (int)GuiDefaultProperty.BACKGROUND_COLOR)));
 
-
     DrawTexture(texture, 10, 40, Color.WHITE);
 
     DrawText("Congrats! You created your first window!", 100, 10, 20, Color.LIGHTGRAY);
@@ -32,7 +31,9 @@ while (!WindowShouldClose())
         }
     }
 
-    DrawRectangle(GetMouseX() - 5 , GetMouseY() - 5, 10, 10, Color.RED);
+    var mousePosition = GetMousePosition();
+
+    DrawRectangle((int)mousePosition.X - 5 , (int)mousePosition.Y - 5, 10, 10, Color.RED);
 
     DrawFPS(10, 10);
 
