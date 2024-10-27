@@ -419,7 +419,7 @@ public class Generator
         }
 
         var pointerCount = 0;
-        string returnType = ConvertCppTypeToCSharp(function.Name, function.Name, function.ReturnType, ref pointerCount, out _);
+        string returnType = ConvertCppTypeToCSharp(function.Name, "return", function.ReturnType, ref pointerCount, out _);
         returnType = AppendPointer(returnType, pointerCount);
 
         string functionName = MapName(function.Name);
@@ -576,8 +576,8 @@ public class Generator
             case CppFunctionType cppFunctionType:
                 var returnPointerCount = 0;
                 string returnType = ConvertCppTypeToCSharp(
-                    parent,
                     cppName,
+                    "return",
                     cppFunctionType.ReturnType,
                     ref returnPointerCount,
                     out _,

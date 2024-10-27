@@ -1142,42 +1142,42 @@ public static unsafe partial class Raylib
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial NativeBool IsKeyPressed(int key);
+    public static partial NativeBool IsKeyPressed(KeyboardKey key);
 
     /// <summary>
     /// Check if a key has been pressed again
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial NativeBool IsKeyPressedRepeat(int key);
+    public static partial NativeBool IsKeyPressedRepeat(KeyboardKey key);
 
     /// <summary>
     /// Check if a key is being pressed
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial NativeBool IsKeyDown(int key);
+    public static partial NativeBool IsKeyDown(KeyboardKey key);
 
     /// <summary>
     /// Check if a key has been released once
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial NativeBool IsKeyReleased(int key);
+    public static partial NativeBool IsKeyReleased(KeyboardKey key);
 
     /// <summary>
     /// Check if a key is NOT being pressed
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial NativeBool IsKeyUp(int key);
+    public static partial NativeBool IsKeyUp(KeyboardKey key);
 
     /// <summary>
     /// Get key pressed (keycode), call it multiple times for keys queued, returns 0 when the queue is empty
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial int GetKeyPressed();
+    public static partial KeyboardKey GetKeyPressed();
 
     /// <summary>
     /// Get char pressed (unicode), call it multiple times for chars queued, returns 0 when the queue is empty
@@ -1219,28 +1219,28 @@ public static unsafe partial class Raylib
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial NativeBool IsGamepadButtonDown(int gamepad, int button);
+    public static partial NativeBool IsGamepadButtonDown(int gamepad, GamepadButton button);
 
     /// <summary>
     /// Check if a gamepad button has been released once
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial NativeBool IsGamepadButtonReleased(int gamepad, int button);
+    public static partial NativeBool IsGamepadButtonReleased(int gamepad, GamepadButton button);
 
     /// <summary>
     /// Check if a gamepad button is NOT being pressed
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial NativeBool IsGamepadButtonUp(int gamepad, int button);
+    public static partial NativeBool IsGamepadButtonUp(int gamepad, GamepadButton button);
 
     /// <summary>
     /// Get the last gamepad button pressed
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial int GetGamepadButtonPressed();
+    public static partial GamepadButton GetGamepadButtonPressed();
 
     /// <summary>
     /// Get gamepad axis count for a gamepad
@@ -1275,28 +1275,28 @@ public static unsafe partial class Raylib
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial NativeBool IsMouseButtonPressed(int button);
+    public static partial NativeBool IsMouseButtonPressed(MouseButton button);
 
     /// <summary>
     /// Check if a mouse button is being pressed
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial NativeBool IsMouseButtonDown(int button);
+    public static partial NativeBool IsMouseButtonDown(MouseButton button);
 
     /// <summary>
     /// Check if a mouse button has been released once
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial NativeBool IsMouseButtonReleased(int button);
+    public static partial NativeBool IsMouseButtonReleased(MouseButton button);
 
     /// <summary>
     /// Check if a mouse button is NOT being pressed
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial NativeBool IsMouseButtonUp(int button);
+    public static partial NativeBool IsMouseButtonUp(MouseButton button);
 
     /// <summary>
     /// Get mouse position X

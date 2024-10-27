@@ -4,7 +4,7 @@ using Bindgen;
 var libPath = "../../lib";
 
 var transformEnum = (string parent, string name, string type) => {
-    if (parent == "GuiGetStyle")
+    if (parent == "GuiGetStyle" || parent == "GuiSetStyle")
     {
         if (name == "control")
         {
@@ -14,6 +14,42 @@ var transformEnum = (string parent, string name, string type) => {
         if (name == "property")
         {
             return "GuiDefaultProperty";
+        }
+    }
+
+    if (parent == "IsKeyPressed"
+            || parent == "IsKeyPressedRepeat"
+            || parent == "IsKeyDown"
+            || parent == "IsKeyReleased"
+            || parent == "IsKeyUp"
+            || parent == "GetKeyPressed")
+    {
+        if (name == "key" || name == "return")
+        {
+            return "KeyboardKey";
+        }
+    }
+
+    if (parent == "IsMouseButtonPressed"
+            || parent == "IsMouseButtonDown"
+            || parent == "IsMouseButtonReleased"
+            || parent == "IsMouseButtonUp")
+    {
+        if (name == "button")
+        {
+            return "MouseButton";
+        }
+    }
+
+    if (parent == "IsGampadButtonPressed"
+            || parent == "IsGamepadButtonDown"
+            || parent == "IsGamepadButtonReleased"
+            || parent == "IsGamepadButtonUp"
+            || parent == "GetGamepadButtonPressed")
+    {
+        if (name == "button" || name == "return")
+        {
+            return "GamepadButton";
         }
     }
 
