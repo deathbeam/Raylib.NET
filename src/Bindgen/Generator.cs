@@ -199,7 +199,7 @@ public class Generator
         }
     }
 
-    private String GenerateConstant(CppMacro macro, out String output)
+    private string GenerateConstant(CppMacro macro, out string output)
     {
         if (macro.Span.Start.File != "cppast.input")
         {
@@ -259,7 +259,7 @@ public class Generator
         return name;
     }
 
-    private String GenerateEnum(CppEnum cppEnum, out String output)
+    private string GenerateEnum(CppEnum cppEnum, out string output)
     {
         if (cppEnum.Span.Start.File != "cppast.input")
         {
@@ -267,7 +267,7 @@ public class Generator
             return "";
         }
 
-        string enumName = MapType(cppEnum.Name, cppEnum.Name);
+        string enumName = MapType(cppEnum.Name, cppEnum.Name, cppEnum.Name);
 
         output = "";
         output += $"public enum {enumName}\n";
@@ -294,7 +294,7 @@ public class Generator
         return enumName;
     }
 
-    private String GenerateStruct(CppClass cppStruct, out String output)
+    private string GenerateStruct(CppClass cppStruct, out string output)
     {
         if (cppStruct.Span.Start.File != "cppast.input")
         {
@@ -302,7 +302,7 @@ public class Generator
             return "";
         }
 
-        string structName = MapType(cppStruct.Name, cppStruct.Name);
+        string structName = MapType(cppStruct.Name, cppStruct.Name, cppStruct.Name);
 
         output = "";
 
@@ -336,8 +336,8 @@ public class Generator
             GenerateComments(field, ref output);
 
             var pointerCount = 0;
-            string fieldType = ConvertCppTypeToCSharp(field.Name, field.Type, ref pointerCount, out var arraySize);
-            string fieldName = MapType(field.Name, field.Name, true);
+            string fieldType = ConvertCppTypeToCSharp(structName, field.Name, field.Type, ref pointerCount, out var arraySize);
+            string fieldName = MapName(field.Name, toPascalCase: true);
 
             if (arraySize > 0)
             {
@@ -377,8 +377,8 @@ public class Generator
             foreach (var field in cppStruct.Fields)
             {
                 var pointerCount = 0;
-                string fieldType = ConvertCppTypeToCSharp(field.Name, field.Type, ref pointerCount, out var arraySize);
-                string fieldName = ToCamelCase(MapType(field.Name, field.Name, true));
+                string fieldType = ConvertCppTypeToCSharp(structName, field.Name, field.Type, ref pointerCount, out var arraySize);
+                string fieldName = MapName(field.Name, toCamelCase: true);
 
                 if (!first)
                 {
@@ -400,7 +400,7 @@ public class Generator
 
             foreach (var field in cppStruct.Fields)
             {
-                string fieldName = MapType(field.Name, field.Name, true);
+                string fieldName = MapName(field.Name, toPascalCase: true);
                 output += $"        this.{fieldName} = {ToCamelCase(fieldName)};\n";
             }
             output += "    }\n";
@@ -410,7 +410,7 @@ public class Generator
         return structName;
     }
 
-    private String GenerateFunction(CppFunction function, out String output)
+    private string GenerateFunction(CppFunction function, out string output)
     {
         if (function.Span.Start.File != "cppast.input")
         {
@@ -419,27 +419,19 @@ public class Generator
         }
 
         var pointerCount = 0;
-        string returnType = ConvertCppTypeToCSharp(function.Name, function.ReturnType, ref pointerCount, out _);
+        string returnType = ConvertCppTypeToCSharp(function.Name, function.Name, function.ReturnType, ref pointerCount, out _);
         returnType = AppendPointer(returnType, pointerCount);
 
-        string functionName = MapType(function.Name, function.Name);
+        string functionName = MapName(function.Name);
         List<string> parameters = new List<string>();
         bool isUnsafe = pointerCount > 0;
 
         foreach (var parameter in function.Parameters)
         {
             var paramPointerCount = 0;
-            string paramType = ConvertCppTypeToCSharp(parameter.Name, parameter.Type, ref paramPointerCount, out _);
-
-            // TODO: Guess arrays maybe? Its a mess, doesnt work 100%
-            // if (paramPointerCount > 0 && IsNotArray(function, parameter))
-            // {
-            //     paramPointerCount--;
-            //     paramType = "ref " + paramType;
-            // }
-
+            string paramType = ConvertCppTypeToCSharp(functionName, parameter.Name, parameter.Type, ref paramPointerCount, out _);
             paramType = AppendPointer(paramType, paramPointerCount);
-            string paramName = MapType(parameter.Name, parameter.Name);
+            string paramName = MapName(parameter.Name);
 
             if (paramPointerCount > 0)
             {
@@ -478,7 +470,7 @@ public class Generator
         return functionName;
     }
 
-    private bool GenerateComments(CppDeclaration dec, ref String output)
+    private bool GenerateComments(CppDeclaration dec, ref string output)
     {
         var lines = fileContent.Split('\n');
         var comments = new List<string>();
@@ -515,6 +507,7 @@ public class Generator
     }
 
     private string ConvertCppTypeToCSharp(
+        string parent,
         string cppName,
         CppType cppType,
         ref int pointerCount,
@@ -526,7 +519,7 @@ public class Generator
         switch (cppType)
         {
             case CppPrimitiveType primitiveType:
-                return MapType(cppName, primitiveType.Kind switch
+                return MapType(parent, cppName, primitiveType.Kind switch
                 {
                     CppPrimitiveKind.Void => "void",
                     CppPrimitiveKind.Bool => skipHighOrder ? "sbyte" : "NativeBool",
@@ -541,7 +534,7 @@ public class Generator
                     CppPrimitiveKind.UnsignedInt => "uint",
                     CppPrimitiveKind.UnsignedLong => "ulong",
                     _ => throw new NotSupportedException($"Unsupported primitive type: {primitiveType.Kind}"),
-                }, isPrimitive: true);
+                });
             case CppPointerType pointerType:
                 if (pointerCount == 0 && !skipHighOrder)
                 {
@@ -565,24 +558,25 @@ public class Generator
                 }
 
                 pointerCount++;
-                return ConvertCppTypeToCSharp(cppName, pointerType.ElementType, ref pointerCount, out _, skipHighOrder);
+                return ConvertCppTypeToCSharp(parent, cppName, pointerType.ElementType, ref pointerCount, out _, skipHighOrder);
             case CppReferenceType referenceType:
                 pointerCount++;
-                return ConvertCppTypeToCSharp(cppName, referenceType.ElementType, ref pointerCount, out _, skipHighOrder);
+                return ConvertCppTypeToCSharp(parent, cppName, referenceType.ElementType, ref pointerCount, out _, skipHighOrder);
             case CppArrayType arrayType:
                 arraySize = arrayType.Size;
-                return ConvertCppTypeToCSharp(cppName, arrayType.ElementType, ref pointerCount, out _, skipHighOrder);
+                return ConvertCppTypeToCSharp(parent, cppName, arrayType.ElementType, ref pointerCount, out _, skipHighOrder);
             case CppQualifiedType qualifiedType:
-                return ConvertCppTypeToCSharp(cppName, qualifiedType.ElementType, ref pointerCount, out _, skipHighOrder);
+                return ConvertCppTypeToCSharp(parent, cppName, qualifiedType.ElementType, ref pointerCount, out _, skipHighOrder);
             case CppTypedef typedefType:
-                return ConvertCppTypeToCSharp(cppName, typedefType.ElementType, ref pointerCount, out _, skipHighOrder);
+                return ConvertCppTypeToCSharp(parent, cppName, typedefType.ElementType, ref pointerCount, out _, skipHighOrder);
             case CppClass cppClass:
-                return MapType(cppName, cppClass.Name);
+                return MapType(parent, cppName, cppClass.Name);
             case CppEnum cppEnum:
-                return MapType(cppName, cppEnum.Name);
+                return MapType(parent, cppName, cppEnum.Name);
             case CppFunctionType cppFunctionType:
                 var returnPointerCount = 0;
                 string returnType = ConvertCppTypeToCSharp(
+                    parent,
                     cppName,
                     cppFunctionType.ReturnType,
                     ref returnPointerCount,
@@ -595,7 +589,7 @@ public class Generator
                 foreach (var parameter in cppFunctionType.Parameters)
                 {
                     var paramPointerCount = 0;
-                    string paramType = ConvertCppTypeToCSharp(parameter.Name, parameter.Type, ref paramPointerCount, out _, true);
+                    string paramType = ConvertCppTypeToCSharp(cppName, parameter.Name, parameter.Type, ref paramPointerCount, out _, true);
                     paramType = AppendPointer(paramType, paramPointerCount);
                     parameters.Add(paramType);
                 }
@@ -607,16 +601,21 @@ public class Generator
         }
     }
 
-    private string MapType(string name, string type, bool toPascalCase = false, bool isPrimitive = false)
+    private string MapName(string name, bool toPascalCase = false, bool toCamelCase = false)
     {
-        var o = toPascalCase ? ToPascalCase(type) : type;
+        var o = toCamelCase ? ToCamelCase(name) : toPascalCase ? ToPascalCase(name) : name;
 
-        if (!isPrimitive && reservedKeywords.Contains(o))
+        if (reservedKeywords.Contains(o))
         {
             return "@" + o;
         }
 
-        return o switch
+        return o;
+    }
+
+    private string MapType(string parent, string name, string type)
+    {
+        return type switch
         {
             "int32_t" => "int",
             "uint32_t" => "uint",
@@ -626,7 +625,7 @@ public class Generator
             "uint8_t" => "byte",
             "int64_t" => "long",
             "uint64_t" => "ulong",
-            _ => options.TransformType(name, o),
+            _ => options.TransformType(parent, name, type),
         };
     }
 

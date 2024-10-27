@@ -177,1072 +177,1072 @@ public static unsafe partial class Rlgl
     /// <summary>
     /// Choose the current matrix to be transformed
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlMatrixMode", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void MatrixMode(int mode);
+    public static partial void rlMatrixMode(int mode);
 
     /// <summary>
     /// Push the current matrix to stack
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlPushMatrix", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void PushMatrix();
+    public static partial void rlPushMatrix();
 
     /// <summary>
     /// Pop latest inserted matrix from stack
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlPopMatrix", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void PopMatrix();
+    public static partial void rlPopMatrix();
 
     /// <summary>
     /// Reset current matrix to identity matrix
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlLoadIdentity", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void LoadIdentity();
+    public static partial void rlLoadIdentity();
 
     /// <summary>
     /// Multiply the current matrix by a translation matrix
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlTranslatef", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void Translatef(float x, float y, float z);
+    public static partial void rlTranslatef(float x, float y, float z);
 
     /// <summary>
     /// Multiply the current matrix by a rotation matrix
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlRotatef", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void Rotatef(float angle, float x, float y, float z);
+    public static partial void rlRotatef(float angle, float x, float y, float z);
 
     /// <summary>
     /// Multiply the current matrix by a scaling matrix
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlScalef", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void Scalef(float x, float y, float z);
+    public static partial void rlScalef(float x, float y, float z);
 
     /// <summary>
     /// Multiply the current matrix by another matrix
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlMultMatrixf", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void MultMatrixf(float* matf);
+    public static unsafe partial void rlMultMatrixf(float* matf);
 
-    [LibraryImport(LIBRARY, EntryPoint = "rlFrustum", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void Frustum(double left, double right, double bottom, double top, double znear, double zfar);
+    public static partial void rlFrustum(double left, double right, double bottom, double top, double znear, double zfar);
 
-    [LibraryImport(LIBRARY, EntryPoint = "rlOrtho", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void Ortho(double left, double right, double bottom, double top, double znear, double zfar);
+    public static partial void rlOrtho(double left, double right, double bottom, double top, double znear, double zfar);
 
     /// <summary>
     /// Set the viewport area
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlViewport", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void Viewport(int x, int y, int width, int height);
+    public static partial void rlViewport(int x, int y, int width, int height);
 
     /// <summary>
     /// Set clip planes distances
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlSetClipPlanes", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void SetClipPlanes(double nearPlane, double farPlane);
+    public static partial void rlSetClipPlanes(double nearPlane, double farPlane);
 
     /// <summary>
     /// Get cull plane distance near
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlGetCullDistanceNear", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial double GetCullDistanceNear();
+    public static partial double rlGetCullDistanceNear();
 
     /// <summary>
     /// Get cull plane distance far
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlGetCullDistanceFar", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial double GetCullDistanceFar();
+    public static partial double rlGetCullDistanceFar();
 
     /// <summary>
     /// Initialize drawing mode (how to organize vertex)
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlBegin", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void Begin(int mode);
+    public static partial void rlBegin(int mode);
 
     /// <summary>
     /// Finish vertex providing
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlEnd", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void End();
+    public static partial void rlEnd();
 
     /// <summary>
     /// Define one vertex (position) - 2 int
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlVertex2i", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void Vertex2i(int x, int y);
+    public static partial void rlVertex2i(int x, int y);
 
     /// <summary>
     /// Define one vertex (position) - 2 float
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlVertex2f", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void Vertex2f(float x, float y);
+    public static partial void rlVertex2f(float x, float y);
 
     /// <summary>
     /// Define one vertex (position) - 3 float
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlVertex3f", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void Vertex3f(float x, float y, float z);
+    public static partial void rlVertex3f(float x, float y, float z);
 
     /// <summary>
     /// Define one vertex (texture coordinate) - 2 float
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlTexCoord2f", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void TexCoord2f(float x, float y);
+    public static partial void rlTexCoord2f(float x, float y);
 
     /// <summary>
     /// Define one vertex (normal) - 3 float
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlNormal3f", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void Normal3f(float x, float y, float z);
+    public static partial void rlNormal3f(float x, float y, float z);
 
     /// <summary>
     /// Define one vertex (color) - 4 byte
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlColor4ub", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void Color4ub(byte r, byte g, byte b, byte a);
+    public static partial void rlColor4ub(byte r, byte g, byte b, byte a);
 
     /// <summary>
     /// Define one vertex (color) - 3 float
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlColor3f", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void Color3f(float x, float y, float z);
+    public static partial void rlColor3f(float x, float y, float z);
 
     /// <summary>
     /// Define one vertex (color) - 4 float
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlColor4f", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void Color4f(float x, float y, float z, float w);
+    public static partial void rlColor4f(float x, float y, float z, float w);
 
     /// <summary>
     /// Enable vertex array (VAO, if supported)
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlEnableVertexArray", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial NativeBool EnableVertexArray(uint vaoId);
+    public static partial NativeBool rlEnableVertexArray(uint vaoId);
 
     /// <summary>
     /// Disable vertex array (VAO, if supported)
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlDisableVertexArray", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DisableVertexArray();
+    public static partial void rlDisableVertexArray();
 
     /// <summary>
     /// Enable vertex buffer (VBO)
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlEnableVertexBuffer", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void EnableVertexBuffer(uint id);
+    public static partial void rlEnableVertexBuffer(uint id);
 
     /// <summary>
     /// Disable vertex buffer (VBO)
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlDisableVertexBuffer", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DisableVertexBuffer();
+    public static partial void rlDisableVertexBuffer();
 
     /// <summary>
     /// Enable vertex buffer element (VBO element)
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlEnableVertexBufferElement", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void EnableVertexBufferElement(uint id);
+    public static partial void rlEnableVertexBufferElement(uint id);
 
     /// <summary>
     /// Disable vertex buffer element (VBO element)
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlDisableVertexBufferElement", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DisableVertexBufferElement();
+    public static partial void rlDisableVertexBufferElement();
 
     /// <summary>
     /// Enable vertex attribute index
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlEnableVertexAttribute", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void EnableVertexAttribute(uint index);
+    public static partial void rlEnableVertexAttribute(uint index);
 
     /// <summary>
     /// Disable vertex attribute index
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlDisableVertexAttribute", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DisableVertexAttribute(uint index);
+    public static partial void rlDisableVertexAttribute(uint index);
 
     /// <summary>
     /// Select and active a texture slot
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlActiveTextureSlot", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ActiveTextureSlot(int slot);
+    public static partial void rlActiveTextureSlot(int slot);
 
     /// <summary>
     /// Enable texture
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlEnableTexture", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void EnableTexture(uint id);
+    public static partial void rlEnableTexture(uint id);
 
     /// <summary>
     /// Disable texture
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlDisableTexture", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DisableTexture();
+    public static partial void rlDisableTexture();
 
     /// <summary>
     /// Enable texture cubemap
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlEnableTextureCubemap", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void EnableTextureCubemap(uint id);
+    public static partial void rlEnableTextureCubemap(uint id);
 
     /// <summary>
     /// Disable texture cubemap
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlDisableTextureCubemap", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DisableTextureCubemap();
+    public static partial void rlDisableTextureCubemap();
 
     /// <summary>
     /// Set texture parameters (filter, wrap)
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlTextureParameters", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void TextureParameters(uint id, int @param, int value);
+    public static partial void rlTextureParameters(uint id, int @param, int value);
 
     /// <summary>
     /// Set cubemap parameters (filter, wrap)
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlCubemapParameters", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void CubemapParameters(uint id, int @param, int value);
+    public static partial void rlCubemapParameters(uint id, int @param, int value);
 
     /// <summary>
     /// Enable shader program
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlEnableShader", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void EnableShader(uint id);
+    public static partial void rlEnableShader(uint id);
 
     /// <summary>
     /// Disable shader program
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlDisableShader", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DisableShader();
+    public static partial void rlDisableShader();
 
     /// <summary>
     /// Enable render texture (fbo)
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlEnableFramebuffer", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void EnableFramebuffer(uint id);
+    public static partial void rlEnableFramebuffer(uint id);
 
     /// <summary>
     /// Disable render texture (fbo), return to default framebuffer
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlDisableFramebuffer", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DisableFramebuffer();
+    public static partial void rlDisableFramebuffer();
 
     /// <summary>
     /// Get the currently active render texture (fbo), 0 for default framebuffer
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlGetActiveFramebuffer", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint GetActiveFramebuffer();
+    public static partial uint rlGetActiveFramebuffer();
 
     /// <summary>
     /// Activate multiple draw color buffers
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlActiveDrawBuffers", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ActiveDrawBuffers(int count);
+    public static partial void rlActiveDrawBuffers(int count);
 
     /// <summary>
     /// Blit active framebuffer to main framebuffer
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlBlitFramebuffer", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void BlitFramebuffer(int srcX, int srcY, int srcWidth, int srcHeight, int dstX, int dstY, int dstWidth, int dstHeight, int bufferMask);
+    public static partial void rlBlitFramebuffer(int srcX, int srcY, int srcWidth, int srcHeight, int dstX, int dstY, int dstWidth, int dstHeight, int bufferMask);
 
     /// <summary>
     /// Bind framebuffer (FBO)
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlBindFramebuffer", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void BindFramebuffer(uint target, uint framebuffer);
+    public static partial void rlBindFramebuffer(uint target, uint framebuffer);
 
     /// <summary>
     /// Enable color blending
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlEnableColorBlend", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void EnableColorBlend();
+    public static partial void rlEnableColorBlend();
 
     /// <summary>
     /// Disable color blending
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlDisableColorBlend", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DisableColorBlend();
+    public static partial void rlDisableColorBlend();
 
     /// <summary>
     /// Enable depth test
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlEnableDepthTest", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void EnableDepthTest();
+    public static partial void rlEnableDepthTest();
 
     /// <summary>
     /// Disable depth test
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlDisableDepthTest", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DisableDepthTest();
+    public static partial void rlDisableDepthTest();
 
     /// <summary>
     /// Enable depth write
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlEnableDepthMask", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void EnableDepthMask();
+    public static partial void rlEnableDepthMask();
 
     /// <summary>
     /// Disable depth write
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlDisableDepthMask", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DisableDepthMask();
+    public static partial void rlDisableDepthMask();
 
     /// <summary>
     /// Enable backface culling
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlEnableBackfaceCulling", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void EnableBackfaceCulling();
+    public static partial void rlEnableBackfaceCulling();
 
     /// <summary>
     /// Disable backface culling
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlDisableBackfaceCulling", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DisableBackfaceCulling();
+    public static partial void rlDisableBackfaceCulling();
 
     /// <summary>
     /// Color mask control
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlColorMask", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ColorMask(NativeBool r, NativeBool g, NativeBool b, NativeBool a);
+    public static partial void rlColorMask(NativeBool r, NativeBool g, NativeBool b, NativeBool a);
 
     /// <summary>
     /// Set face culling mode
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlSetCullFace", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void SetCullFace(int mode);
+    public static partial void rlSetCullFace(int mode);
 
     /// <summary>
     /// Enable scissor test
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlEnableScissorTest", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void EnableScissorTest();
+    public static partial void rlEnableScissorTest();
 
     /// <summary>
     /// Disable scissor test
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlDisableScissorTest", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DisableScissorTest();
+    public static partial void rlDisableScissorTest();
 
     /// <summary>
     /// Scissor test
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlScissor", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void Scissor(int x, int y, int width, int height);
+    public static partial void rlScissor(int x, int y, int width, int height);
 
     /// <summary>
     /// Enable wire mode
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlEnableWireMode", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void EnableWireMode();
+    public static partial void rlEnableWireMode();
 
     /// <summary>
     /// Enable point mode
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlEnablePointMode", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void EnablePointMode();
+    public static partial void rlEnablePointMode();
 
     /// <summary>
     /// Disable wire (and point) mode
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlDisableWireMode", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DisableWireMode();
+    public static partial void rlDisableWireMode();
 
     /// <summary>
     /// Set the line drawing width
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlSetLineWidth", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void SetLineWidth(float width);
+    public static partial void rlSetLineWidth(float width);
 
     /// <summary>
     /// Get the line drawing width
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlGetLineWidth", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial float GetLineWidth();
+    public static partial float rlGetLineWidth();
 
     /// <summary>
     /// Enable line aliasing
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlEnableSmoothLines", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void EnableSmoothLines();
+    public static partial void rlEnableSmoothLines();
 
     /// <summary>
     /// Disable line aliasing
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlDisableSmoothLines", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DisableSmoothLines();
+    public static partial void rlDisableSmoothLines();
 
     /// <summary>
     /// Enable stereo rendering
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlEnableStereoRender", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void EnableStereoRender();
+    public static partial void rlEnableStereoRender();
 
     /// <summary>
     /// Disable stereo rendering
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlDisableStereoRender", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DisableStereoRender();
+    public static partial void rlDisableStereoRender();
 
     /// <summary>
     /// Check if stereo render is enabled
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlIsStereoRenderEnabled", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial NativeBool IsStereoRenderEnabled();
+    public static partial NativeBool rlIsStereoRenderEnabled();
 
     /// <summary>
     /// Clear color buffer with color
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlClearColor", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ClearColor(byte r, byte g, byte b, byte a);
+    public static partial void rlClearColor(byte r, byte g, byte b, byte a);
 
     /// <summary>
     /// Clear used screen buffers (color and depth)
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlClearScreenBuffers", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ClearScreenBuffers();
+    public static partial void rlClearScreenBuffers();
 
     /// <summary>
     /// Check and log OpenGL error codes
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlCheckErrors", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void CheckErrors();
+    public static partial void rlCheckErrors();
 
     /// <summary>
     /// Set blending mode
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlSetBlendMode", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void SetBlendMode(int mode);
+    public static partial void rlSetBlendMode(int mode);
 
     /// <summary>
     /// Set blending mode factor and equation (using OpenGL factors)
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlSetBlendFactors", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void SetBlendFactors(int glSrcFactor, int glDstFactor, int glEquation);
+    public static partial void rlSetBlendFactors(int glSrcFactor, int glDstFactor, int glEquation);
 
     /// <summary>
     /// Set blending mode factors and equations separately (using OpenGL factors)
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlSetBlendFactorsSeparate", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void SetBlendFactorsSeparate(int glSrcRGB, int glDstRGB, int glSrcAlpha, int glDstAlpha, int glEqRGB, int glEqAlpha);
+    public static partial void rlSetBlendFactorsSeparate(int glSrcRGB, int glDstRGB, int glSrcAlpha, int glDstAlpha, int glEqRGB, int glEqAlpha);
 
     /// <summary>
     /// Initialize rlgl (buffers, shaders, textures, states)
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlglInit", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void glInit(int width, int height);
+    public static partial void rlglInit(int width, int height);
 
     /// <summary>
     /// De-initialize rlgl (buffers, shaders, textures)
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlglClose", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void glClose();
+    public static partial void rlglClose();
 
     /// <summary>
     /// Load OpenGL extensions (loader function required)
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlLoadExtensions", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void LoadExtensions(void* loader);
+    public static unsafe partial void rlLoadExtensions(void* loader);
 
     /// <summary>
     /// Get current OpenGL version
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlGetVersion", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial int GetVersion();
+    public static partial int rlGetVersion();
 
     /// <summary>
     /// Set current framebuffer width
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlSetFramebufferWidth", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void SetFramebufferWidth(int width);
+    public static partial void rlSetFramebufferWidth(int width);
 
     /// <summary>
     /// Get default framebuffer width
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlGetFramebufferWidth", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial int GetFramebufferWidth();
+    public static partial int rlGetFramebufferWidth();
 
     /// <summary>
     /// Set current framebuffer height
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlSetFramebufferHeight", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void SetFramebufferHeight(int height);
+    public static partial void rlSetFramebufferHeight(int height);
 
     /// <summary>
     /// Get default framebuffer height
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlGetFramebufferHeight", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial int GetFramebufferHeight();
+    public static partial int rlGetFramebufferHeight();
 
     /// <summary>
     /// Get default texture id
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlGetTextureIdDefault", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint GetTextureIdDefault();
+    public static partial uint rlGetTextureIdDefault();
 
     /// <summary>
     /// Get default shader id
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlGetShaderIdDefault", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint GetShaderIdDefault();
+    public static partial uint rlGetShaderIdDefault();
 
     /// <summary>
     /// Get default shader locations
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlGetShaderLocsDefault", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial int* GetShaderLocsDefault();
+    public static unsafe partial int* rlGetShaderLocsDefault();
 
     /// <summary>
     /// Load a render batch system
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlLoadRenderBatch", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial RenderBatch LoadRenderBatch(int numBuffers, int bufferElements);
+    public static partial RenderBatch rlLoadRenderBatch(int numBuffers, int bufferElements);
 
     /// <summary>
     /// Unload render batch system
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlUnloadRenderBatch", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void UnloadRenderBatch(RenderBatch batch);
+    public static partial void rlUnloadRenderBatch(RenderBatch batch);
 
     /// <summary>
     /// Draw render batch data (Update->Draw->Reset)
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlDrawRenderBatch", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void DrawRenderBatch(RenderBatch* batch);
+    public static unsafe partial void rlDrawRenderBatch(RenderBatch* batch);
 
     /// <summary>
     /// Set the active render batch for rlgl (NULL for default internal)
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlSetRenderBatchActive", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void SetRenderBatchActive(RenderBatch* batch);
+    public static unsafe partial void rlSetRenderBatchActive(RenderBatch* batch);
 
     /// <summary>
     /// Update and draw internal render batch
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlDrawRenderBatchActive", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DrawRenderBatchActive();
+    public static partial void rlDrawRenderBatchActive();
 
     /// <summary>
     /// Check internal buffer overflow for a given number of vertex
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlCheckRenderBatchLimit", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial NativeBool CheckRenderBatchLimit(int vCount);
+    public static partial NativeBool rlCheckRenderBatchLimit(int vCount);
 
     /// <summary>
     /// Set current texture for render batch and check buffers limits
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlSetTexture", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void SetTexture(uint id);
+    public static partial void rlSetTexture(uint id);
 
     /// <summary>
     /// Load vertex array (vao) if supported
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlLoadVertexArray", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint LoadVertexArray();
+    public static partial uint rlLoadVertexArray();
 
     /// <summary>
     /// Load a vertex buffer object
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlLoadVertexBuffer", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial uint LoadVertexBuffer(void* buffer, int size, NativeBool dynamic);
+    public static unsafe partial uint rlLoadVertexBuffer(void* buffer, int size, NativeBool dynamic);
 
     /// <summary>
     /// Load vertex buffer elements object
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlLoadVertexBufferElement", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial uint LoadVertexBufferElement(void* buffer, int size, NativeBool dynamic);
+    public static unsafe partial uint rlLoadVertexBufferElement(void* buffer, int size, NativeBool dynamic);
 
     /// <summary>
     /// Update vertex buffer object data on GPU buffer
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlUpdateVertexBuffer", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void UpdateVertexBuffer(uint bufferId, void* data, int dataSize, int offset);
+    public static unsafe partial void rlUpdateVertexBuffer(uint bufferId, void* data, int dataSize, int offset);
 
     /// <summary>
     /// Update vertex buffer elements data on GPU buffer
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlUpdateVertexBufferElements", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void UpdateVertexBufferElements(uint id, void* data, int dataSize, int offset);
+    public static unsafe partial void rlUpdateVertexBufferElements(uint id, void* data, int dataSize, int offset);
 
     /// <summary>
     /// Unload vertex array (vao)
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlUnloadVertexArray", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void UnloadVertexArray(uint vaoId);
+    public static partial void rlUnloadVertexArray(uint vaoId);
 
     /// <summary>
     /// Unload vertex buffer object
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlUnloadVertexBuffer", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void UnloadVertexBuffer(uint vboId);
+    public static partial void rlUnloadVertexBuffer(uint vboId);
 
     /// <summary>
     /// Set vertex attribute data configuration
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlSetVertexAttribute", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void SetVertexAttribute(uint index, int compSize, int @type, NativeBool normalized, int stride, int offset);
+    public static partial void rlSetVertexAttribute(uint index, int compSize, int @type, NativeBool normalized, int stride, int offset);
 
     /// <summary>
     /// Set vertex attribute data divisor
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlSetVertexAttributeDivisor", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void SetVertexAttributeDivisor(uint index, int divisor);
+    public static partial void rlSetVertexAttributeDivisor(uint index, int divisor);
 
     /// <summary>
     /// Set vertex attribute default value, when attribute to provided
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlSetVertexAttributeDefault", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void SetVertexAttributeDefault(int locIndex, void* value, int attribType, int count);
+    public static unsafe partial void rlSetVertexAttributeDefault(int locIndex, void* value, int attribType, int count);
 
     /// <summary>
     /// Draw vertex array (currently active vao)
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlDrawVertexArray", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DrawVertexArray(int offset, int count);
+    public static partial void rlDrawVertexArray(int offset, int count);
 
     /// <summary>
     /// Draw vertex array elements
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlDrawVertexArrayElements", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void DrawVertexArrayElements(int offset, int count, void* buffer);
+    public static unsafe partial void rlDrawVertexArrayElements(int offset, int count, void* buffer);
 
     /// <summary>
     /// Draw vertex array (currently active vao) with instancing
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlDrawVertexArrayInstanced", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DrawVertexArrayInstanced(int offset, int count, int instances);
+    public static partial void rlDrawVertexArrayInstanced(int offset, int count, int instances);
 
     /// <summary>
     /// Draw vertex array elements with instancing
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlDrawVertexArrayElementsInstanced", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void DrawVertexArrayElementsInstanced(int offset, int count, void* buffer, int instances);
+    public static unsafe partial void rlDrawVertexArrayElementsInstanced(int offset, int count, void* buffer, int instances);
 
     /// <summary>
     /// Load texture data
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlLoadTexture", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial uint LoadTexture(void* data, int width, int height, int format, int mipmapCount);
+    public static unsafe partial uint rlLoadTexture(void* data, int width, int height, int format, int mipmapCount);
 
     /// <summary>
     /// Load depth texture/renderbuffer (to be attached to fbo)
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlLoadTextureDepth", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint LoadTextureDepth(int width, int height, NativeBool useRenderBuffer);
+    public static partial uint rlLoadTextureDepth(int width, int height, NativeBool useRenderBuffer);
 
     /// <summary>
     /// Load texture cubemap data
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlLoadTextureCubemap", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial uint LoadTextureCubemap(void* data, int size, int format, int mipmapCount);
+    public static unsafe partial uint rlLoadTextureCubemap(void* data, int size, int format, int mipmapCount);
 
     /// <summary>
     /// Update texture with new data on GPU
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlUpdateTexture", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void UpdateTexture(uint id, int offsetX, int offsetY, int width, int height, int format, void* data);
+    public static unsafe partial void rlUpdateTexture(uint id, int offsetX, int offsetY, int width, int height, int format, void* data);
 
     /// <summary>
     /// Get OpenGL internal formats
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlGetGlTextureFormats", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void GetGlTextureFormats(int format, uint* glInternalFormat, uint* glFormat, uint* glType);
+    public static unsafe partial void rlGetGlTextureFormats(int format, uint* glInternalFormat, uint* glFormat, uint* glType);
 
     /// <summary>
     /// Get name string for pixel format
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlGetPixelFormatName", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial string GetPixelFormatName(uint format);
+    public static partial string rlGetPixelFormatName(uint format);
 
     /// <summary>
     /// Unload texture from GPU memory
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlUnloadTexture", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void UnloadTexture(uint id);
+    public static partial void rlUnloadTexture(uint id);
 
     /// <summary>
     /// Generate mipmap data for selected texture
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlGenTextureMipmaps", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void GenTextureMipmaps(uint id, int width, int height, int format, int* mipmaps);
+    public static unsafe partial void rlGenTextureMipmaps(uint id, int width, int height, int format, int* mipmaps);
 
     /// <summary>
     /// Read texture pixel data
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlReadTexturePixels", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void* ReadTexturePixels(uint id, int width, int height, int format);
+    public static unsafe partial void* rlReadTexturePixels(uint id, int width, int height, int format);
 
     /// <summary>
     /// Read screen pixel data (color buffer)
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlReadScreenPixels", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial byte* ReadScreenPixels(int width, int height);
+    public static unsafe partial byte* rlReadScreenPixels(int width, int height);
 
     /// <summary>
     /// Load an empty framebuffer
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlLoadFramebuffer", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint LoadFramebuffer();
+    public static partial uint rlLoadFramebuffer();
 
     /// <summary>
     /// Attach texture/renderbuffer to a framebuffer
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlFramebufferAttach", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void FramebufferAttach(uint fboId, uint texId, int attachType, int texType, int mipLevel);
+    public static partial void rlFramebufferAttach(uint fboId, uint texId, int attachType, int texType, int mipLevel);
 
     /// <summary>
     /// Verify framebuffer is complete
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlFramebufferComplete", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial NativeBool FramebufferComplete(uint id);
+    public static partial NativeBool rlFramebufferComplete(uint id);
 
     /// <summary>
     /// Delete framebuffer from GPU
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlUnloadFramebuffer", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void UnloadFramebuffer(uint id);
+    public static partial void rlUnloadFramebuffer(uint id);
 
     /// <summary>
     /// Load shader from code strings
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlLoadShaderCode", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint LoadShaderCode(string vsCode, string fsCode);
+    public static partial uint rlLoadShaderCode(string vsCode, string fsCode);
 
     /// <summary>
     /// Compile custom shader and return shader id (type: RL_VERTEX_SHADER, RL_FRAGMENT_SHADER, RL_COMPUTE_SHADER)
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlCompileShader", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint CompileShader(string shaderCode, int @type);
+    public static partial uint rlCompileShader(string shaderCode, int @type);
 
     /// <summary>
     /// Load custom shader program
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlLoadShaderProgram", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint LoadShaderProgram(uint vShaderId, uint fShaderId);
+    public static partial uint rlLoadShaderProgram(uint vShaderId, uint fShaderId);
 
     /// <summary>
     /// Unload shader program
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlUnloadShaderProgram", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void UnloadShaderProgram(uint id);
+    public static partial void rlUnloadShaderProgram(uint id);
 
     /// <summary>
     /// Get shader location uniform
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlGetLocationUniform", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial int GetLocationUniform(uint shaderId, string uniformName);
+    public static partial int rlGetLocationUniform(uint shaderId, string uniformName);
 
     /// <summary>
     /// Get shader location attribute
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlGetLocationAttrib", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial int GetLocationAttrib(uint shaderId, string attribName);
+    public static partial int rlGetLocationAttrib(uint shaderId, string attribName);
 
     /// <summary>
     /// Set shader value uniform
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlSetUniform", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void SetUniform(int locIndex, void* value, int uniformType, int count);
+    public static unsafe partial void rlSetUniform(int locIndex, void* value, int uniformType, int count);
 
     /// <summary>
     /// Set shader value matrix
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlSetUniformMatrix", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void SetUniformMatrix(int locIndex, Matrix4x4 mat);
+    public static partial void rlSetUniformMatrix(int locIndex, Matrix4x4 mat);
 
     /// <summary>
     /// Set shader value matrices
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlSetUniformMatrices", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void SetUniformMatrices(int locIndex, Matrix4x4* mat, int count);
+    public static unsafe partial void rlSetUniformMatrices(int locIndex, Matrix4x4* mat, int count);
 
     /// <summary>
     /// Set shader value sampler
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlSetUniformSampler", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void SetUniformSampler(int locIndex, uint textureId);
+    public static partial void rlSetUniformSampler(int locIndex, uint textureId);
 
     /// <summary>
     /// Set shader currently active (id and locations)
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlSetShader", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void SetShader(uint id, int* locs);
+    public static unsafe partial void rlSetShader(uint id, int* locs);
 
     /// <summary>
     /// Load compute shader program
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlLoadComputeShaderProgram", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint LoadComputeShaderProgram(uint shaderId);
+    public static partial uint rlLoadComputeShaderProgram(uint shaderId);
 
     /// <summary>
     /// Dispatch compute shader (equivalent to *draw* for graphics pipeline)
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlComputeShaderDispatch", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ComputeShaderDispatch(uint groupX, uint groupY, uint groupZ);
+    public static partial void rlComputeShaderDispatch(uint groupX, uint groupY, uint groupZ);
 
     /// <summary>
     /// Load shader storage buffer object (SSBO)
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlLoadShaderBuffer", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial uint LoadShaderBuffer(uint size, void* data, int usageHint);
+    public static unsafe partial uint rlLoadShaderBuffer(uint size, void* data, int usageHint);
 
     /// <summary>
     /// Unload shader storage buffer object (SSBO)
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlUnloadShaderBuffer", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void UnloadShaderBuffer(uint ssboId);
+    public static partial void rlUnloadShaderBuffer(uint ssboId);
 
     /// <summary>
     /// Update SSBO buffer data
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlUpdateShaderBuffer", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void UpdateShaderBuffer(uint id, void* data, uint dataSize, uint offset);
+    public static unsafe partial void rlUpdateShaderBuffer(uint id, void* data, uint dataSize, uint offset);
 
     /// <summary>
     /// Bind SSBO buffer
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlBindShaderBuffer", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void BindShaderBuffer(uint id, uint index);
+    public static partial void rlBindShaderBuffer(uint id, uint index);
 
     /// <summary>
     /// Read SSBO buffer data (GPU->CPU)
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlReadShaderBuffer", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void ReadShaderBuffer(uint id, void* dest, uint count, uint offset);
+    public static unsafe partial void rlReadShaderBuffer(uint id, void* dest, uint count, uint offset);
 
     /// <summary>
     /// Copy SSBO data between buffers
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlCopyShaderBuffer", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void CopyShaderBuffer(uint destId, uint srcId, uint destOffset, uint srcOffset, uint count);
+    public static partial void rlCopyShaderBuffer(uint destId, uint srcId, uint destOffset, uint srcOffset, uint count);
 
     /// <summary>
     /// Get SSBO buffer size
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlGetShaderBufferSize", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint GetShaderBufferSize(uint id);
+    public static partial uint rlGetShaderBufferSize(uint id);
 
     /// <summary>
     /// Bind image texture
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlBindImageTexture", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void BindImageTexture(uint id, uint index, int format, NativeBool @readonly);
+    public static partial void rlBindImageTexture(uint id, uint index, int format, NativeBool @readonly);
 
     /// <summary>
     /// Get internal modelview matrix
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlGetMatrixModelview", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial Matrix4x4 GetMatrixModelview();
+    public static partial Matrix4x4 rlGetMatrixModelview();
 
     /// <summary>
     /// Get internal projection matrix
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlGetMatrixProjection", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial Matrix4x4 GetMatrixProjection();
+    public static partial Matrix4x4 rlGetMatrixProjection();
 
     /// <summary>
     /// Get internal accumulated transform matrix
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlGetMatrixTransform", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial Matrix4x4 GetMatrixTransform();
+    public static partial Matrix4x4 rlGetMatrixTransform();
 
     /// <summary>
     /// Get internal projection matrix for stereo render (selected eye)
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlGetMatrixProjectionStereo", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial Matrix4x4 GetMatrixProjectionStereo(int eye);
+    public static partial Matrix4x4 rlGetMatrixProjectionStereo(int eye);
 
     /// <summary>
     /// Get internal view offset matrix for stereo render (selected eye)
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlGetMatrixViewOffsetStereo", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial Matrix4x4 GetMatrixViewOffsetStereo(int eye);
+    public static partial Matrix4x4 rlGetMatrixViewOffsetStereo(int eye);
 
     /// <summary>
     /// Set a custom projection matrix (replaces internal projection matrix)
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlSetMatrixProjection", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void SetMatrixProjection(Matrix4x4 proj);
+    public static partial void rlSetMatrixProjection(Matrix4x4 proj);
 
     /// <summary>
     /// Set a custom modelview matrix (replaces internal modelview matrix)
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlSetMatrixModelview", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void SetMatrixModelview(Matrix4x4 view);
+    public static partial void rlSetMatrixModelview(Matrix4x4 view);
 
     /// <summary>
     /// Set eyes projection matrices for stereo rendering
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlSetMatrixProjectionStereo", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void SetMatrixProjectionStereo(Matrix4x4 right, Matrix4x4 left);
+    public static partial void rlSetMatrixProjectionStereo(Matrix4x4 right, Matrix4x4 left);
 
     /// <summary>
     /// Set eyes view offsets matrices for stereo rendering
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlSetMatrixViewOffsetStereo", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void SetMatrixViewOffsetStereo(Matrix4x4 right, Matrix4x4 left);
+    public static partial void rlSetMatrixViewOffsetStereo(Matrix4x4 right, Matrix4x4 left);
 
     /// <summary>
     /// Load and draw a cube
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlLoadDrawCube", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void LoadDrawCube();
+    public static partial void rlLoadDrawCube();
 
     /// <summary>
     /// Load and draw a quad
     /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlLoadDrawQuad", StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void LoadDrawQuad();
+    public static partial void rlLoadDrawQuad();
 }

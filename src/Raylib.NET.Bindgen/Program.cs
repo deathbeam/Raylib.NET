@@ -5,7 +5,7 @@ var libPath = "../../lib";
 
 var options = new GeneratorOptions
 {
-    TransformType = (string name, string type) =>
+    TransformType = (string parent, string name, string type) =>
         type switch
         {
             "Matrix" => "Matrix4x4",
