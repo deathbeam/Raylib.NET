@@ -7,3 +7,6 @@
 [submodule "lib/zig"]
 	path = lib/zig
 	url = https://github.com/ziglang/zig
+[submodule "lib/rres"]
+	path = lib/rres
+	url = https://github.com/raysan5/rres

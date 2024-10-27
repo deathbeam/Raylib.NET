@@ -3,6 +3,7 @@ const std = @import("std");
 pub fn compileRaylib(b: *std.Build, target: std.Build.ResolvedTarget, optimize: std.builtin.OptimizeMode, shared: bool) *std.Build.Step.Compile {
     const raylib = b.dependency("raylib", .{ .target = target, .optimize = optimize, .shared = shared, .linux_display_backend = .X11 });
     const raygui = b.dependency("raygui", .{ .target = target, .optimize = optimize });
+    const rres = b.dependency("rres", .{ .target = target, .optimize = optimize });
     const lib = raylib.artifact("raylib");
 
     if (target.result.isDarwin()) {
@@ -19,10 +20,18 @@ pub fn compileRaylib(b: *std.Build, target: std.Build.ResolvedTarget, optimize: 
     var gen_step = b.addWriteFiles();
     lib.step.dependOn(&gen_step.step);
 
-    const raygui_c_path = gen_step.add("raygui.c", "#define RAYGUI_IMPLEMENTATION\n#include \"raygui.h\"\n");
+    lib.addCSourceFile(.{
+        .file = gen_step.add("raygui.c", "#define RAYGUI_IMPLEMENTATION\n#include \"raygui.h\"\n"),
+        .flags = &[_][]const u8{
+            "-std=gnu99",
+            "-D_GNU_SOURCE",
+            "-DGL_SILENCE_DEPRECATION=199309L",
+            "-fno-sanitize=undefined",
+        },
+    });
 
     lib.addCSourceFile(.{
-        .file = raygui_c_path,
+        .file = gen_step.add("rres.c", "#define RRES_IMPLEMENTATION\n#include \"rres.h\"\n"),
         .flags = &[_][]const u8{
             "-std=gnu99",
             "-D_GNU_SOURCE",
@@ -33,7 +42,9 @@ pub fn compileRaylib(b: *std.Build, target: std.Build.ResolvedTarget, optimize: 
 
     lib.addIncludePath(raylib.path("src"));
     lib.addIncludePath(raygui.path("src"));
+    lib.addIncludePath(rres.path("src"));
     lib.installHeader(raygui.path("src/raygui.h"), "raygui.h");
+    lib.installHeader(rres.path("src/rres.h"), "rres.h");
 
     // Idk why this is needed
     if (target.result.os.tag == .linux) {

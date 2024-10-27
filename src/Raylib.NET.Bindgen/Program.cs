@@ -37,7 +37,7 @@ var options = new GeneratorOptions
             "Rectangle" => "Vector4",
             "va_list" => "IntPtr",
             "int" => transformEnum(parent, name),
-            _ => Regex.Replace(type, @"\brl", ""),
+            _ => Regex.Replace(type, @"\b(rres|rl)", ""),
         },
     ExistingTypes = new()
     {
@@ -67,10 +67,14 @@ options.GeneratedClass = "Raymath";
 options.FilePath = $"{libPath}/raylib/src/raymath.h";
 new Generator(options).Generate();
 
-options.GeneratedClass = "Raylib";
-options.FilePath = $"{libPath}/raylib/src/raylib.h";
-new Generator(options).Generate();
-
 options.GeneratedClass = "Raygui";
 options.FilePath = $"{libPath}/raygui/src/raygui.h";
+new Generator(options).Generate();
+
+options.GeneratedClass = "Rres";
+options.FilePath = $"{libPath}/rres/src/rres.h";
+new Generator(options).Generate();
+
+options.GeneratedClass = "Raylib";
+options.FilePath = $"{libPath}/raylib/src/raylib.h";
 new Generator(options).Generate();
