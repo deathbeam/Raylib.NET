@@ -4,6 +4,14 @@ Everything is 100% generated, Im not touching the generated stuff, only generato
 The goal is to eventually PR some of this stuff to [Raylib-cs](https://github.com/chrisdill/raylib-cs). Natives PR requires 5.5 update there first and generator is a lot of effort
 due to Raylib-cs project structure being quite difficult to work with. If I decide that its not worth it, I will just keep this as a separate project.
 
+### Included bindings
+
+- Raylib
+- Raymath
+- Rlgl
+- Raygui
+- Rres
+
 ### Supported platforms
 
 - Windows x64/x86/arm64
