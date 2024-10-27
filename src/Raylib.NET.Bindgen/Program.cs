@@ -3,6 +3,23 @@ using Bindgen;
 
 var libPath = "../../lib";
 
+var transformEnum = (string parent, string name, string type) => {
+    if (parent == "GuiGetStyle")
+    {
+        if (name == "control")
+        {
+            return "GuiControl";
+        }
+
+        if (name == "property")
+        {
+            return "GuiDefaultProperty";
+        }
+    }
+
+    return type;
+};
+
 var options = new GeneratorOptions
 {
     TransformType = (string parent, string name, string type) =>
@@ -11,6 +28,7 @@ var options = new GeneratorOptions
             "Matrix" => "Matrix4x4",
             "Rectangle" => "Vector4",
             "va_list" => "IntPtr",
+            "int" => transformEnum(parent, name, type),
             _ => Regex.Replace(type, @"\brl", ""),
         },
     ExistingTypes = new()

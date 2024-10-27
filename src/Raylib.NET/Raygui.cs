@@ -104,7 +104,7 @@ public static unsafe partial class Raygui
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial int GuiGetStyle(int control, int @property);
+    public static partial int GuiGetStyle(GuiControl control, GuiDefaultProperty @property);
 
     /// <summary>
     /// Load style file over global style variable (.rgs)

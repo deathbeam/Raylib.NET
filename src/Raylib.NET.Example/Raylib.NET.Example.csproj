@@ -9,17 +9,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Raylib.NET.Native" Version="*-build.*"/>
-    <PackageReference Include="Raylib.NET" Version="*-build.*"/>
+    <PackageReference Include="Raylib.NET.Native" Version="*-build.*" />
+    <ProjectReference Include="..\Raylib.NET\Raylib.NET.csproj" />
   </ItemGroup>
 
   <Choose>
     <When Condition="'$(RuntimeIdentifier)' == 'browser-wasm'">
       <!-- Include all web-related configuration here -->
       <ItemGroup>
-        <LinkerArg Include="--preload-file assets"/>
-        <PackageReference Include="Microsoft.DotNet.ILCompiler.LLVM" Version="10.0.0-*"/>
-        <PackageReference Include="runtime.$(NETCoreSdkPortableRuntimeIdentifier).Microsoft.DotNet.ILCompiler.LLVM" Version="10.0.0-*"/>
+        <LinkerArg Include="--preload-file assets" />
+        <PackageReference Include="Microsoft.DotNet.ILCompiler.LLVM" Version="10.0.0-*" />
+        <PackageReference Include="runtime.$(NETCoreSdkPortableRuntimeIdentifier).Microsoft.DotNet.ILCompiler.LLVM" Version="10.0.0-*" />
       </ItemGroup>
     </When>
     <Otherwise>
