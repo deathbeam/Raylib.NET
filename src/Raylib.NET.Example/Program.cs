@@ -13,9 +13,10 @@ while (!WindowShouldClose())
 
     ClearBackground(GetColor((uint)GuiGetStyle((int)GuiControl.DEFAULT, (int)GuiDefaultProperty.BACKGROUND_COLOR)));
 
+
     DrawTexture(texture, 10, 40, Color.WHITE);
 
-    DrawText("Congrats! You created your first window!", 10, 10, 20, Color.LIGHTGRAY);
+    DrawText("Congrats! You created your first window!", 100, 10, 20, Color.LIGHTGRAY);
 
     if (GuiButton(new(40, 50, 120, 30), "#191#Show Message") == 1)
     {
@@ -30,6 +31,10 @@ while (!WindowShouldClose())
             showMessageBox = false;
         }
     }
+
+    DrawRectangle(GetMouseX() - 5 , GetMouseY() - 5, 10, 10, Color.RED);
+
+    DrawFPS(10, 10);
 
     EndDrawing();
 }
