@@ -4,7 +4,7 @@ namespace RaylibNET;
 public enum GuiControl
 {
     /// <summary>
-    /// Default -> populates to all controls when set
+    /// Default -&gt; populates to all controls when set
     /// </summary>
     DEFAULT = 0,
     /// <summary>

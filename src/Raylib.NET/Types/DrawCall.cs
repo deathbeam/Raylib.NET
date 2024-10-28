@@ -21,7 +21,7 @@ public partial struct DrawCall
     /// </summary>
     public int VertexAlignment;
     /// <summary>
-    /// Texture id to be used on the draw -> Use to create new draw call if changes
+    /// Texture id to be used on the draw -&gt; Use to create new draw call if changes
     /// </summary>
     public uint TextureId;
 

@@ -15,91 +15,91 @@ public static unsafe partial class Rres
     /// <summary>
     /// Load one resource chunk for provided id
     /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, EntryPoint = "rresLoadResourceChunk", StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ResourceChunk rresLoadResourceChunk(string fileName, int rresId);
+    public static partial ResourceChunk LoadResourceChunk(string fileName, int Id);
 
     /// <summary>
     /// Unload resource chunk from memory
     /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, EntryPoint = "rresUnloadResourceChunk", StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void rresUnloadResourceChunk(ResourceChunk chunk);
+    public static partial void UnloadResourceChunk(ResourceChunk chunk);
 
     /// <summary>
     /// Load resource for provided id (multiple resource chunks)
     /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, EntryPoint = "rresLoadResourceMulti", StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ResourceMulti rresLoadResourceMulti(string fileName, int rresId);
+    public static partial ResourceMulti LoadResourceMulti(string fileName, int Id);
 
     /// <summary>
     /// Unload resource from memory (multiple resource chunks)
     /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, EntryPoint = "rresUnloadResourceMulti", StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void rresUnloadResourceMulti(ResourceMulti multi);
+    public static partial void UnloadResourceMulti(ResourceMulti multi);
 
     /// <summary>
     /// Load resource chunk info for provided id
     /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, EntryPoint = "rresLoadResourceChunkInfo", StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ResourceChunkInfo rresLoadResourceChunkInfo(string fileName, int rresId);
+    public static partial ResourceChunkInfo LoadResourceChunkInfo(string fileName, int Id);
 
     /// <summary>
     /// Load all resource chunks info
     /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, EntryPoint = "rresLoadResourceChunkInfoAll", StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial ResourceChunkInfo* rresLoadResourceChunkInfoAll(string fileName, ref uint chunkCount);
+    public static unsafe partial ResourceChunkInfo* LoadResourceChunkInfoAll(string fileName, ref uint chunkCount);
 
     /// <summary>
     /// Load central directory resource chunk from file
     /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, EntryPoint = "rresLoadCentralDirectory", StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial CentralDir rresLoadCentralDirectory(string fileName);
+    public static partial CentralDir LoadCentralDirectory(string fileName);
 
     /// <summary>
     /// Unload central directory resource chunk
     /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, EntryPoint = "rresUnloadCentralDirectory", StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void rresUnloadCentralDirectory(CentralDir dir);
+    public static partial void UnloadCentralDirectory(CentralDir dir);
 
     /// <summary>
     /// Get rresResourceDataType from FourCC code
     /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, EntryPoint = "rresGetDataType", StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial uint rresGetDataType(byte* fourCC);
+    public static unsafe partial uint GetDataType(byte* fourCC);
 
     /// <summary>
     /// Get resource id for a provided filename
     /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, EntryPoint = "rresGetResourceId", StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial int rresGetResourceId(CentralDir dir, string fileName);
+    public static partial int GetResourceId(CentralDir dir, string fileName);
 
     /// <summary>
     /// Compute CRC32 for provided data
     /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, EntryPoint = "rresComputeCRC32", StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial uint rresComputeCRC32(byte* data, int len);
+    public static unsafe partial uint ComputeCRC32(byte* data, int len);
 
     /// <summary>
     /// Set password to be used on data decryption
     /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, EntryPoint = "rresSetCipherPassword", StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void rresSetCipherPassword(string pass);
+    public static partial void SetCipherPassword(string pass);
 
     /// <summary>
     /// Get password to be used on data decryption
     /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [LibraryImport(LIBRARY, EntryPoint = "rresGetCipherPassword", StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial string rresGetCipherPassword();
+    public static partial string GetCipherPassword();
 }

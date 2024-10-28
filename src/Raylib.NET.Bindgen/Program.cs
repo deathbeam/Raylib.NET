@@ -59,6 +59,7 @@ var options = new GeneratorOptions
             "int" => transformEnum(parent, name),
             _ => Regex.Replace(type, @"\b(rres|rl|r)", ""),
         },
+    TransformName = (string name) => Regex.Replace(name, @"\b(rres|rl)", ""),
     ExistingTypes = new()
     {
         { "Vector2", "System.Numerics" },

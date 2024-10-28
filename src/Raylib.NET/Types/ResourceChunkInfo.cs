@@ -41,7 +41,7 @@ public partial struct ResourceChunkInfo
     /// </summary>
     public uint NextOffset;
     /// <summary>
-    /// <reserved>
+    /// &lt;reserved&gt;
     /// </summary>
     public uint Reserved;
     /// <summary>

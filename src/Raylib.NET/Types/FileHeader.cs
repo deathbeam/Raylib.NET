@@ -25,7 +25,7 @@ public partial struct FileHeader
     /// </summary>
     public uint CdOffset;
     /// <summary>
-    /// <reserved>
+    /// &lt;reserved&gt;
     /// </summary>
     public uint Reserved;
 }

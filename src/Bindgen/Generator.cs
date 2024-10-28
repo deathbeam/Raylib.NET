@@ -506,7 +506,7 @@ public class Generator
         if (!string.IsNullOrEmpty(commentsString))
         {
             output += $"    /// <summary>\n";
-            output += $"    /// {commentsString}\n";
+            output += $"    /// {commentsString.Replace("<", "&lt;").Replace(">", "&gt;")}\n";
             output += $"    /// </summary>\n";
             return true;
         }
@@ -611,7 +611,8 @@ public class Generator
 
     private string MapName(string name, bool toPascalCase = false, bool toCamelCase = false)
     {
-        var o = toCamelCase ? ToCamelCase(name) : toPascalCase ? ToPascalCase(name) : name;
+        var o = options.TransformName(name) ?? name;
+        o = toCamelCase ? ToCamelCase(o) : toPascalCase ? ToPascalCase(o) : o;
 
         if (reservedKeywords.Contains(o))
         {

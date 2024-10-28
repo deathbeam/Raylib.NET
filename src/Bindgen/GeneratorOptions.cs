@@ -12,6 +12,7 @@ public struct GeneratorOptions
     public string[] IncludeFolders = { };
     public string[] Defines = { };
     public Func<string, string, string, string?> TransformType = (parent, name, type) => null;
+    public Func<string, string?> TransformName = (name) => null;
     public Func<string, string, bool> DetectArray = (parent, name) => false;
     public Dictionary<string, string> ExistingTypes = new();
 
