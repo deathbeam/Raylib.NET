@@ -66,7 +66,7 @@ git submodule update --init --recursive
 Updates raylib submodules (if needed):
 
 ```sh
-git submodule update --recursive --remote lib/raylib lib/raygui
+git submodule update --recursive --remote
 ```
 
 Generate bindings, build natives for whatever os you are on etc:
