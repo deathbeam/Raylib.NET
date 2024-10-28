@@ -22,7 +22,7 @@ jobs:
           dotnet-version: 8.0.x
 
       - name: Build
-        run: dotnet build -c Release
+        run: dotnet build -c Release -p:SkipNatives=true
 
       - name: Test
         run: dotnet test -p:SkipNatives=true -p:SkipGen=true
