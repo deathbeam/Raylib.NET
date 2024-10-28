@@ -117,10 +117,10 @@ jobs:
           echo "version=$version" >> $GITHUB_OUTPUT
 
       - name: Create NuGet Debug Packages
-        run: dotnet pack src/Raylib.NET.Native -c Debug --output nuget -p:SkipNatives=true -p:SkipBindgen=true -p:VersionSuffix=${{ steps.package-info.outputs.version }}
+        run: dotnet pack src/Raylib.NET.Native -c Debug --output nuget -p:SkipNatives=true -p:SkipGen=true -p:VersionSuffix=${{ steps.package-info.outputs.version }}
 
       - name: Create NuGet Release Packages
-        run: dotnet pack src/Raylib.NET.Native -c Release --output nuget -p:SkipNatives=true -p:SkipBindgen=true -p:VersionSuffix=${{ steps.package-info.outputs.version }}
+        run: dotnet pack src/Raylib.NET.Native -c Release --output nuget -p:SkipNatives=true -p:SkipGen=true -p:VersionSuffix=${{ steps.package-info.outputs.version }}
 
       - name: Upload NuGet Packages As Artifacts
         uses: actions/upload-artifact@v4

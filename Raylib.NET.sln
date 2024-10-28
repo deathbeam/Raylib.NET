@@ -1,4 +1,4 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
@@ -7,13 +7,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{DA7DD588-77B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bindgen", "src\Bindgen\Bindgen.csproj", "{0A7DD14F-8EED-4688-8931-38AA1B940DCB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raylib.NET", "src\Raylib.NET\Raylib.NET.csproj", "{5A3CE360-CC8F-4ADD-B342-FD6A3246C7B9}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raylib.NET.Bindgen", "src\Raylib.NET.Bindgen\Raylib.NET.Bindgen.csproj", "{DE44EB33-70C2-402D-9FBB-36A6CD713B4F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raylib.NET.Native", "src\Raylib.NET.Native\Raylib.NET.Native.csproj", "{0EE0C0FD-F7B7-42C9-8B63-095A066C0800}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raylib.NET.Test", "src\Raylib.NET.Test\Raylib.NET.Test.csproj", "{29E68756-5677-461E-8E54-8017E9FBFEED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raylib.NET", "src\Raylib.NET\Raylib.NET.csproj", "{5A3CE360-CC8F-4ADD-B342-FD6A3246C7B9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -52,4 +52,8 @@ Global
 		{0EE0C0FD-F7B7-42C9-8B63-095A066C0800} = {DA7DD588-77B2-465A-8BCF-BE3295552258}
 		{29E68756-5677-461E-8E54-8017E9FBFEED} = {DA7DD588-77B2-465A-8BCF-BE3295552258}
 	EndGlobalSection
+    GlobalSection(ProjectDependencies) = postSolution
+        {5A3CE360-CC8F-4ADD-B342-FD6A3246C7B9}.0 = {DE44EB33-70C2-402D-9FBB-36A6CD713B4F}
+        {29E68756-5677-461E-8E54-8017E9FBFEED}.0 = {DE44EB33-70C2-402D-9FBB-36A6CD713B4F}
+    EndGlobalSection
 EndGlobal

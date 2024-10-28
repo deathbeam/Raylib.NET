@@ -21,7 +21,8 @@
         </PackageReference>
     </ItemGroup>
 
-    <Target Name="RunAfterBuild" AfterTargets="Build" Condition="'$(SkipBindgen)' != 'true'">
+    <Target Name="Generate" AfterTargets="Build" Condition="'$(SkipGen)' != 'true'">
         <Exec Command="dotnet '$(TargetDir)$(TargetFileName)' '$(ZigLibPath)'" />
     </Target>
+
 </Project>

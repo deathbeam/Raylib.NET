@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  build-and-update-bindings:
+  build-and-update:
     permissions:
       contents: write
     runs-on: ubuntu-latest
@@ -21,14 +21,11 @@ jobs:
         with:
           dotnet-version: 8.0.x
 
-      - name: Generate Bindings
-        run: dotnet build -c Release src/Raylib.NET.Bindgen
+      - name: Build
+        run: dotnet build -c Release
 
       - name: Test
-        run: dotnet test -p:SkipNatives=true -p:SkipBindgen=true
-
-      - name: Build
-        run: dotnet build -c Release -p:SkipNatives=true -p:SkipBindgen=true
+        run: dotnet test -p:SkipNatives=true -p:SkipGen=true
 
       - name: Push Changes
         run: |
@@ -47,7 +44,7 @@ jobs:
       packages: write
     runs-on: ubuntu-latest
     needs:
-      - build-and-update-bindings
+      - build-and-update
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -67,7 +64,7 @@ jobs:
 
       - name: Create NuGet Packages
         run: |
-          dotnet pack -c Release --output nuget -p:SkipNatives=true -p:SkipBindgen=true -p:VersionSuffix=${{ steps.package-info.outputs.version }}
+          dotnet pack -c Release --output nuget -p:SkipNatives=true -p:SkipGen=true -p:VersionSuffix=${{ steps.package-info.outputs.version }}
           rm -rf nuget/Raylib.NET.Native*
 
       - name: Upload NuGet Packages As Artifacts
