@@ -22,7 +22,7 @@
     </ItemGroup>
 
     <Target Name="Generate" AfterTargets="Build" Condition="'$(SkipGen)' != 'true'">
-        <Exec Command="dotnet '$(TargetDir)$(TargetFileName)' '$(ZigLibPath)'" />
+        <Exec Command="dotnet &quot;$(TargetDir)$(TargetFileName)&quot; &quot;$(ZigLibPath)&quot;" />
     </Target>
 
 </Project>
