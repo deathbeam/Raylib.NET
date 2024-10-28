@@ -216,7 +216,7 @@ public static unsafe partial class Raygui
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial int GuiScrollPanel(Vector4 bounds, string text, Vector4 content, Vector2* scroll, Vector4* view);
+    public static partial int GuiScrollPanel(Vector4 bounds, string text, Vector4 content, ref Vector2 scroll, ref Vector4 view);
 
     /// <summary>
     /// Label control
@@ -244,63 +244,63 @@ public static unsafe partial class Raygui
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial int GuiToggle(Vector4 bounds, string text, NativeBool* active);
+    public static partial int GuiToggle(Vector4 bounds, string text, ref NativeBool active);
 
     /// <summary>
     /// Toggle Group control
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial int GuiToggleGroup(Vector4 bounds, string text, int* active);
+    public static partial int GuiToggleGroup(Vector4 bounds, string text, ref int active);
 
     /// <summary>
     /// Toggle Slider control
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial int GuiToggleSlider(Vector4 bounds, string text, int* active);
+    public static partial int GuiToggleSlider(Vector4 bounds, string text, ref int active);
 
     /// <summary>
     /// Check Box control, returns true when active
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial int GuiCheckBox(Vector4 bounds, string text, NativeBool* @checked);
+    public static partial int GuiCheckBox(Vector4 bounds, string text, ref NativeBool @checked);
 
     /// <summary>
     /// Combo Box control
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial int GuiComboBox(Vector4 bounds, string text, int* active);
+    public static partial int GuiComboBox(Vector4 bounds, string text, ref int active);
 
     /// <summary>
     /// Dropdown Box control
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial int GuiDropdownBox(Vector4 bounds, string text, int* active, NativeBool editMode);
+    public static partial int GuiDropdownBox(Vector4 bounds, string text, ref int active, NativeBool editMode);
 
     /// <summary>
     /// Spinner control
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial int GuiSpinner(Vector4 bounds, string text, int* value, int minValue, int maxValue, NativeBool editMode);
+    public static partial int GuiSpinner(Vector4 bounds, string text, ref int value, int minValue, int maxValue, NativeBool editMode);
 
     /// <summary>
     /// Value Box control, updates input text with numbers
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial int GuiValueBox(Vector4 bounds, string text, int* value, int minValue, int maxValue, NativeBool editMode);
+    public static partial int GuiValueBox(Vector4 bounds, string text, ref int value, int minValue, int maxValue, NativeBool editMode);
 
     /// <summary>
     /// Value box control for float values
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial int GuiValueBoxFloat(Vector4 bounds, string text, string textValue, float* value, NativeBool editMode);
+    public static partial int GuiValueBoxFloat(Vector4 bounds, string text, string textValue, ref float value, NativeBool editMode);
 
     /// <summary>
     /// Text Box control, updates input text
@@ -314,21 +314,21 @@ public static unsafe partial class Raygui
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial int GuiSlider(Vector4 bounds, string textLeft, string textRight, float* value, float minValue, float maxValue);
+    public static partial int GuiSlider(Vector4 bounds, string textLeft, string textRight, ref float value, float minValue, float maxValue);
 
     /// <summary>
     /// Slider Bar control
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial int GuiSliderBar(Vector4 bounds, string textLeft, string textRight, float* value, float minValue, float maxValue);
+    public static partial int GuiSliderBar(Vector4 bounds, string textLeft, string textRight, ref float value, float minValue, float maxValue);
 
     /// <summary>
     /// Progress Bar control
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial int GuiProgressBar(Vector4 bounds, string textLeft, string textRight, float* value, float minValue, float maxValue);
+    public static partial int GuiProgressBar(Vector4 bounds, string textLeft, string textRight, ref float value, float minValue, float maxValue);
 
     /// <summary>
     /// Status Bar control, shows info text
@@ -349,14 +349,14 @@ public static unsafe partial class Raygui
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial int GuiGrid(Vector4 bounds, string text, float spacing, int subdivs, Vector2* mouseCell);
+    public static partial int GuiGrid(Vector4 bounds, string text, float spacing, int subdivs, ref Vector2 mouseCell);
 
     /// <summary>
     /// List View control
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial int GuiListView(Vector4 bounds, string text, int* scrollIndex, int* active);
+    public static partial int GuiListView(Vector4 bounds, string text, ref int scrollIndex, ref int active);
 
     /// <summary>
     /// List View with extended parameters
@@ -377,47 +377,47 @@ public static unsafe partial class Raygui
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial int GuiTextInputBox(Vector4 bounds, string title, string message, string buttons, string text, int textMaxSize, NativeBool* secretViewActive);
+    public static partial int GuiTextInputBox(Vector4 bounds, string title, string message, string buttons, string text, int textMaxSize, ref NativeBool secretViewActive);
 
     /// <summary>
     /// Color Picker control (multiple color controls)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial int GuiColorPicker(Vector4 bounds, string text, Color* color);
+    public static partial int GuiColorPicker(Vector4 bounds, string text, ref Color color);
 
     /// <summary>
     /// Color Panel control
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial int GuiColorPanel(Vector4 bounds, string text, Color* color);
+    public static partial int GuiColorPanel(Vector4 bounds, string text, ref Color color);
 
     /// <summary>
     /// Color Bar Alpha control
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial int GuiColorBarAlpha(Vector4 bounds, string text, float* alpha);
+    public static partial int GuiColorBarAlpha(Vector4 bounds, string text, ref float alpha);
 
     /// <summary>
     /// Color Bar Hue control
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial int GuiColorBarHue(Vector4 bounds, string text, float* value);
+    public static partial int GuiColorBarHue(Vector4 bounds, string text, ref float value);
 
     /// <summary>
     /// Color Picker control that avoids conversion to RGB on each call (multiple color controls)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial int GuiColorPickerHSV(Vector4 bounds, string text, Vector3* colorHsv);
+    public static partial int GuiColorPickerHSV(Vector4 bounds, string text, ref Vector3 colorHsv);
 
     /// <summary>
     /// Color Panel control that updates Hue-Saturation-Value color value, used by GuiColorPickerHSV()
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial int GuiColorPanelHSV(Vector4 bounds, string text, Vector3* colorHsv);
+    public static partial int GuiColorPanelHSV(Vector4 bounds, string text, ref Vector3 colorHsv);
 }

@@ -764,7 +764,7 @@ public static unsafe partial class Raylib
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void TraceLog(int logLevel, string text);
+    public static partial void TraceLog(int logLevel, string text, IntPtr args);
 
     /// <summary>
     /// Set the current threshold (minimum) log level
@@ -834,7 +834,7 @@ public static unsafe partial class Raylib
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial byte* LoadFileData(string fileName, int* dataSize);
+    public static unsafe partial byte* LoadFileData(string fileName, ref int dataSize);
 
     /// <summary>
     /// Unload file data allocated by LoadFileData()
@@ -1037,28 +1037,28 @@ public static unsafe partial class Raylib
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial byte* CompressData(byte* data, int dataSize, int* compDataSize);
+    public static unsafe partial byte* CompressData(byte* data, int dataSize, ref int compDataSize);
 
     /// <summary>
     /// Decompress data (DEFLATE algorithm), memory must be MemFree()
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial byte* DecompressData(byte* compData, int compDataSize, int* dataSize);
+    public static unsafe partial byte* DecompressData(byte* compData, int compDataSize, ref int dataSize);
 
     /// <summary>
     /// Encode data to Base64 string, memory must be MemFree()
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial string EncodeDataBase64(byte* data, int dataSize, int* outputSize);
+    public static unsafe partial string EncodeDataBase64(byte* data, int dataSize, ref int outputSize);
 
     /// <summary>
     /// Decode Base64 string data, memory must be MemFree()
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial byte* DecodeDataBase64(byte* data, int* outputSize);
+    public static unsafe partial byte* DecodeDataBase64(byte* data, ref int outputSize);
 
     /// <summary>
     /// Compute CRC32 hash code
@@ -1107,7 +1107,7 @@ public static unsafe partial class Raylib
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void SetAutomationEventList(AutomationEventList* list);
+    public static partial void SetAutomationEventList(ref AutomationEventList list);
 
     /// <summary>
     /// Set automation event internal base frame to start recording
@@ -1464,14 +1464,14 @@ public static unsafe partial class Raylib
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void UpdateCamera(Camera3D* camera, int mode);
+    public static partial void UpdateCamera(ref Camera3D camera, int mode);
 
     /// <summary>
     /// Update camera movement/rotation
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void UpdateCameraPro(Camera3D* camera, Vector3 movement, Vector3 rotation, float zoom);
+    public static partial void UpdateCameraPro(ref Camera3D camera, Vector3 movement, Vector3 rotation, float zoom);
 
     /// <summary>
     /// Set texture and rectangle to be used on shapes drawing
@@ -1926,7 +1926,7 @@ public static unsafe partial class Raylib
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial NativeBool CheckCollisionLines(Vector2 startPos1, Vector2 endPos1, Vector2 startPos2, Vector2 endPos2, Vector2* collisionPoint);
+    public static partial NativeBool CheckCollisionLines(Vector2 startPos1, Vector2 endPos1, Vector2 startPos2, Vector2 endPos2, ref Vector2 collisionPoint);
 
     /// <summary>
     /// Get collision rectangle for two rectangles collision
@@ -1954,14 +1954,14 @@ public static unsafe partial class Raylib
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial Image LoadImageAnim(string fileName, int* frames);
+    public static partial Image LoadImageAnim(string fileName, ref int frames);
 
     /// <summary>
     /// Load image sequence from memory buffer
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial Image LoadImageAnimFromMemory(string fileType, byte* fileData, int dataSize, int* frames);
+    public static unsafe partial Image LoadImageAnimFromMemory(string fileType, byte* fileData, int dataSize, ref int frames);
 
     /// <summary>
     /// Load image from memory buffer, fileType refers to extension: i.e. '.png'
@@ -2010,7 +2010,7 @@ public static unsafe partial class Raylib
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial byte* ExportImageToMemory(Image image, string fileType, int* fileSize);
+    public static unsafe partial byte* ExportImageToMemory(Image image, string fileType, ref int fileSize);
 
     /// <summary>
     /// Export image as code file defining an array of bytes, returns true on success
@@ -2122,175 +2122,175 @@ public static unsafe partial class Raylib
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void ImageFormat(Image* image, int newFormat);
+    public static partial void ImageFormat(ref Image image, int newFormat);
 
     /// <summary>
     /// Convert image to POT (power-of-two)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void ImageToPOT(Image* image, Color fill);
+    public static partial void ImageToPOT(ref Image image, Color fill);
 
     /// <summary>
     /// Crop an image to a defined rectangle
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void ImageCrop(Image* image, Vector4 crop);
+    public static partial void ImageCrop(ref Image image, Vector4 crop);
 
     /// <summary>
     /// Crop image depending on alpha value
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void ImageAlphaCrop(Image* image, float threshold);
+    public static partial void ImageAlphaCrop(ref Image image, float threshold);
 
     /// <summary>
     /// Clear alpha channel to desired color
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void ImageAlphaClear(Image* image, Color color, float threshold);
+    public static partial void ImageAlphaClear(ref Image image, Color color, float threshold);
 
     /// <summary>
     /// Apply alpha mask to image
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void ImageAlphaMask(Image* image, Image alphaMask);
+    public static partial void ImageAlphaMask(ref Image image, Image alphaMask);
 
     /// <summary>
     /// Premultiply alpha channel
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void ImageAlphaPremultiply(Image* image);
+    public static partial void ImageAlphaPremultiply(ref Image image);
 
     /// <summary>
     /// Apply Gaussian blur using a box blur approximation
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void ImageBlurGaussian(Image* image, int blurSize);
+    public static partial void ImageBlurGaussian(ref Image image, int blurSize);
 
     /// <summary>
     /// Apply custom square convolution kernel to image
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void ImageKernelConvolution(Image* image, float* kernel, int kernelSize);
+    public static unsafe partial void ImageKernelConvolution(ref Image image, float* kernel, int kernelSize);
 
     /// <summary>
     /// Resize image (Bicubic scaling algorithm)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void ImageResize(Image* image, int newWidth, int newHeight);
+    public static partial void ImageResize(ref Image image, int newWidth, int newHeight);
 
     /// <summary>
     /// Resize image (Nearest-Neighbor scaling algorithm)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void ImageResizeNN(Image* image, int newWidth, int newHeight);
+    public static partial void ImageResizeNN(ref Image image, int newWidth, int newHeight);
 
     /// <summary>
     /// Resize canvas and fill with color
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void ImageResizeCanvas(Image* image, int newWidth, int newHeight, int offsetX, int offsetY, Color fill);
+    public static partial void ImageResizeCanvas(ref Image image, int newWidth, int newHeight, int offsetX, int offsetY, Color fill);
 
     /// <summary>
     /// Compute all mipmap levels for a provided image
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void ImageMipmaps(Image* image);
+    public static partial void ImageMipmaps(ref Image image);
 
     /// <summary>
     /// Dither image data to 16bpp or lower (Floyd-Steinberg dithering)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void ImageDither(Image* image, int rBpp, int gBpp, int bBpp, int aBpp);
+    public static partial void ImageDither(ref Image image, int rBpp, int gBpp, int bBpp, int aBpp);
 
     /// <summary>
     /// Flip image vertically
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void ImageFlipVertical(Image* image);
+    public static partial void ImageFlipVertical(ref Image image);
 
     /// <summary>
     /// Flip image horizontally
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void ImageFlipHorizontal(Image* image);
+    public static partial void ImageFlipHorizontal(ref Image image);
 
     /// <summary>
     /// Rotate image by input angle in degrees (-359 to 359)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void ImageRotate(Image* image, int degrees);
+    public static partial void ImageRotate(ref Image image, int degrees);
 
     /// <summary>
     /// Rotate image clockwise 90deg
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void ImageRotateCW(Image* image);
+    public static partial void ImageRotateCW(ref Image image);
 
     /// <summary>
     /// Rotate image counter-clockwise 90deg
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void ImageRotateCCW(Image* image);
+    public static partial void ImageRotateCCW(ref Image image);
 
     /// <summary>
     /// Modify image color: tint
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void ImageColorTint(Image* image, Color color);
+    public static partial void ImageColorTint(ref Image image, Color color);
 
     /// <summary>
     /// Modify image color: invert
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void ImageColorInvert(Image* image);
+    public static partial void ImageColorInvert(ref Image image);
 
     /// <summary>
     /// Modify image color: grayscale
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void ImageColorGrayscale(Image* image);
+    public static partial void ImageColorGrayscale(ref Image image);
 
     /// <summary>
     /// Modify image color: contrast (-100 to 100)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void ImageColorContrast(Image* image, float contrast);
+    public static partial void ImageColorContrast(ref Image image, float contrast);
 
     /// <summary>
     /// Modify image color: brightness (-255 to 255)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void ImageColorBrightness(Image* image, int brightness);
+    public static partial void ImageColorBrightness(ref Image image, int brightness);
 
     /// <summary>
     /// Modify image color: replace color
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void ImageColorReplace(Image* image, Color color, Color replace);
+    public static partial void ImageColorReplace(ref Image image, Color color, Color replace);
 
     /// <summary>
     /// Load color data from image as a Color array (RGBA - 32bit)
@@ -2304,7 +2304,7 @@ public static unsafe partial class Raylib
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial Color* LoadImagePalette(Image image, int maxPaletteSize, int* colorCount);
+    public static unsafe partial Color* LoadImagePalette(Image image, int maxPaletteSize, ref int colorCount);
 
     /// <summary>
     /// Unload color data loaded with LoadImageColors()
@@ -2339,77 +2339,77 @@ public static unsafe partial class Raylib
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void ImageClearBackground(Image* dst, Color color);
+    public static partial void ImageClearBackground(ref Image dst, Color color);
 
     /// <summary>
     /// Draw pixel within an image
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void ImageDrawPixel(Image* dst, int posX, int posY, Color color);
+    public static partial void ImageDrawPixel(ref Image dst, int posX, int posY, Color color);
 
     /// <summary>
     /// Draw pixel within an image (Vector version)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void ImageDrawPixelV(Image* dst, Vector2 position, Color color);
+    public static partial void ImageDrawPixelV(ref Image dst, Vector2 position, Color color);
 
     /// <summary>
     /// Draw line within an image
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void ImageDrawLine(Image* dst, int startPosX, int startPosY, int endPosX, int endPosY, Color color);
+    public static partial void ImageDrawLine(ref Image dst, int startPosX, int startPosY, int endPosX, int endPosY, Color color);
 
     /// <summary>
     /// Draw line within an image (Vector version)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void ImageDrawLineV(Image* dst, Vector2 start, Vector2 end, Color color);
+    public static partial void ImageDrawLineV(ref Image dst, Vector2 start, Vector2 end, Color color);
 
     /// <summary>
     /// Draw a line defining thickness within an image
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void ImageDrawLineEx(Image* dst, Vector2 start, Vector2 end, int thick, Color color);
+    public static partial void ImageDrawLineEx(ref Image dst, Vector2 start, Vector2 end, int thick, Color color);
 
     /// <summary>
     /// Draw a filled circle within an image
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void ImageDrawCircle(Image* dst, int centerX, int centerY, int radius, Color color);
+    public static partial void ImageDrawCircle(ref Image dst, int centerX, int centerY, int radius, Color color);
 
     /// <summary>
     /// Draw a filled circle within an image (Vector version)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void ImageDrawCircleV(Image* dst, Vector2 center, int radius, Color color);
+    public static partial void ImageDrawCircleV(ref Image dst, Vector2 center, int radius, Color color);
 
     /// <summary>
     /// Draw circle outline within an image
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void ImageDrawCircleLines(Image* dst, int centerX, int centerY, int radius, Color color);
+    public static partial void ImageDrawCircleLines(ref Image dst, int centerX, int centerY, int radius, Color color);
 
     /// <summary>
     /// Draw circle outline within an image (Vector version)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void ImageDrawCircleLinesV(Image* dst, Vector2 center, int radius, Color color);
+    public static partial void ImageDrawCircleLinesV(ref Image dst, Vector2 center, int radius, Color color);
 
     /// <summary>
     /// Draw rectangle within an image
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void ImageDrawRectangle(Image* dst, int posX, int posY, int width, int height, Color color);
+    public static partial void ImageDrawRectangle(ref Image dst, int posX, int posY, int width, int height, Color color);
 
     /// <summary>
     /// Draw rectangle within an image (Vector version)
@@ -2423,70 +2423,70 @@ public static unsafe partial class Raylib
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void ImageDrawRectangleRec(Image* dst, Vector4 rec, Color color);
+    public static partial void ImageDrawRectangleRec(ref Image dst, Vector4 rec, Color color);
 
     /// <summary>
     /// Draw rectangle lines within an image
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void ImageDrawRectangleLines(Image* dst, Vector4 rec, int thick, Color color);
+    public static partial void ImageDrawRectangleLines(ref Image dst, Vector4 rec, int thick, Color color);
 
     /// <summary>
     /// Draw triangle within an image
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void ImageDrawTriangle(Image* dst, Vector2 v1, Vector2 v2, Vector2 v3, Color color);
+    public static partial void ImageDrawTriangle(ref Image dst, Vector2 v1, Vector2 v2, Vector2 v3, Color color);
 
     /// <summary>
     /// Draw triangle with interpolated colors within an image
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void ImageDrawTriangleEx(Image* dst, Vector2 v1, Vector2 v2, Vector2 v3, Color c1, Color c2, Color c3);
+    public static partial void ImageDrawTriangleEx(ref Image dst, Vector2 v1, Vector2 v2, Vector2 v3, Color c1, Color c2, Color c3);
 
     /// <summary>
     /// Draw triangle outline within an image
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void ImageDrawTriangleLines(Image* dst, Vector2 v1, Vector2 v2, Vector2 v3, Color color);
+    public static partial void ImageDrawTriangleLines(ref Image dst, Vector2 v1, Vector2 v2, Vector2 v3, Color color);
 
     /// <summary>
     /// Draw a triangle fan defined by points within an image (first vertex is the center)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void ImageDrawTriangleFan(Image* dst, Vector2* points, int pointCount, Color color);
+    public static unsafe partial void ImageDrawTriangleFan(ref Image dst, Vector2* points, int pointCount, Color color);
 
     /// <summary>
     /// Draw a triangle strip defined by points within an image
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void ImageDrawTriangleStrip(Image* dst, Vector2* points, int pointCount, Color color);
+    public static unsafe partial void ImageDrawTriangleStrip(ref Image dst, Vector2* points, int pointCount, Color color);
 
     /// <summary>
     /// Draw a source image within a destination image (tint applied to source)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void ImageDraw(Image* dst, Image src, Vector4 srcRec, Vector4 dstRec, Color tint);
+    public static partial void ImageDraw(ref Image dst, Image src, Vector4 srcRec, Vector4 dstRec, Color tint);
 
     /// <summary>
     /// Draw text (using default font) within an image (destination)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void ImageDrawText(Image* dst, string text, int posX, int posY, int fontSize, Color color);
+    public static partial void ImageDrawText(ref Image dst, string text, int posX, int posY, int fontSize, Color color);
 
     /// <summary>
     /// Draw text (custom sprite font) within an image (destination)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void ImageDrawTextEx(Image* dst, Font font, string text, Vector2 position, float fontSize, float spacing, Color tint);
+    public static partial void ImageDrawTextEx(ref Image dst, Font font, string text, Vector2 position, float fontSize, float spacing, Color tint);
 
     /// <summary>
     /// Load texture from file into GPU memory (VRAM)
@@ -2563,7 +2563,7 @@ public static unsafe partial class Raylib
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void GenTextureMipmaps(Texture* texture);
+    public static partial void GenTextureMipmaps(ref Texture texture);
 
     /// <summary>
     /// Set texture scaling filter mode
@@ -2941,28 +2941,28 @@ public static unsafe partial class Raylib
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial int GetCodepoint(string text, int* codepointSize);
+    public static partial int GetCodepoint(string text, ref int codepointSize);
 
     /// <summary>
     /// Get next codepoint in a UTF-8 encoded string, 0x3f('?') is returned on failure
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial int GetCodepointNext(string text, int* codepointSize);
+    public static partial int GetCodepointNext(string text, ref int codepointSize);
 
     /// <summary>
     /// Get previous codepoint in a UTF-8 encoded string, 0x3f('?') is returned on failure
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial int GetCodepointPrevious(string text, int* codepointSize);
+    public static partial int GetCodepointPrevious(string text, ref int codepointSize);
 
     /// <summary>
     /// Encode one codepoint into UTF-8 byte array (array length returned as parameter)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial string CodepointToUTF8(int codepoint, int* utf8Size);
+    public static partial string CodepointToUTF8(int codepoint, ref int utf8Size);
 
     /// <summary>
     /// Copy one string to another, returns bytes copied
@@ -2990,7 +2990,7 @@ public static unsafe partial class Raylib
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial string TextFormat(string text);
+    public static partial string TextFormat(string text, IntPtr args);
 
     /// <summary>
     /// Get a piece of a text string
@@ -3032,7 +3032,7 @@ public static unsafe partial class Raylib
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void TextAppend(string text, string append, int* position);
+    public static partial void TextAppend(string text, string append, ref int position);
 
     /// <summary>
     /// Find first text occurrence within a string
@@ -3347,7 +3347,7 @@ public static unsafe partial class Raylib
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void UploadMesh(Mesh* mesh, NativeBool dynamic);
+    public static partial void UploadMesh(ref Mesh mesh, NativeBool dynamic);
 
     /// <summary>
     /// Update mesh vertex data in GPU for a specific buffer index
@@ -3375,7 +3375,7 @@ public static unsafe partial class Raylib
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void DrawMeshInstanced(Mesh mesh, Material material, Matrix4x4* transforms, int instances);
+    public static partial void DrawMeshInstanced(Mesh mesh, Material material, ref Matrix4x4 transforms, int instances);
 
     /// <summary>
     /// Compute mesh bounding box limits
@@ -3389,7 +3389,7 @@ public static unsafe partial class Raylib
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void GenMeshTangents(Mesh* mesh);
+    public static partial void GenMeshTangents(ref Mesh mesh);
 
     /// <summary>
     /// Export mesh data to file, returns true on success
@@ -3487,7 +3487,7 @@ public static unsafe partial class Raylib
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial Material* LoadMaterials(string fileName, int* materialCount);
+    public static unsafe partial Material* LoadMaterials(string fileName, ref int materialCount);
 
     /// <summary>
     /// Load default material (Supports: DIFFUSE, SPECULAR, NORMAL maps)
@@ -3515,21 +3515,21 @@ public static unsafe partial class Raylib
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void SetMaterialTexture(Material* material, int mapType, Texture texture);
+    public static partial void SetMaterialTexture(ref Material material, int mapType, Texture texture);
 
     /// <summary>
     /// Set material for a mesh
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void SetModelMeshMaterial(Model* model, int meshId, int materialId);
+    public static partial void SetModelMeshMaterial(ref Model model, int meshId, int materialId);
 
     /// <summary>
     /// Load model animations from file
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial ModelAnimation* LoadModelAnimations(string fileName, int* animCount);
+    public static unsafe partial ModelAnimation* LoadModelAnimations(string fileName, ref int animCount);
 
     /// <summary>
     /// Update model animation pose (CPU)
@@ -3816,14 +3816,14 @@ public static unsafe partial class Raylib
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void WaveCrop(Wave* wave, int initFrame, int finalFrame);
+    public static partial void WaveCrop(ref Wave wave, int initFrame, int finalFrame);
 
     /// <summary>
     /// Convert wave data to desired format
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void WaveFormat(Wave* wave, int sampleRate, int sampleSize, int channels);
+    public static partial void WaveFormat(ref Wave wave, int sampleRate, int sampleSize, int channels);
 
     /// <summary>
     /// Load samples data from wave as a 32bit float data array

@@ -430,12 +430,20 @@ public class Generator
         {
             var paramPointerCount = 0;
             string paramType = ConvertCppTypeToCSharp(functionName, parameter.Name, parameter.Type, ref paramPointerCount, out _);
-            paramType = AppendPointer(paramType, paramPointerCount);
             string paramName = MapName(parameter.Name);
+            bool isArray = options.DetectArray(function.Name, parameter.Name);
 
             if (paramPointerCount > 0)
             {
-                isUnsafe = true;
+                if (paramPointerCount == 1 && IsSimpleRef(function, paramName, paramType) && !isArray)
+                {
+                    paramType = "ref " + paramType;
+                }
+                else
+                {
+                    isUnsafe = true;
+                    paramType = AppendPointer(paramType, paramPointerCount);
+                }
             }
 
             parameters.Add($"{paramType} {paramName}");
@@ -443,9 +451,9 @@ public class Generator
 
         if (function.Flags.HasFlag(CppFunctionFlags.Variadic))
         {
+            // FIXME: Use something real for varargs
             // https://github.com/dotnet/runtime/issues/48796
-            // parameters.Add("__arglist");
-            Console.WriteLine($"- Unsupported function param: {functionName} (variadic)");
+            parameters.Add("IntPtr args");
         }
 
         string parametersString = string.Join(", ", parameters);
@@ -644,22 +652,27 @@ public class Generator
         return identifier[0].ToString().ToLower() != identifier[0].ToString();
     }
 
-    private static bool IsNotArray(CppFunction fn, CppParameter param)
+    private static bool IsSimpleRef(CppFunction fn, string name, string type)
     {
-        var name = param.Name;
+        if (type.Contains("void") || type.Contains("delegate") || type == "byte")
+        {
+            return false;
+        }
+
         var baseName = name.EndsWith("s") ? name.Substring(0, name.Length - 1) : name;
-        var possibleSuffixes = new List<string> { "Count", "Length", "sCount", "sLength" };
+        var possibleSuffixes = new List<string> { "Count", "sCount", "Length", "sLength", "Size", "sSize", "Len", "sLen" };
 
         foreach (var p in fn.Parameters)
         {
             foreach (var suffix in possibleSuffixes)
             {
-                if (p.Name == baseName + suffix)
+                if (p.Name == baseName + suffix || p.Name == suffix.ToLower())
                 {
                     return false; // It's an array
                 }
             }
         }
+
         return true; // It's not an array
     }
 

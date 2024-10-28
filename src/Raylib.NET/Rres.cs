@@ -52,7 +52,7 @@ public static unsafe partial class Rres
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial ResourceChunkInfo* rresLoadResourceChunkInfoAll(string fileName, uint* chunkCount);
+    public static unsafe partial ResourceChunkInfo* rresLoadResourceChunkInfoAll(string fileName, ref uint chunkCount);
 
     /// <summary>
     /// Load central directory resource chunk from file

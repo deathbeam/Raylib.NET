@@ -31,6 +31,25 @@ var transformEnum = (string parent, string name) => parent switch
 
 var options = new GeneratorOptions
 {
+    DetectArray = (string parent, string name) => {
+        if (parent == "rlGenTextureMipmaps") {
+            return true;
+        }
+
+        if (parent == "rlMultMatrixf") {
+            return true;
+        }
+
+        if (parent == "rlSetShader") {
+            return true;
+        }
+
+        if (parent.StartsWith("Unload")) {
+            return true;
+        }
+
+        return false;
+    },
     TransformType = (string parent, string name, string type) =>
         type switch
         {

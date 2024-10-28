@@ -11,7 +11,8 @@ public struct GeneratorOptions
     public string[] SystemIncludeFolders = { };
     public string[] IncludeFolders = { };
     public string[] Defines = { };
-    public Func<string, string, string, string?> TransformType = (parent, name, type) => type;
+    public Func<string, string, string, string?> TransformType = (parent, name, type) => null;
+    public Func<string, string, bool> DetectArray = (parent, name) => false;
     public Dictionary<string, string> ExistingTypes = new();
 
     public GeneratorOptions()

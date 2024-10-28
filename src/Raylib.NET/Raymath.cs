@@ -432,7 +432,7 @@ public static unsafe partial class Raymath
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void Vector3OrthoNormalize(Vector3* v1, Vector3* v2);
+    public static partial void Vector3OrthoNormalize(ref Vector3 v1, ref Vector3 v2);
 
     /// <summary>
     /// Transforms a Vector3 by a given Matrix
@@ -985,7 +985,7 @@ public static unsafe partial class Raymath
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void QuaternionToAxisAngle(Vector4 q, Vector3* outAxis, float* outAngle);
+    public static partial void QuaternionToAxisAngle(Vector4 q, ref Vector3 outAxis, ref float outAngle);
 
     /// <summary>
     /// Get the quaternion equivalent to Euler angles
@@ -1022,5 +1022,5 @@ public static unsafe partial class Raymath
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void MatrixDecompose(Matrix4x4 mat, Vector3* translation, Vector4* rotation, Vector3* scale);
+    public static partial void MatrixDecompose(Matrix4x4 mat, ref Vector3 translation, ref Vector4 rotation, ref Vector3 scale);
 }

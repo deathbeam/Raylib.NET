@@ -796,14 +796,14 @@ public static unsafe partial class Rlgl
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void rlDrawRenderBatch(RenderBatch* batch);
+    public static partial void rlDrawRenderBatch(ref RenderBatch batch);
 
     /// <summary>
     /// Set the active render batch for rlgl (NULL for default internal)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void rlSetRenderBatchActive(RenderBatch* batch);
+    public static partial void rlSetRenderBatchActive(ref RenderBatch batch);
 
     /// <summary>
     /// Update and draw internal render batch
@@ -957,7 +957,7 @@ public static unsafe partial class Rlgl
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void rlGetGlTextureFormats(int format, uint* glInternalFormat, uint* glFormat, uint* glType);
+    public static partial void rlGetGlTextureFormats(int format, ref uint glInternalFormat, ref uint glFormat, ref uint glType);
 
     /// <summary>
     /// Get name string for pixel format
