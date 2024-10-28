@@ -27,7 +27,7 @@ public class Generator
 
     public void Generate()
     {
-        var parserOptions  = new CppParserOptions
+        var parserOptions = new CppParserOptions
         {
             AdditionalArguments = { "-xc", "-std=gnu99" },
             ParseAsCpp = false,
@@ -172,12 +172,14 @@ public class Generator
             testBuilder.AppendLine($"public class {options.GeneratedClass}Test");
             testBuilder.AppendLine("{");
 
-            testBuilder.Append($$"""
-                private unsafe void CheckType<T>() where T : unmanaged
-                {
-                    Assert.True(BlittableHelper.IsBlittable<T>());
-                }
-            """);
+            testBuilder.Append(
+                $$"""
+                    private unsafe void CheckType<T>() where T : unmanaged
+                    {
+                        Assert.True(BlittableHelper.IsBlittable<T>());
+                    }
+                """
+            );
 
             testBuilder.AppendLine();
             testBuilder.AppendLine();
@@ -336,7 +338,13 @@ public class Generator
             GenerateComments(field, ref output);
 
             var pointerCount = 0;
-            string fieldType = ConvertCppTypeToCSharp(structName, field.Name, field.Type, ref pointerCount, out var arraySize);
+            string fieldType = ConvertCppTypeToCSharp(
+                structName,
+                field.Name,
+                field.Type,
+                ref pointerCount,
+                out var arraySize
+            );
             string fieldName = MapName(field.Name, toPascalCase: true);
 
             if (arraySize > 0)
@@ -377,7 +385,13 @@ public class Generator
             foreach (var field in cppStruct.Fields)
             {
                 var pointerCount = 0;
-                string fieldType = ConvertCppTypeToCSharp(structName, field.Name, field.Type, ref pointerCount, out var arraySize);
+                string fieldType = ConvertCppTypeToCSharp(
+                    structName,
+                    field.Name,
+                    field.Type,
+                    ref pointerCount,
+                    out var arraySize
+                );
                 string fieldName = MapName(field.Name, toCamelCase: true);
 
                 if (!first)
@@ -419,7 +433,13 @@ public class Generator
         }
 
         var pointerCount = 0;
-        string returnType = ConvertCppTypeToCSharp(function.Name, "return", function.ReturnType, ref pointerCount, out _);
+        string returnType = ConvertCppTypeToCSharp(
+            function.Name,
+            "return",
+            function.ReturnType,
+            ref pointerCount,
+            out _
+        );
         returnType = AppendPointer(returnType, pointerCount);
 
         string functionName = MapName(function.Name);
@@ -429,7 +449,13 @@ public class Generator
         foreach (var parameter in function.Parameters)
         {
             var paramPointerCount = 0;
-            string paramType = ConvertCppTypeToCSharp(functionName, parameter.Name, parameter.Type, ref paramPointerCount, out _);
+            string paramType = ConvertCppTypeToCSharp(
+                functionName,
+                parameter.Name,
+                parameter.Type,
+                ref paramPointerCount,
+                out _
+            );
             string paramName = MapName(parameter.Name);
             bool isArray = options.DetectArray(function.Name, parameter.Name);
 
@@ -527,22 +553,26 @@ public class Generator
         switch (cppType)
         {
             case CppPrimitiveType primitiveType:
-                return MapType(parent, cppName, primitiveType.Kind switch
-                {
-                    CppPrimitiveKind.Void => "void",
-                    CppPrimitiveKind.Bool => skipHighOrder ? "sbyte" : "NativeBool",
-                    CppPrimitiveKind.Char => "sbyte",
-                    CppPrimitiveKind.Short => "short",
-                    CppPrimitiveKind.Int => "int",
-                    CppPrimitiveKind.Long => "long",
-                    CppPrimitiveKind.Float => "float",
-                    CppPrimitiveKind.Double => "double",
-                    CppPrimitiveKind.UnsignedChar => "byte",
-                    CppPrimitiveKind.UnsignedShort => "ushort",
-                    CppPrimitiveKind.UnsignedInt => "uint",
-                    CppPrimitiveKind.UnsignedLong => "ulong",
-                    _ => throw new NotSupportedException($"Unsupported primitive type: {primitiveType.Kind}"),
-                });
+                return MapType(
+                    parent,
+                    cppName,
+                    primitiveType.Kind switch
+                    {
+                        CppPrimitiveKind.Void => "void",
+                        CppPrimitiveKind.Bool => skipHighOrder ? "sbyte" : "NativeBool",
+                        CppPrimitiveKind.Char => "sbyte",
+                        CppPrimitiveKind.Short => "short",
+                        CppPrimitiveKind.Int => "int",
+                        CppPrimitiveKind.Long => "long",
+                        CppPrimitiveKind.Float => "float",
+                        CppPrimitiveKind.Double => "double",
+                        CppPrimitiveKind.UnsignedChar => "byte",
+                        CppPrimitiveKind.UnsignedShort => "ushort",
+                        CppPrimitiveKind.UnsignedInt => "uint",
+                        CppPrimitiveKind.UnsignedLong => "ulong",
+                        _ => throw new NotSupportedException($"Unsupported primitive type: {primitiveType.Kind}"),
+                    }
+                );
             case CppPointerType pointerType:
                 if (pointerCount == 0 && !skipHighOrder)
                 {
@@ -566,17 +596,52 @@ public class Generator
                 }
 
                 pointerCount++;
-                return ConvertCppTypeToCSharp(parent, cppName, pointerType.ElementType, ref pointerCount, out _, skipHighOrder);
+                return ConvertCppTypeToCSharp(
+                    parent,
+                    cppName,
+                    pointerType.ElementType,
+                    ref pointerCount,
+                    out _,
+                    skipHighOrder
+                );
             case CppReferenceType referenceType:
                 pointerCount++;
-                return ConvertCppTypeToCSharp(parent, cppName, referenceType.ElementType, ref pointerCount, out _, skipHighOrder);
+                return ConvertCppTypeToCSharp(
+                    parent,
+                    cppName,
+                    referenceType.ElementType,
+                    ref pointerCount,
+                    out _,
+                    skipHighOrder
+                );
             case CppArrayType arrayType:
                 arraySize = arrayType.Size;
-                return ConvertCppTypeToCSharp(parent, cppName, arrayType.ElementType, ref pointerCount, out _, skipHighOrder);
+                return ConvertCppTypeToCSharp(
+                    parent,
+                    cppName,
+                    arrayType.ElementType,
+                    ref pointerCount,
+                    out _,
+                    skipHighOrder
+                );
             case CppQualifiedType qualifiedType:
-                return ConvertCppTypeToCSharp(parent, cppName, qualifiedType.ElementType, ref pointerCount, out _, skipHighOrder);
+                return ConvertCppTypeToCSharp(
+                    parent,
+                    cppName,
+                    qualifiedType.ElementType,
+                    ref pointerCount,
+                    out _,
+                    skipHighOrder
+                );
             case CppTypedef typedefType:
-                return ConvertCppTypeToCSharp(parent, cppName, typedefType.ElementType, ref pointerCount, out _, skipHighOrder);
+                return ConvertCppTypeToCSharp(
+                    parent,
+                    cppName,
+                    typedefType.ElementType,
+                    ref pointerCount,
+                    out _,
+                    skipHighOrder
+                );
             case CppClass cppClass:
                 return MapType(parent, cppName, cppClass.Name);
             case CppEnum cppEnum:
@@ -597,7 +662,14 @@ public class Generator
                 foreach (var parameter in cppFunctionType.Parameters)
                 {
                     var paramPointerCount = 0;
-                    string paramType = ConvertCppTypeToCSharp(cppName, parameter.Name, parameter.Type, ref paramPointerCount, out _, true);
+                    string paramType = ConvertCppTypeToCSharp(
+                        cppName,
+                        parameter.Name,
+                        parameter.Type,
+                        ref paramPointerCount,
+                        out _,
+                        true
+                    );
                     paramType = AppendPointer(paramType, paramPointerCount);
                     parameters.Add(paramType);
                 }
@@ -612,7 +684,10 @@ public class Generator
     private string MapName(string name, bool toPascalCase = false, bool toCamelCase = false)
     {
         var o = options.TransformName(name) ?? name;
-        o = toCamelCase ? ToCamelCase(o) : toPascalCase ? ToPascalCase(o) : o;
+        o =
+            toCamelCase ? ToCamelCase(o)
+            : toPascalCase ? ToPascalCase(o)
+            : o;
 
         if (reservedKeywords.Contains(o))
         {
@@ -634,7 +709,7 @@ public class Generator
             "uint8_t" => "byte",
             "int64_t" => "long",
             "uint64_t" => "ulong",
-            _ => options.TransformType(parent, name, type) ?? type
+            _ => options.TransformType(parent, name, type) ?? type,
         };
     }
 
@@ -661,7 +736,17 @@ public class Generator
         }
 
         var baseName = name.EndsWith("s") ? name.Substring(0, name.Length - 1) : name;
-        var possibleSuffixes = new List<string> { "Count", "sCount", "Length", "sLength", "Size", "sSize", "Len", "sLen" };
+        var possibleSuffixes = new List<string>
+        {
+            "Count",
+            "sCount",
+            "Length",
+            "sLength",
+            "Size",
+            "sSize",
+            "Len",
+            "sLen",
+        };
 
         foreach (var p in fn.Parameters)
         {

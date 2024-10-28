@@ -4,52 +4,47 @@ using Bindgen;
 var libPath = "../../lib";
 var includePath = args[0];
 
-var transformEnum = (string parent, string name) => parent switch
-{
-    "IsKeyPressed" or "IsKeyPressedRepeat" or "IsKeyDown" or "IsKeyReleased" or "IsKeyUp" or "GetKeyPressed" => name switch
+var transformEnum = (string parent, string name) =>
+    parent switch
     {
-        "key" or "return" => "KeyboardKey",
-        _ => null
-    },
-    "IsMouseButtonPressed" or "IsMouseButtonDown" or "IsMouseButtonReleased" or "IsMouseButtonUp" => name switch
-    {
-        "button" => "MouseButton",
-        _ => null
-    },
-    "IsGampadButtonPressed" or "IsGamepadButtonDown" or "IsGamepadButtonReleased" or "IsGamepadButtonUp" or "GetGamepadButtonPressed" => name switch
-    {
-        "button" or "return" => "GamepadButton",
-        _ => null
-    },
-    "GuiGetStyle" or "GuiSetStyle" => name switch
-    {
-        "control" => "GuiControl",
-        _ => null
-    },
-    _ => null
-};
+        "IsKeyPressed" or "IsKeyPressedRepeat" or "IsKeyDown" or "IsKeyReleased" or "IsKeyUp" or "GetKeyPressed" =>
+            name switch
+            {
+                "key" or "return" => "KeyboardKey",
+                _ => null,
+            },
+        "IsMouseButtonPressed" or "IsMouseButtonDown" or "IsMouseButtonReleased" or "IsMouseButtonUp" => name switch
+        {
+            "button" => "MouseButton",
+            _ => null,
+        },
+        "IsGampadButtonPressed"
+        or "IsGamepadButtonDown"
+        or "IsGamepadButtonReleased"
+        or "IsGamepadButtonUp"
+        or "GetGamepadButtonPressed" => name switch
+        {
+            "button" or "return" => "GamepadButton",
+            _ => null,
+        },
+        "GuiGetStyle" or "GuiSetStyle" => name switch
+        {
+            "control" => "GuiControl",
+            _ => null,
+        },
+        _ => null,
+    };
 
 var options = new GeneratorOptions
 {
-    DetectArray = (string parent, string name) => {
-        if (parent == "rlGenTextureMipmaps") {
-            return true;
-        }
-
-        if (parent == "rlMultMatrixf") {
-            return true;
-        }
-
-        if (parent == "rlSetShader") {
-            return true;
-        }
-
-        if (parent.StartsWith("Unload")) {
-            return true;
-        }
-
-        return false;
-    },
+    DetectArray = (string parent, string name) =>
+        parent switch
+        {
+            "rlGenTextureMipmaps" => true,
+            "rlMultMatrixf" => true,
+            "rlSetShader" => true,
+            _ => parent.StartsWith("Unload"),
+        },
     TransformType = (string parent, string name, string type) =>
         type switch
         {

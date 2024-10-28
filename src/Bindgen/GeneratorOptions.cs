@@ -16,7 +16,5 @@ public struct GeneratorOptions
     public Func<string, string, bool> DetectArray = (parent, name) => false;
     public Dictionary<string, string> ExistingTypes = new();
 
-    public GeneratorOptions()
-    {
-    }
+    public GeneratorOptions() { }
 }
