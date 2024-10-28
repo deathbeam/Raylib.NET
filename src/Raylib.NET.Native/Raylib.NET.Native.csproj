@@ -17,10 +17,6 @@
         <Description>Native libraries for Raylib</Description>
     </PropertyGroup>
 
-    <PropertyGroup>
-        <HostArch>$([System.Runtime.InteropServices.RuntimeInformation]::ProcessArchitecture)</HostArch>
-    </PropertyGroup>
-
     <!-- We want 2 separate natives packages for debug and release modes -->
     <Choose>
         <When Condition="'$(Configuration)' == 'Debug'">
@@ -33,28 +29,6 @@
             <PropertyGroup>
                 <PackageId>Raylib.NET.Native</PackageId>
                 <ZigConfiguration>ReleaseFast</ZigConfiguration>
-            </PropertyGroup>
-        </When>
-    </Choose>
-
-    <!-- As we are cross-compiling, RID != host runtime so we need to determine it for later -->
-    <Choose>
-        <When Condition="$([MSBuild]::IsOSPlatform('Windows'))">
-            <PropertyGroup>
-                <HostRuntime Condition="'$(HostArch)' == 'X64'">win-x64</HostRuntime>
-                <HostRuntime Condition="'$(HostArch)' == 'Arm64'">win-arm64</HostRuntime>
-            </PropertyGroup>
-        </When>
-        <When Condition="$([MSBuild]::IsOSPlatform('Linux'))">
-            <PropertyGroup>
-                <HostRuntime Condition="'$(HostArch)' == 'X64'">linux-x64</HostRuntime>
-                <HostRuntime Condition="'$(HostArch)' == 'Arm64'">linux-arm64</HostRuntime>
-            </PropertyGroup>
-        </When>
-        <When Condition="$([MSBuild]::IsOSPlatform('OSX'))">
-            <PropertyGroup>
-                <HostRuntime Condition="'$(HostArch)' == 'X64'">osx-x64</HostRuntime>
-                <HostRuntime Condition="'$(HostArch)' == 'Arm64'">osx-arm64</HostRuntime>
             </PropertyGroup>
         </When>
     </Choose>

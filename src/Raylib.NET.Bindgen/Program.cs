@@ -2,6 +2,7 @@ using System.Text.RegularExpressions;
 using Bindgen;
 
 var libPath = "../../lib";
+var includePath = args[0];
 
 var transformEnum = (string parent, string name) => parent switch
 {
@@ -53,8 +54,8 @@ var options = new GeneratorOptions
     LibraryName = "raylib",
     SystemIncludeFolders = new[]
     {
-        $"{libPath}/zig/lib/libc/include/generic-musl",
-        $"{libPath}/zig/lib/libc/include/x86-linux-musl",
+        $"{includePath}/libc/include/generic-musl",
+        $"{includePath}/libc/include/x86-linux-musl",
     },
     IncludeFolders = new[] { $"{libPath}/raylib/src" },
 };

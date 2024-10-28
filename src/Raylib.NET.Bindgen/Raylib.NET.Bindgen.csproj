@@ -14,9 +14,14 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Bindgen\Bindgen.csproj" />
+
+        <PackageReference Include="Vezel.Zig.Toolsets.$(HostRuntime)" Version="0.13.0.1">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
     </ItemGroup>
 
     <Target Name="RunAfterBuild" AfterTargets="Build" Condition="'$(SkipBindgen)' != 'true'">
-        <Exec Command="dotnet &quot;$(TargetDir)$(TargetFileName)&quot;" />
+        <Exec Command="dotnet '$(TargetDir)$(TargetFileName)' '$(ZigLibPath)'" />
     </Target>
 </Project>
