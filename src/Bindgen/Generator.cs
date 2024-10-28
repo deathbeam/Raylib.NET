@@ -752,7 +752,7 @@ public class Generator
         {
             foreach (var suffix in possibleSuffixes)
             {
-                if (p.Name == baseName + suffix || p.Name == suffix.ToLower())
+                if (p.Name != name && (p.Name == baseName + suffix || p.Name == suffix.ToLower()))
                 {
                     return false; // It's an array
                 }

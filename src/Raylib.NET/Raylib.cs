@@ -2920,7 +2920,7 @@ public static unsafe partial class Raylib
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial int* LoadCodepoints(string text, int* count);
+    public static unsafe partial int* LoadCodepoints(string text, ref int count);
 
     /// <summary>
     /// Unload codepoints data from memory
@@ -3025,7 +3025,7 @@ public static unsafe partial class Raylib
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial sbyte** TextSplit(string text, sbyte delimiter, int* count);
+    public static unsafe partial sbyte** TextSplit(string text, sbyte delimiter, ref int count);
 
     /// <summary>
     /// Append text at specific position and move cursor!
