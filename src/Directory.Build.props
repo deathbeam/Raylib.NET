@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <VersionPrefix>1.0.0</VersionPrefix>
+    <Authors>deathbeam</Authors>
+    <RepositoryUrl>https://github.com/deathbeam/Raylib.NET.git</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/deathbeam/Raylib.NET</PackageProjectUrl>
+    <PackageLicenseExpression>zlib</PackageLicenseExpression>
+  </PropertyGroup>
+</Project>

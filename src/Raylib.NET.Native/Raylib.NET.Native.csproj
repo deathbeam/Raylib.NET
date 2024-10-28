@@ -1,6 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <OutputType>Library</OutputType>
         <TargetFramework>net8.0</TargetFramework>
 
         <!-- This is project for holding natives only so we dont really want to generate anything else -->
@@ -12,6 +11,10 @@
         <IncludeBuildOutput>false</IncludeBuildOutput>
         <MSBuildEnableWorkloadResolver>false</MSBuildEnableWorkloadResolver>
         <NoWarn>$(NoWarn);CS2008</NoWarn>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <Description>Native libraries for Raylib</Description>
     </PropertyGroup>
 
     <PropertyGroup>
