@@ -18,7 +18,7 @@ while (!WindowShouldClose())
 
     BeginDrawing();
 
-    ClearBackground(GetColor((uint)GuiGetStyle(GuiControl.DEFAULT, (int)GuiDefaultProperty.BACKGROUND_COLOR)));
+    ClearBackground(GetColor((uint)GuiGetStyle((int)GuiControl.DEFAULT, (int)GuiDefaultProperty.BACKGROUND_COLOR)));
 
     DrawTexture(texture, 10, 40, Color.WHITE);
 
