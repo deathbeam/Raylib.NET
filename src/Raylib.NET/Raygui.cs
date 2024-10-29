@@ -209,7 +209,7 @@ public static unsafe partial class Raygui
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial int GuiTabBar(Vector4 bounds, sbyte** text, int count, int* active);
+    public static unsafe partial int GuiTabBar(Vector4 bounds, sbyte** text, int count, ref int active);
 
     /// <summary>
     /// Scroll Panel control
@@ -363,7 +363,7 @@ public static unsafe partial class Raygui
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial int GuiListViewEx(Vector4 bounds, sbyte** text, int count, int* scrollIndex, int* active, int* focus);
+    public static unsafe partial int GuiListViewEx(Vector4 bounds, sbyte** text, int count, ref int scrollIndex, ref int active, ref int focus);
 
     /// <summary>
     /// Message Box control, displays a message

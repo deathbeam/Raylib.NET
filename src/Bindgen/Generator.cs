@@ -748,11 +748,19 @@ public class Generator
             "sLen",
         };
 
+        var found = false;
+
         foreach (var p in fn.Parameters)
         {
+            if (p.Name == name)
+            {
+                found = true;
+                continue;
+            }
+
             foreach (var suffix in possibleSuffixes)
             {
-                if (p.Name != name && (p.Name == baseName + suffix || p.Name == suffix.ToLower()))
+                if (found && (p.Name == baseName + suffix || p.Name == suffix.ToLower()))
                 {
                     return false; // It's an array
                 }
