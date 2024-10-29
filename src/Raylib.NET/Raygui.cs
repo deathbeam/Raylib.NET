@@ -97,14 +97,14 @@ public static unsafe partial class Raygui
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void GuiSetStyle(GuiControl control, int @property, int value);
+    public static partial void GuiSetStyle(int control, int @property, int value);
 
     /// <summary>
     /// Get one style property
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial int GuiGetStyle(GuiControl control, int @property);
+    public static partial int GuiGetStyle(int control, int @property);
 
     /// <summary>
     /// Load style file over global style variable (.rgs)

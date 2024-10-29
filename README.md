@@ -4,6 +4,11 @@ Everything is 100% generated, Im not touching the generated stuff, only generato
 The goal is to eventually PR some of this stuff to [Raylib-cs](https://github.com/chrisdill/raylib-cs). Natives PR requires 5.5 update there first and generator is a lot of effort
 due to Raylib-cs project structure being quite difficult to work with. If I decide that its not worth it, I will just keep this as a separate project.
 
+### Stuff not being done here
+
+- Enum to argument mappings - this is raylib design decision, if raylib maintainers decide to provide type info in headers I can parse it, but without it too bad
+- Array->Span mappings - C arrays are fake, ideally raylib should provide C99 [] notation for arrays in headers, but when it doesnt, too bad
+
 ### Included bindings
 
 - Raylib
@@ -97,7 +102,3 @@ cd emsdk
 ./emsdk activate latest
 export EMSDK=$PWD
 ```
-
-### TODO/Maybe
-
-- [ ] Generate Span wrappers for arrays?
