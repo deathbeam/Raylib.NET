@@ -16,5 +16,6 @@
     <!-- Set emcc flags for debug and release builds -->
     <EmccFlags Condition="$(Configuration) == 'Debug'">-sUSE_GLFW=3 -sASYNCIFY=1 -sASSERTIONS=1 -sVERBOSE=1 -Wbad-function-cast -Wcast-function-type -O2 -g3</EmccFlags>
     <EmccFlags Condition="$(Configuration) == 'Release'">-sUSE_GLFW=3 -sASYNCIFY=1 -O3 -g0</EmccFlags>
+    <EmccFlags>$(EmccFlags) --shell-file $(RaylibStaticPath)/shell.html</EmccFlags>
   </PropertyGroup>
 </Project>
