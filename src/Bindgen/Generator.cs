@@ -27,9 +27,18 @@ public class Generator
 
     public void Generate()
     {
+        var preHeaderText = "";
+        foreach (var include in options.Includes)
+        {
+            preHeaderText += $"#include <{include}>\n";
+        }
+
+        preHeaderText = preHeaderText.Trim();
+
         var parserOptions = new CppParserOptions
         {
             AdditionalArguments = { "-xc", "-std=gnu99" },
+            PreHeaderText = string.IsNullOrEmpty(preHeaderText) ? null : preHeaderText,
             ParseAsCpp = false,
             ParseComments = true,
             ParseMacros = true,
@@ -74,6 +83,11 @@ public class Generator
         Console.WriteLine($"> Macros: {ast.Macros.Count}");
         foreach (var macro in ast.Macros)
         {
+            if (!ShouldGenerate(macro.Span))
+            {
+                continue;
+            }
+
             var name = GenerateConstant(macro, out var generated);
             if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(generated))
             {
@@ -89,6 +103,11 @@ public class Generator
         Console.WriteLine($"> Functions: {ast.Functions.Count}");
         foreach (var function in ast.Functions)
         {
+            if (!ShouldGenerate(function.Span))
+            {
+                continue;
+            }
+
             var name = GenerateFunction(function, out var generated);
             if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(generated))
             {
@@ -106,6 +125,11 @@ public class Generator
         Console.WriteLine($"> Enums: {ast.Enums.Count}");
         foreach (var cppEnum in ast.Enums)
         {
+            if (!ShouldGenerate(cppEnum.Span))
+            {
+                continue;
+            }
+
             var name = GenerateEnum(cppEnum, out var generated);
             if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(generated))
             {
@@ -124,6 +148,11 @@ public class Generator
         Console.WriteLine($"> Structs: {ast.Classes.Count}");
         foreach (var cppStruct in ast.Classes)
         {
+            if (!ShouldGenerate(cppStruct.Span))
+            {
+                continue;
+            }
+
             var name = GenerateStruct(cppStruct, out var generated);
             if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(generated))
             {
@@ -203,12 +232,6 @@ public class Generator
 
     private string GenerateConstant(CppMacro macro, out string output)
     {
-        if (macro.Span.Start.File != "cppast.input")
-        {
-            output = "";
-            return "";
-        }
-
         string name = macro.Name.Trim();
         string value = macro.Value.Trim();
 
@@ -263,12 +286,6 @@ public class Generator
 
     private string GenerateEnum(CppEnum cppEnum, out string output)
     {
-        if (cppEnum.Span.Start.File != "cppast.input")
-        {
-            output = "";
-            return "";
-        }
-
         string enumName = MapType(cppEnum.Name, cppEnum.Name, cppEnum.Name);
 
         output = "";
@@ -298,12 +315,6 @@ public class Generator
 
     private string GenerateStruct(CppClass cppStruct, out string output)
     {
-        if (cppStruct.Span.Start.File != "cppast.input")
-        {
-            output = "";
-            return "";
-        }
-
         string structName = MapType(cppStruct.Name, cppStruct.Name, cppStruct.Name);
 
         output = "";
@@ -426,12 +437,6 @@ public class Generator
 
     private string GenerateFunction(CppFunction function, out string output)
     {
-        if (function.Span.Start.File != "cppast.input")
-        {
-            output = "";
-            return "";
-        }
-
         var pointerCount = 0;
         string returnType = ConvertCppTypeToCSharp(
             function.Name,
@@ -508,13 +513,18 @@ public class Generator
     {
         var lines = fileContent.Split('\n');
         var comments = new List<string>();
+        var startLine = dec.Span.Start.Line - 1 - options.Includes.Count();
+        var endLine = dec.Span.End.Line - options.Includes.Count();
 
-        for (int i = dec.Span.Start.Line - 1; i < dec.Span.End.Line; i++)
+        if (dec.Span.Start.File == "cppast.input")
         {
-            var line = lines[i].Trim();
-            if (line.Contains("//"))
+            for (int i = startLine; i < endLine; i++)
             {
-                comments.Add(line.Substring(line.IndexOf("//") + 2).Trim());
+                var line = lines[i].Trim();
+                if (line.Contains("//"))
+                {
+                    comments.Add(line.Substring(line.IndexOf("//") + 2).Trim());
+                }
             }
         }
 
@@ -711,6 +721,19 @@ public class Generator
             "uint64_t" => "ulong",
             _ => options.TransformType(parent, name, type) ?? type,
         };
+    }
+
+    private bool ShouldGenerate(CppSourceSpan span)
+    {
+        foreach (var include in options.GenerateIncludes)
+        {
+            if (span.Start.File.Contains(include))
+            {
+                return true;
+            }
+        }
+
+        return span.Start.File == "cppast.input";
     }
 
     private static string AppendPointer(string type, int pointerCount)

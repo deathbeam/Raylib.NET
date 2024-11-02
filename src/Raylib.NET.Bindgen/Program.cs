@@ -40,7 +40,11 @@ var options = new GeneratorOptions
         $"{includePath}/libc/include/generic-musl",
         $"{includePath}/libc/include/x86-linux-musl",
     },
-    IncludeFolders = new[] { $"{libPath}/raylib/src" },
+    IncludeFolders = new[] {
+        $"{libPath}/raylib/src",
+        $"{libPath}/raygui/src",
+        $"{libPath}/rres/src",
+    },
 };
 
 options.GeneratedClass = "Rlgl";
