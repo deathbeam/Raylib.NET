@@ -22,7 +22,7 @@
 - Windows x64/x86/arm64
 - OSX x64/arm64
 - Linux x64/arm64 (arm64 currently not prebuilt)
-- Browser WASM
+- Browser WASM (using better WASM not the awful default .NET one, e.g [NativeAOT-LLVM](https://github.com/dotnet/runtimelab/tree/feature/NativeAOT-LLVM))
 
 ### Use as dependency
 
