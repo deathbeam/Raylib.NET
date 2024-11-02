@@ -1,13 +1,13 @@
 ### Stuff being done here
 
-Everything is 100% generated, Im not touching the generated stuff, only generator.
-The goal is to eventually PR some of this stuff to [Raylib-cs](https://github.com/chrisdill/raylib-cs). Natives PR requires 5.5 update there first and generator is a lot of effort
-due to Raylib-cs project structure being quite difficult to work with. If I decide that its not worth it, I will just keep this as a separate project.
+- Everything is 100% generated, no manual wrappers, minimal amount of manual mappings (mostly just slight correction for array detection, C "arrays" are worst thing ever made)
+- Natives are built for all platforms, using raylib zig build scripts
 
 ### Stuff not being done here
 
-- Enum to argument mappings - this is raylib design decision, if raylib maintainers decide to provide type info in headers I can parse it, but without it too bad
-- Array->Span mappings - C arrays are fake, ideally raylib should provide C99 [] notation for arrays in headers, but when it doesnt, too bad
+- Enum to argument mappings - this is raylib design decision, if raylib maintainers decide to provide type info in headers I can parse it, but i dont want to hardcode it
+- Array->Span mappings - there is no info if something is array or not in raylib C headers so detecting arrays is very volatile. I do some basic array detection at the moment so this might be possible eventually, but im undecided yet
+- Manual wrappers - Everything manual is error prone and harder to maintain, the bindings are perfectly usable without them (partially thanks to LibraryImport being so nice to work with)
 
 ### Included bindings
 
