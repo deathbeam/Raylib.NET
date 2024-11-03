@@ -97,8 +97,8 @@ jobs:
               libxext-dev:arm64 \
               libxfixes-dev:arm64 \
               libwayland-dev:arm64 \
-              libxkbcommon-dev:arm64 \
-              crossbuild-essential-arm64
+              libxkbcommon-dev:arm64
+              # crossbuild-essential-arm64
 
       - name: Setup EMSDK
         if: matrix.runtime == 'browser-wasm'
