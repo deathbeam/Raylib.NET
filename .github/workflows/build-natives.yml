@@ -51,9 +51,6 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get install -y --no-install-recommends \
               gcc-multilib \
-              gcc-aarch64-linux-gnu \
-              g++-aarch64-linux-gnu \
-              binutils-aarch64-linux-gnu \
               libgl1-mesa-dev \
               libglfw3 \
               libglfw3-dev \
