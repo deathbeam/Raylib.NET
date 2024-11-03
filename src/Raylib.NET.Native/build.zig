@@ -46,22 +46,26 @@ pub fn compileRaylib(b: *std.Build, target: std.Build.ResolvedTarget, optimize: 
     lib.installHeader(raygui.path("src/raygui.h"), "raygui.h");
     lib.installHeader(rres.path("src/rres.h"), "rres.h");
 
-    // Idk why this is needed
+    // We need this to grab correct includes based on architecture
     if (target.result.os.tag == .linux) {
         if (target.result.cpu.arch == .aarch64) {
             lib.addLibraryPath(.{ .cwd_relative = "/usr/lib/aarch64-linux-gnu/" });
             lib.addIncludePath(.{ .cwd_relative = "/usr/include/aarch64-linux-gnu/" });
             lib.addSystemIncludePath(.{ .cwd_relative = "/usr/include" });
-        } else {
+        } else if (target.result.cpu.arch == .x86) {
+            lib.addLibraryPath(.{ .cwd_relative = "/usr/lib/i386-linux-gnu/" });
+            lib.addIncludePath(.{ .cwd_relative = "/usr/include/i386-linux-gnu/" });
+            lib.addSystemIncludePath(.{ .cwd_relative = "/usr/include" });
+        } else if (target.result.cpu.arch == .x86_64) {
             lib.addLibraryPath(.{ .cwd_relative = "/usr/lib/x86_64-linux-gnu/" });
             lib.addIncludePath(.{ .cwd_relative = "/usr/include/x86_64-linux-gnu/" });
             lib.addIncludePath(.{ .cwd_relative = "/usr/include" });
+        } else {
+            lib.addSystemIncludePath(.{ .cwd_relative = "/usr/include" });
         }
 
         lib.addLibraryPath(.{ .cwd_relative = "/usr/lib" });
     }
-
-    lib.linkLibC();
 
     return lib;
 }
