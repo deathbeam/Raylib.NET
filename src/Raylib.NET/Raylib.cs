@@ -3543,7 +3543,7 @@ public static unsafe partial class Raylib
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void UpdateModelAnimationBoneMatrices(Model model, ModelAnimation anim, int frame);
+    public static partial void UpdateModelAnimationBones(Model model, ModelAnimation anim, int frame);
 
     /// <summary>
     /// Unload animation data
