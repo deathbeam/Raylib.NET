@@ -45,7 +45,6 @@ pub fn compileRaylib(b: *std.Build, target: std.Build.ResolvedTarget, optimize: 
     lib.addIncludePath(rres.path("src"));
     lib.installHeader(raygui.path("src/raygui.h"), "raygui.h");
     lib.installHeader(rres.path("src/rres.h"), "rres.h");
-    lib.linkLibC();
 
     // Idk why this is needed
     if (target.result.os.tag == .linux) {
@@ -55,11 +54,14 @@ pub fn compileRaylib(b: *std.Build, target: std.Build.ResolvedTarget, optimize: 
         } else {
             lib.addLibraryPath(.{ .cwd_relative = "/usr/lib/x86_64-linux-gnu/" });
             lib.addIncludePath(.{ .cwd_relative = "/usr/include/x86_64-linux-gnu/" });
+            lib.defineCMacro("_GNU_SOURCE", "1");
         }
 
         lib.addLibraryPath(.{ .cwd_relative = "/usr/lib" });
         lib.addSystemIncludePath(.{ .cwd_relative = "/usr/include" });
     }
+
+    lib.linkLibC();
 
     return lib;
 }
