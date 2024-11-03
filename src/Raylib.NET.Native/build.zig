@@ -46,7 +46,6 @@ pub fn compileRaylib(b: *std.Build, target: std.Build.ResolvedTarget, optimize: 
     lib.installHeader(raygui.path("src/raygui.h"), "raygui.h");
     lib.installHeader(rres.path("src/rres.h"), "rres.h");
     lib.linkLibC();
-    lib.setTarget(target);
 
     // Idk why this is needed
     if (target.result.os.tag == .linux) {
