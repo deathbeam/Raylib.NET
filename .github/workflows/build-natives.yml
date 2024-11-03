@@ -44,8 +44,8 @@ jobs:
         with:
           dotnet-version: 8.0.x
 
-      - name: Setup Environment
-        if: matrix.os == 'ubuntu-latest'
+      - name: Setup Environment (x64)
+        if: matrix.os == 'ubuntu-latest' && matrix.runtime == 'linux-x64'
         shell: bash
         run: |
           sudo apt-get update -qq
@@ -63,6 +63,28 @@ jobs:
               libxfixes-dev \
               libwayland-dev \
               libxkbcommon-dev
+
+      - name: Setup Environment (arm64)
+        if: matrix.os == 'ubuntu-latest' && matrix.runtime == 'linux-arm64'
+        shell: bash
+        run: |
+          sudo dpkg --add-architecture arm64
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends \
+              gcc-multilib \
+              libgl1-mesa-dev:arm64 \
+              libglfw3:arm64 \
+              libglfw3-dev:arm64 \
+              libx11-dev:arm64 \
+              libxcursor-dev:arm64 \
+              libxrandr-dev:arm64 \
+              libxinerama-dev:arm64 \
+              libxi-dev:arm64 \
+              libxext-dev:arm64 \
+              libxfixes-dev:arm64 \
+              libwayland-dev:arm64 \
+              libxkbcommon-dev:arm64 \
+              crossbuild-essential-arm64
 
       - name: Setup EMSDK
         if: matrix.runtime == 'browser-wasm'
