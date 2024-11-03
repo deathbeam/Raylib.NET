@@ -49,7 +49,7 @@ jobs:
         if: matrix.os == 'ubuntu-latest' && matrix.runtime == 'linux-x64'
         shell: bash
         run: |
-          sudo apt-get update -qq
+          sudo apt-get update
           sudo apt-get install -y --no-install-recommends \
               gcc-multilib \
               libgl1-mesa-dev \
@@ -71,9 +71,14 @@ jobs:
         run: |
           sudo dpkg --print-foreign-architectures
           sudo dpkg --add-architecture arm64
-          sudo sed -i 's/http:\/\/security.ubuntu.com\/ubuntu\//http:\/\/ports.ubuntu.com\/ubuntu-ports\//g' /etc/apt/sources.list
-          sudo sed -i 's/http:\/\/archive.ubuntu.com\/ubuntu\//http:\/\/ports.ubuntu.com\/ubuntu-ports\//g' /etc/apt/sources.list
-          sudo apt-get update -qq
+          # Create a new sources list for arm64
+          sudo tee /etc/apt/sources.list.d/arm64.list << EOF
+          deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports/ jammy main restricted
+          deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports/ jammy-updates main restricted
+          deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports/ jammy-security main restricted
+          deb [arch=arm64] http://ports.ubuntu.com/ubuntu-ports/ jammy-backports main restricted
+          EOF
+          sudo apt-get update
           sudo apt-get install -y --no-install-recommends \
               gcc-multilib \
               libgl1-mesa-dev:arm64 \
