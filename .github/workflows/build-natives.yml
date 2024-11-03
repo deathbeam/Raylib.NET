@@ -69,8 +69,9 @@ jobs:
         if: matrix.os == 'ubuntu-latest' && matrix.runtime == 'linux-arm64'
         shell: bash
         run: |
-          sudo dpkg --add-architecture arm64
           sudo apt-get update -qq
+          sudo dpkg --print-foreign-architectures
+          sudo dpkg --add-architecture arm64
           sudo apt-get install -y --no-install-recommends \
               gcc-multilib \
               libgl1-mesa-dev:arm64 \
