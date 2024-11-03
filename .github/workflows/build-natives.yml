@@ -47,7 +47,6 @@ jobs:
 
       - name: Setup Environment (x64)
         if: matrix.os == 'ubuntu-latest' && matrix.runtime == 'linux-x64'
-        shell: bash
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends \
@@ -67,7 +66,6 @@ jobs:
 
       - name: Setup Environment (arm64)
         if: matrix.os == 'ubuntu-latest' && matrix.runtime == 'linux-arm64'
-        shell: bash
         run: |
           sudo dpkg --print-foreign-architectures
           sudo dpkg --add-architecture arm64
@@ -85,7 +83,6 @@ jobs:
           sudo apt-get clean
           sudo apt-get update
 
-          # Install crossbuild essentials first
           sudo apt-get install -y \
               crossbuild-essential-arm64 \
               gcc-aarch64-linux-gnu \
@@ -106,6 +103,9 @@ jobs:
               libxfixes-dev:arm64 \
               libwayland-dev:arm64 \
               libxkbcommon-dev:arm64
+
+          # List architecture directories
+          ls -la /usr/*-linux-*
 
       - name: Setup EMSDK
         if: matrix.runtime == 'browser-wasm'
