@@ -48,20 +48,14 @@ pub fn compileRaylib(b: *std.Build, target: std.Build.ResolvedTarget, optimize: 
 
     // Idk why this is needed
     if (target.result.os.tag == .linux) {
-        lib.addLibraryPath(.{ .cwd_relative = "/usr/lib" });
-        lib.addIncludePath(.{ .cwd_relative = "/usr/include" });
-
-        // Add architecture-specific paths based on target CPU
-        switch (target.result.cpu.arch) {
-            .x86_64 => {
-                lib.addLibraryPath(.{ .cwd_relative = "/usr/lib/x86_64-linux-gnu/" });
-                lib.addIncludePath(.{ .cwd_relative = "/usr/include/x86_64-linux-gnu/" });
-            },
-            .aarch64 => {
-                lib.addLibraryPath(.{ .cwd_relative = "/usr/lib/aarch64-linux-gnu/" });
-                lib.addIncludePath(.{ .cwd_relative = "/usr/include/aarch64-linux-gnu/" });
-            },
-            else => {}, // Handle other architectures if needed
+        if (target.result.cpu.arch == .aarch64) {
+            lib.addLibraryPath(.{ .cwd_relative = "/usr/lib/aarch64-linux-gnu/" });
+            lib.addIncludePath(.{ .cwd_relative = "/usr/include/aarch64-linux-gnu/" });
+        } else {
+            lib.addLibraryPath(.{ .cwd_relative = "/usr/lib" });
+            lib.addIncludePath(.{ .cwd_relative = "/usr/include" });
+            lib.addLibraryPath(.{ .cwd_relative = "/usr/lib/x86_64-linux-gnu/" });
+            lib.addIncludePath(.{ .cwd_relative = "/usr/include/x86_64-linux-gnu/" });
         }
     }
 

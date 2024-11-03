@@ -84,7 +84,15 @@ jobs:
           sudo rm -rf /var/lib/apt/lists/*
           sudo apt-get clean
           sudo apt-get update
-          sudo apt-get install -y --no-install-recommends \
+
+          # Install crossbuild essentials first
+          sudo apt-get install -y \
+              crossbuild-essential-arm64 \
+              gcc-aarch64-linux-gnu \
+              g++-aarch64-linux-gnu \
+              libc6-dev-arm64-cross
+
+          sudo apt-get install -y \
               gcc-multilib \
               libgl1-mesa-dev:arm64 \
               libglfw3:arm64 \
@@ -98,7 +106,6 @@ jobs:
               libxfixes-dev:arm64 \
               libwayland-dev:arm64 \
               libxkbcommon-dev:arm64
-              # crossbuild-essential-arm64
 
       - name: Setup EMSDK
         if: matrix.runtime == 'browser-wasm'
