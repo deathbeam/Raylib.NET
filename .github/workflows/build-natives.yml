@@ -87,7 +87,8 @@ jobs:
               crossbuild-essential-arm64 \
               gcc-aarch64-linux-gnu \
               g++-aarch64-linux-gnu \
-              libc6-dev-arm64-cross
+              libc6-dev-arm64-cross \
+              tree
 
           sudo apt-get install -y \
               gcc-multilib \
@@ -104,8 +105,8 @@ jobs:
               libwayland-dev:arm64 \
               libxkbcommon-dev:arm64
 
-          # List architecture directories
-          ls -la /usr/*-linux-*
+          # List architecture include folders
+          tree /usr/include -L 1
 
       - name: Setup EMSDK
         if: matrix.runtime == 'browser-wasm'
