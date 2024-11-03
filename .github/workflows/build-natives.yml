@@ -13,10 +13,12 @@ jobs:
     strategy:
       matrix:
         # TODO: add linx-arm64, probs needs separate runner
-        runtime: [linux-x64, browser-wasm, osx-x64, osx-arm64, win-x64, win-x86, win-arm64]
+        runtime: [linux-x64, linux-arm64, browser-wasm, osx-x64, osx-arm64, win-x64, win-x86, win-arm64]
         config: [Debug, Release]
         include:
           - runtime: linux-x64
+            os: ubuntu-latest
+          - runtime: linux-arm64
             os: ubuntu-latest
           - runtime: browser-wasm
             os: ubuntu-latest
@@ -49,6 +51,9 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get install -y --no-install-recommends \
               gcc-multilib \
+              gcc-aarch64-linux-gnu \
+              g++-aarch64-linux-gnu \
+              binutils-aarch64-linux-gnu \
               libgl1-mesa-dev \
               libglfw3 \
               libglfw3-dev \
