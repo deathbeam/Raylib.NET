@@ -7,6 +7,7 @@ on:
     paths:
       - lib/**
       - src/Raylib.NET.Native/**
+      - .github/workflows/build-natives.yml
 
 jobs:
   natives:
