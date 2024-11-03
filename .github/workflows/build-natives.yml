@@ -106,7 +106,7 @@ jobs:
               libxkbcommon-dev:arm64
 
           # List architecture include folders
-          tree /usr/include -L 1
+          tree /usr/include -L 2
 
       - name: Setup EMSDK
         if: matrix.runtime == 'browser-wasm'
