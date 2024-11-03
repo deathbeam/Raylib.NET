@@ -56,6 +56,9 @@ pub fn compileRaylib(b: *std.Build, target: std.Build.ResolvedTarget, optimize: 
             lib.addLibraryPath(.{ .cwd_relative = "/usr/lib/x86_64-linux-gnu/" });
             lib.addIncludePath(.{ .cwd_relative = "/usr/include/x86_64-linux-gnu/" });
         }
+
+        lib.addLibraryPath(.{ .cwd_relative = "/usr/lib" });
+        lib.addSystemIncludePath(.{ .cwd_relative = "/usr/include" });
     }
 
     return lib;
