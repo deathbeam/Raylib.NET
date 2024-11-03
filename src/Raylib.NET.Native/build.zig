@@ -51,14 +51,14 @@ pub fn compileRaylib(b: *std.Build, target: std.Build.ResolvedTarget, optimize: 
         if (target.result.cpu.arch == .aarch64) {
             lib.addLibraryPath(.{ .cwd_relative = "/usr/lib/aarch64-linux-gnu/" });
             lib.addIncludePath(.{ .cwd_relative = "/usr/include/aarch64-linux-gnu/" });
+            lib.addSystemIncludePath(.{ .cwd_relative = "/usr/include" });
         } else {
             lib.addLibraryPath(.{ .cwd_relative = "/usr/lib/x86_64-linux-gnu/" });
             lib.addIncludePath(.{ .cwd_relative = "/usr/include/x86_64-linux-gnu/" });
-            lib.defineCMacro("_GNU_SOURCE", "1");
+            lib.addIncludePath(.{ .cwd_relative = "/usr/include" });
         }
 
         lib.addLibraryPath(.{ .cwd_relative = "/usr/lib" });
-        lib.addSystemIncludePath(.{ .cwd_relative = "/usr/include" });
     }
 
     lib.linkLibC();
