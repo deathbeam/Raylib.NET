@@ -50,7 +50,6 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends \
-              gcc-multilib \
               libgl1-mesa-dev \
               libglfw3 \
               libglfw3-dev \
@@ -83,15 +82,7 @@ jobs:
           sudo apt-get clean
           sudo apt-get update
 
-          sudo apt-get install -y \
-              crossbuild-essential-arm64 \
-              gcc-aarch64-linux-gnu \
-              g++-aarch64-linux-gnu \
-              libc6-dev-arm64-cross \
-              tree
-
-          sudo apt-get install -y \
-              gcc-multilib \
+          sudo apt-get install -y --no-install-recommends \
               libgl1-mesa-dev:arm64 \
               libglfw3:arm64 \
               libglfw3-dev:arm64 \
@@ -104,9 +95,6 @@ jobs:
               libxfixes-dev:arm64 \
               libwayland-dev:arm64 \
               libxkbcommon-dev:arm64
-
-          # List architecture include folders
-          tree /usr/include -L 2
 
       - name: Setup EMSDK
         if: matrix.runtime == 'browser-wasm'
