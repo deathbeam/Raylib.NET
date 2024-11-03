@@ -68,8 +68,22 @@ jobs:
       - name: Setup Environment (x86)
         if: matrix.os == 'ubuntu-latest' && matrix.runtime == 'linux-x86'
         run: |
+          # Add i386 architecture
           sudo dpkg --add-architecture i386
+          # Modify main sources.list to be explicitly amd64
+          sudo sed -i 's/^deb /deb [arch=amd64] /g' /etc/apt/sources.list
+          # Create clean sources for i386
+          sudo tee /etc/apt/sources.list.d/ubuntu-i386.list << EOF
+          deb [arch=i386] http://archive.ubuntu.com/ubuntu/ jammy main restricted universe multiverse
+          deb [arch=i386] http://archive.ubuntu.com/ubuntu/ jammy-updates main restricted universe multiverse
+          deb [arch=i386] http://archive.ubuntu.com/ubuntu/ jammy-security main restricted universe multiverse
+          deb [arch=i386] http://archive.ubuntu.com/ubuntu/ jammy-backports main restricted universe multiverse
+          EOF
+          # Clear package lists and update
+          sudo rm -rf /var/lib/apt/lists/*
+          sudo apt-get clean
           sudo apt-get update
+          # Install dependencies
           sudo apt-get install -y --no-install-recommends \
               gcc-multilib \
               libgl1-mesa-dev:i386 \
@@ -88,7 +102,7 @@ jobs:
       - name: Setup Environment (arm64)
         if: matrix.os == 'ubuntu-latest' && matrix.runtime == 'linux-arm64'
         run: |
-          sudo dpkg --print-foreign-architectures
+          # Add arm64 architecture
           sudo dpkg --add-architecture arm64
           # Modify main sources.list to be explicitly amd64
           sudo sed -i 's/^deb /deb [arch=amd64] /g' /etc/apt/sources.list
@@ -103,7 +117,7 @@ jobs:
           sudo rm -rf /var/lib/apt/lists/*
           sudo apt-get clean
           sudo apt-get update
-
+          # Install dependencies
           sudo apt-get install -y --no-install-recommends \
               libgl1-mesa-dev:arm64 \
               libglfw3:arm64 \
