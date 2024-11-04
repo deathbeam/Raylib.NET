@@ -62,6 +62,8 @@ pub fn compileRaylib(b: *std.Build, target: std.Build.ResolvedTarget, optimize: 
             lib.addLibraryPath(.{ .cwd_relative = "/usr/lib/i386-linux-gnu/" });
             lib.addIncludePath(.{ .cwd_relative = "/usr/include/i386-linux-gnu/" });
             lib.addSystemIncludePath(.{ .cwd_relative = "/usr/include" });
+            // https://github.com/ziglang/zig/issues/7935
+            lib.link_z_notext = true;
         } else if (target.result.cpu.arch == .x86_64) {
             lib.addLibraryPath(.{ .cwd_relative = "/usr/lib/x86_64-linux-gnu/" });
             lib.addIncludePath(.{ .cwd_relative = "/usr/include/x86_64-linux-gnu/" });
