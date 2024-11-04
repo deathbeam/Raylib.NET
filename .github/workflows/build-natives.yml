@@ -13,10 +13,12 @@ jobs:
   natives:
     strategy:
       matrix:
-        runtime: [linux-x64, linux-arm64, browser-wasm, osx-x64, osx-arm64, win-x64, win-x86, win-arm64]
+        runtime: [linux-x64, linux-x86, linux-arm64, browser-wasm, osx-x64, osx-arm64, win-x64, win-x86, win-arm64]
         config: [Debug, Release]
         include:
           - runtime: linux-x64
+            os: ubuntu-latest
+          - runtime: linux-x86
             os: ubuntu-latest
           - runtime: linux-arm64
             os: ubuntu-latest
@@ -60,6 +62,24 @@ jobs:
               libxfixes-dev \
               libwayland-dev \
               libxkbcommon-dev
+
+      - name: Setup Environment (x86)
+        if: matrix.os == 'ubuntu-latest' && matrix.runtime == 'linux-x86'
+        run: |
+          sudo dpkg --add-architecture i386
+          sudo apt-get update
+          # Install dependencies
+          sudo apt-get install -y --no-install-recommends \
+              libgl1-mesa-dev:i386 \
+              libx11-dev:i386 \
+              libxcursor-dev:i386 \
+              libxrandr-dev:i386 \
+              libxinerama-dev:i386 \
+              libxi-dev:i386 \
+              libxext-dev:i386 \
+              libxfixes-dev:i386 \
+              libwayland-dev:i386 \
+              libxkbcommon-dev:i386
 
       - name: Setup Environment (arm64)
         if: matrix.os == 'ubuntu-latest' && matrix.runtime == 'linux-arm64'
