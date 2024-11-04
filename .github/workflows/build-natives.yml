@@ -51,8 +51,6 @@ jobs:
           sudo apt-get install -y --no-install-recommends \
               gcc-multilib \
               libgl1-mesa-dev \
-              libglfw3 \
-              libglfw3-dev \
               libx11-dev \
               libxcursor-dev \
               libxrandr-dev \
@@ -83,8 +81,6 @@ jobs:
           # Install dependencies
           sudo apt-get install -y --no-install-recommends \
               libgl1-mesa-dev:arm64 \
-              libglfw3:arm64 \
-              libglfw3-dev:arm64 \
               libx11-dev:arm64 \
               libxcursor-dev:arm64 \
               libxrandr-dev:arm64 \
