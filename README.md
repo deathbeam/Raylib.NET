@@ -88,11 +88,11 @@ cd src/Raylib.NET.Native
 dotnet build -r win-x64
 dotnet build -r win-x86
 dotnet build -r win-arm64
+dotnet build -r osx-x64
+dotnet build -r osx-arm64
 dotnet build -r linux-x64
 dotnet build -r linux-x86 # requires i386 libraries for dependencies (X11, etc)
 dotnet build -r linux-arm64 # requires arm64 libraries for dependencies (X11, etc)
-dotnet build -r osx-x64
-dotnet build -r osx-arm64
 dotnet build -r browser-wasm # requires EMSDK
 ```
 
