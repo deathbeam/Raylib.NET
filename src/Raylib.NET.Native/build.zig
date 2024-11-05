@@ -6,15 +6,39 @@ pub fn compileRaylib(b: *std.Build, target: std.Build.ResolvedTarget, optimize: 
     const rres = b.dependency("rres", .{ .target = target, .optimize = optimize });
     const lib = raylib.artifact("raylib");
 
-    if (target.result.isDarwin()) {
-        if (b.lazyDependency("xcode_frameworks", .{
-            .target = target,
-            .optimize = optimize,
-        })) |dep| {
-            lib.addSystemFrameworkPath(dep.path("Frameworks"));
-            lib.addSystemIncludePath(dep.path("include"));
-            lib.addLibraryPath(dep.path("lib"));
-        }
+    switch (target.result.os.tag) {
+        .macos => {
+            if (b.lazyDependency("xcode_frameworks", .{
+                .target = target,
+                .optimize = optimize,
+            })) |dep| {
+                lib.addSystemFrameworkPath(dep.path("Frameworks"));
+                lib.addSystemIncludePath(dep.path("include"));
+                lib.addLibraryPath(dep.path("lib"));
+            }
+        },
+        .linux => {
+            if (target.result.cpu.arch == .aarch64) {
+                lib.addLibraryPath(.{ .cwd_relative = "/usr/lib/aarch64-linux-gnu/" });
+                lib.addIncludePath(.{ .cwd_relative = "/usr/include/aarch64-linux-gnu/" });
+                lib.addSystemIncludePath(.{ .cwd_relative = "/usr/include" });
+            } else if (target.result.cpu.arch == .x86) {
+                lib.addLibraryPath(.{ .cwd_relative = "/usr/lib/i386-linux-gnu/" });
+                lib.addIncludePath(.{ .cwd_relative = "/usr/include/i386-linux-gnu/" });
+                lib.addSystemIncludePath(.{ .cwd_relative = "/usr/include" });
+                // https://github.com/ziglang/zig/issues/7935
+                lib.link_z_notext = true;
+            } else if (target.result.cpu.arch == .x86_64) {
+                lib.addLibraryPath(.{ .cwd_relative = "/usr/lib/x86_64-linux-gnu/" });
+                lib.addIncludePath(.{ .cwd_relative = "/usr/include/x86_64-linux-gnu/" });
+                lib.addIncludePath(.{ .cwd_relative = "/usr/include" });
+            } else {
+                lib.addSystemIncludePath(.{ .cwd_relative = "/usr/include" });
+            }
+
+            lib.addLibraryPath(.{ .cwd_relative = "/usr/lib" });
+        },
+        else => {}
     }
 
     var gen_step = b.addWriteFiles();
@@ -52,28 +76,6 @@ pub fn compileRaylib(b: *std.Build, target: std.Build.ResolvedTarget, optimize: 
     lib.addIncludePath(rres.path("src"));
     lib.installHeader(raygui.path("src/raygui.h"), "raygui.h");
     lib.installHeader(rres.path("src/rres.h"), "rres.h");
-
-    if (target.result.os.tag == .linux) {
-        if (target.result.cpu.arch == .aarch64) {
-            lib.addLibraryPath(.{ .cwd_relative = "/usr/lib/aarch64-linux-gnu/" });
-            lib.addIncludePath(.{ .cwd_relative = "/usr/include/aarch64-linux-gnu/" });
-            lib.addSystemIncludePath(.{ .cwd_relative = "/usr/include" });
-        } else if (target.result.cpu.arch == .x86) {
-            lib.addLibraryPath(.{ .cwd_relative = "/usr/lib/i386-linux-gnu/" });
-            lib.addIncludePath(.{ .cwd_relative = "/usr/include/i386-linux-gnu/" });
-            lib.addSystemIncludePath(.{ .cwd_relative = "/usr/include" });
-            // https://github.com/ziglang/zig/issues/7935
-            lib.link_z_notext = true;
-        } else if (target.result.cpu.arch == .x86_64) {
-            lib.addLibraryPath(.{ .cwd_relative = "/usr/lib/x86_64-linux-gnu/" });
-            lib.addIncludePath(.{ .cwd_relative = "/usr/include/x86_64-linux-gnu/" });
-            lib.addIncludePath(.{ .cwd_relative = "/usr/include" });
-        } else {
-            lib.addSystemIncludePath(.{ .cwd_relative = "/usr/include" });
-        }
-
-        lib.addLibraryPath(.{ .cwd_relative = "/usr/lib" });
-    }
 
     return lib;
 }
