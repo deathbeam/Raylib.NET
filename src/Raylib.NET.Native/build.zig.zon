@@ -1,9 +1,7 @@
 .{
     .name = "Raylib.NET",
-
     .version = "0.0.0",
-
-    .minimum_zig_version = "0.12.0",
+    .minimum_zig_version = "0.13.0",
 
     .dependencies = .{
         .raylib = .{ .path = "../../lib/raylib" },
@@ -11,7 +9,8 @@
         .rres = .{ .path = "../../lib/rres" },
         .xcode_frameworks = .{
             .url = "git+https://github.com/hexops/xcode-frameworks#a6bf82e032d4d9923ad5c222d466710fcc05f249",
-            .hash = "122098b9174895f9708bc824b0f9e550c401892c40a900006459acf2cbf78acd99bb",
+            .hash = "12208da4dfcd9b53fb367375fb612ec73f38e53015f1ce6ae6d6e8437a637078e170",
+",
             .lazy = true,
         },
     },
