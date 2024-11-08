@@ -7,16 +7,6 @@ pub fn compileRaylib(b: *std.Build, target: std.Build.ResolvedTarget, optimize: 
     const lib = raylib.artifact("raylib");
 
     switch (target.result.os.tag) {
-        .macos => {
-            if (b.lazyDependency("xcode_frameworks", .{
-                .target = target,
-                .optimize = optimize,
-            })) |dep| {
-                lib.addSystemFrameworkPath(dep.path("Frameworks"));
-                lib.addSystemIncludePath(dep.path("include"));
-                lib.addLibraryPath(dep.path("lib"));
-            }
-        },
         .linux => {
             if (target.result.cpu.arch == .aarch64) {
                 lib.addLibraryPath(.{ .cwd_relative = "/usr/lib/aarch64-linux-gnu/" });
