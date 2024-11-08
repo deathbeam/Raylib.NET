@@ -7,6 +7,8 @@ pub fn compileRaylib(b: *std.Build, target: std.Build.ResolvedTarget, optimize: 
     const lib = raylib.artifact("raylib");
 
     switch (target.result.os.tag) {
+        // Due to *terrible* zig default behaviour for include paths when cross-compiling I have to do this
+        // The includes are resolved properly only when -Dtarget=native (or omitted) is passed
         .linux => {
             if (target.result.cpu.arch == .aarch64) {
                 lib.addLibraryPath(.{ .cwd_relative = "/usr/lib/aarch64-linux-gnu/" });
