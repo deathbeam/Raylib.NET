@@ -347,6 +347,13 @@ public static unsafe partial class Raylib
     public static partial string GetClipboardText();
 
     /// <summary>
+    /// Get clipboard image
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial Image GetClipboardImage();
+
+    /// <summary>
     /// Enable waiting for events on EndDrawing(), no automatic event polling
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
