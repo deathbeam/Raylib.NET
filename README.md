@@ -16,7 +16,6 @@
 - Raymath
 - Rlgl
 - Raygui
-- Rres
 
 ### Supported platforms
 

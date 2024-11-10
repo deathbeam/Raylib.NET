@@ -3,7 +3,6 @@ const std = @import("std");
 pub fn compileRaylib(b: *std.Build, target: std.Build.ResolvedTarget, optimize: std.builtin.OptimizeMode, shared: bool) !*std.Build.Step.Compile {
     const raylib = b.dependency("raylib", .{ .target = target, .optimize = optimize, .shared = shared, .linux_display_backend = .X11 });
     const raygui = b.dependency("raygui", .{ .target = target, .optimize = optimize });
-    const rres = b.dependency("rres", .{ .target = target, .optimize = optimize });
     const lib = raylib.artifact("raylib");
 
     switch (target.result.os.tag) {
@@ -58,16 +57,9 @@ pub fn compileRaylib(b: *std.Build, target: std.Build.ResolvedTarget, optimize: 
         .flags = cflags.items,
     });
 
-    lib.addCSourceFile(.{
-        .file = gen_step.add("rres.c", "#define RRES_IMPLEMENTATION\n#include \"rres.h\"\n"),
-        .flags = cflags.items,
-    });
-
     lib.addIncludePath(raylib.path("src"));
     lib.addIncludePath(raygui.path("src"));
-    lib.addIncludePath(rres.path("src"));
     lib.installHeader(raygui.path("src/raygui.h"), "raygui.h");
-    lib.installHeader(rres.path("src/rres.h"), "rres.h");
 
     return lib;
 }

@@ -4,6 +4,3 @@
 [submodule "lib/raylib"]
 	path = lib/raylib
 	url = https://github.com/raysan5/raylib
-[submodule "lib/rres"]
-	path = lib/rres
-	url = https://github.com/raysan5/rres

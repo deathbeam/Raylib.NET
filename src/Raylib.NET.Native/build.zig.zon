@@ -6,7 +6,6 @@
     .dependencies = .{
         .raylib = .{ .path = "../../lib/raylib" },
         .raygui = .{ .path = "../../lib/raygui" },
-        .rres = .{ .path = "../../lib/rres" },
     },
 
     .paths = .{

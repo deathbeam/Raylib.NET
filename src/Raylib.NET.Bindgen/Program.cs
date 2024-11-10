@@ -20,9 +20,9 @@ var options = new GeneratorOptions
             "Matrix" => "Matrix4x4",
             "Rectangle" => "Vector4",
             "va_list" => "IntPtr",
-            _ => Regex.Replace(type, @"\b(rres|rl|r)", ""),
+            _ => Regex.Replace(type, @"\b(rl|r)", ""),
         },
-    TransformName = (string name) => Regex.Replace(name, @"\b(rres|rl)", ""),
+    TransformName = (string name) => Regex.Replace(name, @"\b(rl)", ""),
     ExistingTypes = new()
     {
         { "Vector2", "System.Numerics" },
@@ -42,8 +42,7 @@ var options = new GeneratorOptions
     },
     IncludeFolders = new[] {
         $"{libPath}/raylib/src",
-        $"{libPath}/raygui/src",
-        $"{libPath}/rres/src",
+        $"{libPath}/raygui/src"
     },
 };
 
@@ -57,10 +56,6 @@ new Generator(options).Generate();
 
 options.GeneratedClass = "Raygui";
 options.FilePath = $"{libPath}/raygui/src/raygui.h";
-new Generator(options).Generate();
-
-options.GeneratedClass = "Rres";
-options.FilePath = $"{libPath}/rres/src/rres.h";
 new Generator(options).Generate();
 
 options.GeneratedClass = "Raylib";
