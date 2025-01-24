@@ -36,6 +36,22 @@ public enum ShaderUniformDataType
     /// </summary>
     SHADER_UNIFORM_IVEC4,
     /// <summary>
+    /// Shader uniform type: unsigned int
+    /// </summary>
+    SHADER_UNIFORM_UINT,
+    /// <summary>
+    /// Shader uniform type: uivec2 (2 unsigned int)
+    /// </summary>
+    SHADER_UNIFORM_UIVEC2,
+    /// <summary>
+    /// Shader uniform type: uivec3 (3 unsigned int)
+    /// </summary>
+    SHADER_UNIFORM_UIVEC3,
+    /// <summary>
+    /// Shader uniform type: uivec4 (4 unsigned int)
+    /// </summary>
+    SHADER_UNIFORM_UIVEC4,
+    /// <summary>
     /// Shader uniform type: sampler2d
     /// </summary>
     SHADER_UNIFORM_SAMPLER2D,

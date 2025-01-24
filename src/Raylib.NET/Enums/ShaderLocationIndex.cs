@@ -119,4 +119,8 @@ public enum ShaderLocationIndex
     /// Shader location: array of matrices uniform: boneMatrices
     /// </summary>
     SHADER_LOC_BONE_MATRICES,
+    /// <summary>
+    /// Shader location: vertex attribute: instanceTransform
+    /// </summary>
+    SHADER_LOC_VERTEX_INSTANCE_TX,
 }

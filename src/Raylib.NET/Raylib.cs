@@ -12,11 +12,11 @@ public static unsafe partial class Raylib
 
     public const int RAYLIB_VERSION_MAJOR = 5;
 
-    public const int RAYLIB_VERSION_MINOR = 5;
+    public const int RAYLIB_VERSION_MINOR = 6;
 
     public const int RAYLIB_VERSION_PATCH = 0;
 
-    public const string RAYLIB_VERSION = "5.5";
+    public const string RAYLIB_VERSION = "5.6-dev";
 
     public const float PI = 3.14159265358979323846f;
 
@@ -599,7 +599,7 @@ public static unsafe partial class Raylib
     public static partial void SetShaderValueMatrix(Shader shader, int locIndex, Matrix4x4 mat);
 
     /// <summary>
-    /// Set shader uniform value for texture (sampler2d)
+    /// Set shader uniform value and bind the texture (sampler2d)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -1192,6 +1192,13 @@ public static unsafe partial class Raylib
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial int GetCharPressed();
+
+    /// <summary>
+    /// Get name of a QWERTY key on the current keyboard layout (eg returns string 'q' for KEY_A on an AZERTY keyboard)
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial string GetKeyName(int key);
 
     /// <summary>
     /// Set a custom key to exit program (default is ESC)
@@ -3084,14 +3091,14 @@ public static unsafe partial class Raylib
     public static partial string TextToCamel(string text);
 
     /// <summary>
-    /// Get integer value from text (negative values not supported)
+    /// Get integer value from text
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial int TextToInteger(string text);
 
     /// <summary>
-    /// Get float value from text (negative values not supported)
+    /// Get float value from text
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]

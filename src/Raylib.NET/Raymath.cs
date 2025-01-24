@@ -124,6 +124,13 @@ public static unsafe partial class Raymath
     public static partial float Vector2DotProduct(Vector2 v1, Vector2 v2);
 
     /// <summary>
+    /// Calculate two vectors cross product
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial float Vector2CrossProduct(Vector2 v1, Vector2 v2);
+
+    /// <summary>
     /// Calculate distance between two vectors
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
@@ -138,8 +145,9 @@ public static unsafe partial class Raymath
     public static partial float Vector2DistanceSqr(Vector2 v1, Vector2 v2);
 
     /// <summary>
-    /// Calculate angle between two vectors
-    /// NOTE: Angle is calculated from origin point (0, 0)
+    /// Calculate the signed angle from v1 to v2, relative to the origin (0, 0)
+    /// NOTE: Coordinate system convention: positive X right, positive Y down,
+    /// positive angles appear clockwise, and negative angles appear counterclockwise
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]

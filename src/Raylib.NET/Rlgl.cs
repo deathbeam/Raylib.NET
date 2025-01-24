@@ -174,6 +174,8 @@ public static unsafe partial class Rlgl
 
     public const int RL_DEFAULT_SHADER_ATTRIB_LOCATION_INDICES = 6;
 
+    public const int RL_DEFAULT_SHADER_ATTRIB_LOCATION_INSTANCE_TX = 9;
+
     /// <summary>
     /// Choose the current matrix to be transformed
     /// </summary>
@@ -589,13 +591,6 @@ public static unsafe partial class Rlgl
     public static partial void Scissor(int x, int y, int width, int height);
 
     /// <summary>
-    /// Enable wire mode
-    /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlEnableWireMode", StringMarshalling = StringMarshalling.Utf8)]
-    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void EnableWireMode();
-
-    /// <summary>
     /// Enable point mode
     /// </summary>
     [LibraryImport(LIBRARY, EntryPoint = "rlEnablePointMode", StringMarshalling = StringMarshalling.Utf8)]
@@ -603,7 +598,21 @@ public static unsafe partial class Rlgl
     public static partial void EnablePointMode();
 
     /// <summary>
-    /// Disable wire (and point) mode
+    /// Disable point mode
+    /// </summary>
+    [LibraryImport(LIBRARY, EntryPoint = "rlDisablePointMode", StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void DisablePointMode();
+
+    /// <summary>
+    /// Enable wire mode
+    /// </summary>
+    [LibraryImport(LIBRARY, EntryPoint = "rlEnableWireMode", StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void EnableWireMode();
+
+    /// <summary>
+    /// Disable wire mode
     /// </summary>
     [LibraryImport(LIBRARY, EntryPoint = "rlDisableWireMode", StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
