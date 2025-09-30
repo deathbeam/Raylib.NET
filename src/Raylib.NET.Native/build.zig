@@ -1,7 +1,8 @@
 const std = @import("std");
+const builtin = @import("builtin");
 
 pub fn compileRaylib(b: *std.Build, target: std.Build.ResolvedTarget, optimize: std.builtin.OptimizeMode, shared: bool) !*std.Build.Step.Compile {
-    const raylib = b.dependency("raylib", .{ .target = target, .optimize = optimize, .shared = shared, .linux_display_backend = .X11 });
+    const raylib = b.dependency("raylib", .{ .target = target, .optimize = optimize, .linkage = if (shared) std.builtin.LinkMode.dynamic else std.builtin.LinkMode.static, .linux_display_backend = .X11 });
     const raygui = b.dependency("raygui", .{ .target = target, .optimize = optimize });
     const lib = raylib.artifact("raylib");
 
@@ -35,10 +36,10 @@ pub fn compileRaylib(b: *std.Build, target: std.Build.ResolvedTarget, optimize: 
     var gen_step = b.addWriteFiles();
     lib.step.dependOn(&gen_step.step);
 
-    var cflags = std.ArrayList([]const u8).init(b.allocator);
-    defer cflags.deinit();
+    var cflags = std.ArrayList([]const u8){};
+    defer cflags.deinit(b.allocator);
 
-    try cflags.appendSlice(&[_][]const u8{
+    try cflags.appendSlice(b.allocator, &[_][]const u8{
         "-std=gnu99",
         "-D_GNU_SOURCE",
         "-DGL_SILENCE_DEPRECATION=199309L",
@@ -46,7 +47,7 @@ pub fn compileRaylib(b: *std.Build, target: std.Build.ResolvedTarget, optimize: 
     });
 
     if (shared) {
-        try cflags.appendSlice(&[_][]const u8{
+        try cflags.appendSlice(b.allocator, &[_][]const u8{
             "-fPIC",
             "-DBUILD_LIBTYPE_SHARED",
         });
