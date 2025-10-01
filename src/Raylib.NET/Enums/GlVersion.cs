@@ -4,9 +4,13 @@ namespace RaylibNET;
 public enum GlVersion
 {
     /// <summary>
+    /// Software rendering
+    /// </summary>
+    RL_OPENGL_11_SOFTWARE = 0,
+    /// <summary>
     /// OpenGL 1.1
     /// </summary>
-    RL_OPENGL_11 = 1,
+    RL_OPENGL_11,
     /// <summary>
     /// OpenGL 2.1 (GLSL 120)
     /// </summary>

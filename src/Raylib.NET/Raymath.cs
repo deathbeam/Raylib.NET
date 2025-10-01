@@ -146,7 +146,7 @@ public static unsafe partial class Raymath
 
     /// <summary>
     /// Calculate the signed angle from v1 to v2, relative to the origin (0, 0)
-    /// NOTE: Coordinate system convention: positive X right, positive Y down,
+    /// NOTE: Coordinate system convention: positive X right, positive Y down
     /// positive angles appear clockwise, and negative angles appear counterclockwise
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
@@ -1026,7 +1026,7 @@ public static unsafe partial class Raymath
     public static partial int QuaternionEquals(Vector4 p, Vector4 q);
 
     /// <summary>
-    /// Decompose a transformation matrix into its rotational, translational and scaling components
+    /// Decompose a transformation matrix into its rotational, translational and scaling components and remove shear
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]

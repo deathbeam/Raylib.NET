@@ -21,7 +21,7 @@ public partial struct Camera3D
     /// </summary>
     public Vector3 Up;
     /// <summary>
-    /// Camera field-of-view aperture in Y (degrees) in perspective, used as near plane width in orthographic
+    /// Camera field-of-view aperture in Y (degrees) in perspective, used as near plane height in world units in orthographic
     /// </summary>
     public float Fovy;
     /// <summary>

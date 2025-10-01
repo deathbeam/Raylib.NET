@@ -29,10 +29,7 @@ public enum GuiControl
     /// </summary>
     TEXTBOX,
     VALUEBOX,
-    /// <summary>
-    /// Uses: BUTTON, VALUEBOX
-    /// </summary>
-    SPINNER,
+    CONTROL11,
     LISTVIEW,
     COLORPICKER,
     SCROLLBAR,

@@ -20,6 +20,10 @@ public enum GuiListViewProperty
     /// </summary>
     SCROLLBAR_SIDE,
     /// <summary>
+    /// ListView items border enabled in normal state
+    /// </summary>
+    LIST_ITEMS_BORDER_NORMAL,
+    /// <summary>
     /// ListView items border width
     /// </summary>
     LIST_ITEMS_BORDER_WIDTH,

@@ -29,7 +29,7 @@ public class RayguiTest
         CheckType<GuiComboBoxProperty>();
         CheckType<GuiDropdownBoxProperty>();
         CheckType<GuiTextBoxProperty>();
-        CheckType<GuiSpinnerProperty>();
+        CheckType<GuiValueBoxProperty>();
         CheckType<GuiListViewProperty>();
         CheckType<GuiColorPickerProperty>();
         CheckType<GuiIconName>();

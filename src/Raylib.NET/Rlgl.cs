@@ -24,9 +24,9 @@ public static unsafe partial class Rlgl
 
     public const int RL_MAX_SHADER_LOCATIONS = 32;
 
-    public const float RL_CULL_DISTANCE_NEAR = 0.01f;
+    public const float RL_CULL_DISTANCE_NEAR = 0.05f;
 
-    public const float RL_CULL_DISTANCE_FAR = 1000.0f;
+    public const float RL_CULL_DISTANCE_FAR = 4000.0f;
 
     public const int RL_TEXTURE_WRAP_S = 10242;
 
@@ -395,6 +395,20 @@ public static unsafe partial class Rlgl
     public static partial void DisableVertexAttribute(uint index);
 
     /// <summary>
+    /// Enable attribute state pointer
+    /// </summary>
+    [LibraryImport(LIBRARY, EntryPoint = "rlEnableStatePointer", StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static unsafe partial void EnableStatePointer(int vertexAttribType, void* buffer);
+
+    /// <summary>
+    /// Disable attribute state pointer
+    /// </summary>
+    [LibraryImport(LIBRARY, EntryPoint = "rlDisableStatePointer", StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void DisableStatePointer(int vertexAttribType);
+
+    /// <summary>
     /// Select and active a texture slot
     /// </summary>
     [LibraryImport(LIBRARY, EntryPoint = "rlActiveTextureSlot", StringMarshalling = StringMarshalling.Utf8)]
@@ -605,6 +619,20 @@ public static unsafe partial class Rlgl
     public static partial void DisablePointMode();
 
     /// <summary>
+    /// Set the point drawing size
+    /// </summary>
+    [LibraryImport(LIBRARY, EntryPoint = "rlSetPointSize", StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void SetPointSize(float size);
+
+    /// <summary>
+    /// Get the point drawing size
+    /// </summary>
+    [LibraryImport(LIBRARY, EntryPoint = "rlGetPointSize", StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial float GetPointSize();
+
+    /// <summary>
     /// Enable wire mode
     /// </summary>
     [LibraryImport(LIBRARY, EntryPoint = "rlEnableWireMode", StringMarshalling = StringMarshalling.Utf8)]
@@ -729,6 +757,13 @@ public static unsafe partial class Rlgl
     [LibraryImport(LIBRARY, EntryPoint = "rlLoadExtensions", StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static unsafe partial void LoadExtensions(void* loader);
+
+    /// <summary>
+    /// Get OpenGL procedure address
+    /// </summary>
+    [LibraryImport(LIBRARY, EntryPoint = "rlGetProcAddress", StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static unsafe partial void* GetProcAddress(string procName);
 
     /// <summary>
     /// Get current OpenGL version

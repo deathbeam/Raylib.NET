@@ -54,13 +54,13 @@ public enum GuiControlProperty
     /// <summary>
     /// Control border size, 0 for no border
     /// </summary>
-    BORDER_WIDTH,
+    BORDER_WIDTH = 12,
     /// <summary>
     /// Control text padding, not considering border
     /// </summary>
-    TEXT_PADDING,
+    TEXT_PADDING = 13,
     /// <summary>
     /// Control text horizontal alignment inside control text bound (after border and padding)
     /// </summary>
-    TEXT_ALIGNMENT,
+    TEXT_ALIGNMENT = 14,
 }

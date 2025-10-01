@@ -16,7 +16,7 @@ public static unsafe partial class Raygui
 
     public const int RAYGUI_VERSION_PATCH = 0;
 
-    public const string RAYGUI_VERSION = "4.5-dev";
+    public const string RAYGUI_VERSION = "5.0-dev";
 
     public const int SCROLLBAR_LEFT_SIDE = 0;
 
@@ -175,6 +175,13 @@ public static unsafe partial class Raygui
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial void GuiDrawIcon(int iconId, int posX, int posY, int pixelSize, Color color);
+
+    /// <summary>
+    /// Get text width considering gui style and icon size (if required)
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial int GuiGetTextWidth(string text);
 
     /// <summary>
     /// Window Box control, shows a window that can be closed

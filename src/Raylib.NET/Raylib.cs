@@ -144,7 +144,7 @@ public static unsafe partial class Raylib
     public static partial void MinimizeWindow();
 
     /// <summary>
-    /// Set window state: not minimized/maximized
+    /// Restore window from being minimized/maximized
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -886,6 +886,48 @@ public static unsafe partial class Raylib
     public static partial NativeBool SaveFileText(string fileName, string text);
 
     /// <summary>
+    /// Rename file (if exists)
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial int FileRename(string fileName, string fileRename);
+
+    /// <summary>
+    /// Remove file (if exists)
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial int FileRemove(string fileName);
+
+    /// <summary>
+    /// Copy file from one path to another, dstPath created if it doesn't exist
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial int FileCopy(string srcPath, string dstPath);
+
+    /// <summary>
+    /// Move file from one directory to another, dstPath created if it doesn't exist
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial int FileMove(string srcPath, string dstPath);
+
+    /// <summary>
+    /// Replace text in an existing file
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial int FileTextReplace(string fileName, string search, string replacement);
+
+    /// <summary>
+    /// Find text in existing file
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial int FileTextFindIndex(string fileName, string search);
+
+    /// <summary>
     /// Check if file exists
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
@@ -900,7 +942,7 @@ public static unsafe partial class Raylib
     public static partial NativeBool DirectoryExists(string dirPath);
 
     /// <summary>
-    /// Check file extension (including point: .png, .wav)
+    /// Check file extension (recommended include point: .png, .wav)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -912,6 +954,13 @@ public static unsafe partial class Raylib
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial int GetFileLength(string fileName);
+
+    /// <summary>
+    /// Get file modification time (last write time)
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial long GetFileModTime(string fileName);
 
     /// <summary>
     /// Get pointer to extension for a filename string (includes dot: '.png')
@@ -1033,13 +1082,6 @@ public static unsafe partial class Raylib
     public static partial void UnloadDroppedFiles(FilePathList files);
 
     /// <summary>
-    /// Get file modification time (last write time)
-    /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
-    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial long GetFileModTime(string fileName);
-
-    /// <summary>
     /// Compress data (DEFLATE algorithm), memory must be MemFree()
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
@@ -1054,18 +1096,18 @@ public static unsafe partial class Raylib
     public static unsafe partial byte* DecompressData(byte* compData, int compDataSize, ref int dataSize);
 
     /// <summary>
-    /// Encode data to Base64 string, memory must be MemFree()
+    /// Encode data to Base64 string (includes NULL terminator), memory must be MemFree()
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static unsafe partial string EncodeDataBase64(byte* data, int dataSize, ref int outputSize);
 
     /// <summary>
-    /// Decode Base64 string data, memory must be MemFree()
+    /// Decode Base64 string (expected NULL terminated), memory must be MemFree()
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial byte* DecodeDataBase64(byte* data, ref int outputSize);
+    public static unsafe partial byte* DecodeDataBase64(string text, ref int outputSize);
 
     /// <summary>
     /// Compute CRC32 hash code
@@ -1257,14 +1299,14 @@ public static unsafe partial class Raylib
     public static partial int GetGamepadButtonPressed();
 
     /// <summary>
-    /// Get gamepad axis count for a gamepad
+    /// Get axis count for a gamepad
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial int GetGamepadAxisCount(int gamepad);
 
     /// <summary>
-    /// Get axis movement value for a gamepad axis
+    /// Get movement value for a gamepad axis
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -1614,11 +1656,25 @@ public static unsafe partial class Raylib
     public static partial void DrawEllipse(int centerX, int centerY, float radiusH, float radiusV, Color color);
 
     /// <summary>
+    /// Draw ellipse (Vector version)
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void DrawEllipseV(Vector2 center, float radiusH, float radiusV, Color color);
+
+    /// <summary>
     /// Draw ellipse outline
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial void DrawEllipseLines(int centerX, int centerY, float radiusH, float radiusV, Color color);
+
+    /// <summary>
+    /// Draw ellipse outline (Vector version)
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void DrawEllipseLinesV(Vector2 center, float radiusH, float radiusV, Color color);
 
     /// <summary>
     /// Draw ring
@@ -1681,7 +1737,7 @@ public static unsafe partial class Raylib
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DrawRectangleGradientEx(Vector4 rec, Color topLeft, Color bottomLeft, Color topRight, Color bottomRight);
+    public static partial void DrawRectangleGradientEx(Vector4 rec, Color topLeft, Color bottomLeft, Color bottomRight, Color topRight);
 
     /// <summary>
     /// Draw rectangle outline
@@ -2559,14 +2615,14 @@ public static unsafe partial class Raylib
     public static partial void UnloadRenderTexture(RenderTexture target);
 
     /// <summary>
-    /// Update GPU texture with new data
+    /// Update GPU texture with new data (pixels should be able to fill texture)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static unsafe partial void UpdateTexture(Texture texture, void* pixels);
 
     /// <summary>
-    /// Update GPU texture rectangle with new data
+    /// Update GPU texture rectangle with new data (pixels and rec should fit in texture)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -2801,7 +2857,7 @@ public static unsafe partial class Raylib
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial GlyphInfo* LoadFontData(byte* fileData, int dataSize, int fontSize, int* codepoints, int codepointCount, int @type);
+    public static unsafe partial GlyphInfo* LoadFontData(byte* fileData, int dataSize, int fontSize, int* codepoints, int codepointCount, int @type, ref int glyphCount);
 
     /// <summary>
     /// Generate image font atlas using chars info
@@ -2979,6 +3035,20 @@ public static unsafe partial class Raylib
     public static partial string CodepointToUTF8(int codepoint, ref int utf8Size);
 
     /// <summary>
+    /// Load text as separate lines ('\n')
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static unsafe partial sbyte** LoadTextLines(string text, ref int count);
+
+    /// <summary>
+    /// Unload text lines
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static unsafe partial void UnloadTextLines(sbyte** text, int lineCount);
+
+    /// <summary>
     /// Copy one string to another, returns bytes copied
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
@@ -3014,11 +3084,32 @@ public static unsafe partial class Raylib
     public static partial string TextSubtext(string text, int position, int length);
 
     /// <summary>
+    /// Remove text spaces, concat words
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial string TextRemoveSpaces(string text);
+
+    /// <summary>
+    /// Get text between two strings
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial string GetTextBetween(string text, string begin, string end);
+
+    /// <summary>
     /// Replace text string (WARNING: memory must be freed!)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial string TextReplace(string text, string replace, string @by);
+    public static partial string TextReplace(string text, string search, string replacement);
+
+    /// <summary>
+    /// Replace text between two specific strings (WARNING: memory must be freed!)
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial string TextReplaceBetween(string text, string begin, string end, string replacement);
 
     /// <summary>
     /// Insert text in a position (WARNING: memory must be freed!)
@@ -3035,25 +3126,25 @@ public static unsafe partial class Raylib
     public static unsafe partial string TextJoin(sbyte** textList, int count, string delimiter);
 
     /// <summary>
-    /// Split text into multiple strings
+    /// Split text into multiple strings, using MAX_TEXTSPLIT_COUNT static strings
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static unsafe partial sbyte** TextSplit(string text, sbyte delimiter, ref int count);
 
     /// <summary>
-    /// Append text at specific position and move cursor!
+    /// Append text at specific position and move cursor
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial void TextAppend(string text, string append, ref int position);
 
     /// <summary>
-    /// Find first text occurrence within a string
+    /// Find first text occurrence within a string, -1 if not found
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial int TextFindIndex(string text, string find);
+    public static partial int TextFindIndex(string text, string search);
 
     /// <summary>
     /// Get upper case version of provided string
@@ -3721,7 +3812,7 @@ public static unsafe partial class Raylib
     public static partial NativeBool IsSoundValid(Sound sound);
 
     /// <summary>
-    /// Update sound buffer with new data
+    /// Update sound buffer with new data (data and frame count should fit in sound)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -4071,7 +4162,7 @@ public static unsafe partial class Raylib
     public static unsafe partial void SetAudioStreamCallback(AudioStream stream, delegate* unmanaged[Cdecl]<void*, uint, void> callback);
 
     /// <summary>
-    /// Attach audio stream processor to stream, receives the samples as 'float'
+    /// Attach audio stream processor to stream, receives frames x 2 samples as 'float' (stereo)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -4085,7 +4176,7 @@ public static unsafe partial class Raylib
     public static unsafe partial void DetachAudioStreamProcessor(AudioStream stream, delegate* unmanaged[Cdecl]<void*, uint, void> processor);
 
     /// <summary>
-    /// Attach audio stream processor to the entire audio pipeline, receives the samples as 'float'
+    /// Attach audio stream processor to the entire audio pipeline, receives frames x 2 samples as 'float' (stereo)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
