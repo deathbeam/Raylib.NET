@@ -1,7 +1,7 @@
 .{
     .name = .Raylib_NET,
     .version = "0.0.0",
-    .minimum_zig_version = "0.13.0",
+    .minimum_zig_version = "0.15.0",
     .fingerprint = 0x2e11ece2dc4951ac,
 
     .dependencies = .{
