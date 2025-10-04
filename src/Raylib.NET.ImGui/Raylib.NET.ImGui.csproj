@@ -1,16 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <IsPackable>false</IsPackable>
-    <Description>ImGui integration for Raylib.NET</Description>
-  </PropertyGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Raylib.NET\Raylib.NET.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="ImGui.NET" Version="1.91.6.1" />
-  </ItemGroup>
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <IsAotCompatible>true</IsAotCompatible>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <NoWarn>$(NoWarn);CS1591</NoWarn>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <Description>ImGui integration for Raylib.NET</Description>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Raylib.NET\Raylib.NET.csproj" />
+        <PackageReference Include="ImGui.NET" Version="1.91.6.1" />
+    </ItemGroup>
 </Project>
+
