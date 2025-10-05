@@ -1,4 +1,3 @@
-// This file is a port of rlImGui_cs to Raylib.NET
 using System.Numerics;
 using System.Runtime.InteropServices;
 using ImGuiNET;
@@ -7,11 +6,11 @@ namespace RaylibNET;
 
 public static class RlImGui
 {
-    internal static IntPtr ImGuiContext = IntPtr.Zero;
+    private static IntPtr ImGuiContext = IntPtr.Zero;
     private static ImGuiMouseCursor CurrentMouseCursor = ImGuiMouseCursor.COUNT;
-    private static Dictionary<ImGuiMouseCursor, int> MouseCursorMap = new();
     private static Texture FontTexture;
-    static Dictionary<int, ImGuiKey> RaylibKeyMap = new();
+    private static readonly Dictionary<ImGuiMouseCursor, int> MouseCursorMap = [];
+    private static readonly Dictionary<int, ImGuiKey> RaylibKeyMap = [];
 
     internal static bool LastFrameFocused = false;
     internal static bool LastControlPressed = false;
@@ -19,13 +18,10 @@ public static class RlImGui
     internal static bool LastAltPressed = false;
     internal static bool LastSuperPressed = false;
 
-    internal static bool rlImGuiIsControlDown() => Raylib.IsKeyDown(341) || Raylib.IsKeyDown(345); // LeftControl/RightControl
-    internal static bool rlImGuiIsShiftDown() => Raylib.IsKeyDown(340) || Raylib.IsKeyDown(344); // LeftShift/RightShift
-    internal static bool rlImGuiIsAltDown() => Raylib.IsKeyDown(342) || Raylib.IsKeyDown(346); // LeftAlt/RightAlt
-    internal static bool rlImGuiIsSuperDown() => Raylib.IsKeyDown(343) || Raylib.IsKeyDown(347); // LeftSuper/RightSuper
-
-    public delegate void SetupUserFontsCallback(ImGuiIOPtr imGuiIo);
-    public static SetupUserFontsCallback? SetupUserFonts = null;
+    internal static bool IsControlDown() => Raylib.IsKeyDown((int)KeyboardKey.KEY_RIGHT_CONTROL) || Raylib.IsKeyDown((int)KeyboardKey.KEY_LEFT_CONTROL);
+    internal static bool IsShiftDown() => Raylib.IsKeyDown((int)KeyboardKey.KEY_LEFT_SHIFT) || Raylib.IsKeyDown((int)KeyboardKey.KEY_RIGHT_SHIFT);
+    internal static bool IsAltDown() => Raylib.IsKeyDown((int)KeyboardKey.KEY_LEFT_ALT) || Raylib.IsKeyDown((int)KeyboardKey.KEY_RIGHT_ALT);
+    internal static bool IsSuperDown() => Raylib.IsKeyDown((int)KeyboardKey.KEY_LEFT_SUPER) || Raylib.IsKeyDown((int)KeyboardKey.KEY_RIGHT_SUPER);
 
     public static void Setup(bool darkTheme = true, bool enableDocking = false)
     {
@@ -44,8 +40,6 @@ public static class RlImGui
 
     public static void BeginInitImGui()
     {
-        MouseCursorMap = new();
-
         LastFrameFocused = Raylib.IsWindowFocused();
         LastControlPressed = false;
         LastShiftPressed = false;
@@ -59,131 +53,133 @@ public static class RlImGui
         ImGuiContext = ImGui.CreateContext();
     }
 
-    internal static void SetupKeymap()
+    private static void SetupKeymap()
     {
         if (RaylibKeyMap.Count > 0)
             return;
 
-        // Map Raylib key codes to ImGuiKey
-        RaylibKeyMap[39] = ImGuiKey.Apostrophe;
-        RaylibKeyMap[44] = ImGuiKey.Comma;
-        RaylibKeyMap[45] = ImGuiKey.Minus;
-        RaylibKeyMap[46] = ImGuiKey.Period;
-        RaylibKeyMap[47] = ImGuiKey.Slash;
-        RaylibKeyMap[48] = ImGuiKey._0;
-        RaylibKeyMap[49] = ImGuiKey._1;
-        RaylibKeyMap[50] = ImGuiKey._2;
-        RaylibKeyMap[51] = ImGuiKey._3;
-        RaylibKeyMap[52] = ImGuiKey._4;
-        RaylibKeyMap[53] = ImGuiKey._5;
-        RaylibKeyMap[54] = ImGuiKey._6;
-        RaylibKeyMap[55] = ImGuiKey._7;
-        RaylibKeyMap[56] = ImGuiKey._8;
-        RaylibKeyMap[57] = ImGuiKey._9;
-        RaylibKeyMap[59] = ImGuiKey.Semicolon;
-        RaylibKeyMap[61] = ImGuiKey.Equal;
-        RaylibKeyMap[65] = ImGuiKey.A;
-        RaylibKeyMap[66] = ImGuiKey.B;
-        RaylibKeyMap[67] = ImGuiKey.C;
-        RaylibKeyMap[68] = ImGuiKey.D;
-        RaylibKeyMap[69] = ImGuiKey.E;
-        RaylibKeyMap[70] = ImGuiKey.F;
-        RaylibKeyMap[71] = ImGuiKey.G;
-        RaylibKeyMap[72] = ImGuiKey.H;
-        RaylibKeyMap[73] = ImGuiKey.I;
-        RaylibKeyMap[74] = ImGuiKey.J;
-        RaylibKeyMap[75] = ImGuiKey.K;
-        RaylibKeyMap[76] = ImGuiKey.L;
-        RaylibKeyMap[77] = ImGuiKey.M;
-        RaylibKeyMap[78] = ImGuiKey.N;
-        RaylibKeyMap[79] = ImGuiKey.O;
-        RaylibKeyMap[80] = ImGuiKey.P;
-        RaylibKeyMap[81] = ImGuiKey.Q;
-        RaylibKeyMap[82] = ImGuiKey.R;
-        RaylibKeyMap[83] = ImGuiKey.S;
-        RaylibKeyMap[84] = ImGuiKey.T;
-        RaylibKeyMap[85] = ImGuiKey.U;
-        RaylibKeyMap[86] = ImGuiKey.V;
-        RaylibKeyMap[87] = ImGuiKey.W;
-        RaylibKeyMap[88] = ImGuiKey.X;
-        RaylibKeyMap[89] = ImGuiKey.Y;
-        RaylibKeyMap[90] = ImGuiKey.Z;
-        RaylibKeyMap[32] = ImGuiKey.Space;
-        RaylibKeyMap[256] = ImGuiKey.Escape;
-        RaylibKeyMap[257] = ImGuiKey.Enter;
-        RaylibKeyMap[258] = ImGuiKey.Tab;
-        RaylibKeyMap[259] = ImGuiKey.Backspace;
-        RaylibKeyMap[260] = ImGuiKey.Insert;
-        RaylibKeyMap[261] = ImGuiKey.Delete;
-        RaylibKeyMap[262] = ImGuiKey.RightArrow;
-        RaylibKeyMap[263] = ImGuiKey.LeftArrow;
-        RaylibKeyMap[264] = ImGuiKey.DownArrow;
-        RaylibKeyMap[265] = ImGuiKey.UpArrow;
-        RaylibKeyMap[266] = ImGuiKey.PageUp;
-        RaylibKeyMap[267] = ImGuiKey.PageDown;
-        RaylibKeyMap[268] = ImGuiKey.Home;
-        RaylibKeyMap[269] = ImGuiKey.End;
-        RaylibKeyMap[280] = ImGuiKey.CapsLock;
-        RaylibKeyMap[281] = ImGuiKey.ScrollLock;
-        RaylibKeyMap[282] = ImGuiKey.NumLock;
-        RaylibKeyMap[283] = ImGuiKey.PrintScreen;
-        RaylibKeyMap[284] = ImGuiKey.Pause;
-        RaylibKeyMap[290] = ImGuiKey.F1;
-        RaylibKeyMap[291] = ImGuiKey.F2;
-        RaylibKeyMap[292] = ImGuiKey.F3;
-        RaylibKeyMap[293] = ImGuiKey.F4;
-        RaylibKeyMap[294] = ImGuiKey.F5;
-        RaylibKeyMap[295] = ImGuiKey.F6;
-        RaylibKeyMap[296] = ImGuiKey.F7;
-        RaylibKeyMap[297] = ImGuiKey.F8;
-        RaylibKeyMap[298] = ImGuiKey.F9;
-        RaylibKeyMap[299] = ImGuiKey.F10;
-        RaylibKeyMap[300] = ImGuiKey.F11;
-        RaylibKeyMap[301] = ImGuiKey.F12;
-        RaylibKeyMap[340] = ImGuiKey.LeftShift;
-        RaylibKeyMap[341] = ImGuiKey.LeftCtrl;
-        RaylibKeyMap[342] = ImGuiKey.LeftAlt;
-        RaylibKeyMap[343] = ImGuiKey.LeftSuper;
-        RaylibKeyMap[344] = ImGuiKey.RightShift;
-        RaylibKeyMap[345] = ImGuiKey.RightCtrl;
-        RaylibKeyMap[346] = ImGuiKey.RightAlt;
-        RaylibKeyMap[347] = ImGuiKey.RightSuper;
-        RaylibKeyMap[348] = ImGuiKey.Menu;
-        RaylibKeyMap[91] = ImGuiKey.LeftBracket;
-        RaylibKeyMap[92] = ImGuiKey.Backslash;
-        RaylibKeyMap[93] = ImGuiKey.RightBracket;
-        RaylibKeyMap[96] = ImGuiKey.GraveAccent;
-        RaylibKeyMap[320] = ImGuiKey.Keypad0;
-        RaylibKeyMap[321] = ImGuiKey.Keypad1;
-        RaylibKeyMap[322] = ImGuiKey.Keypad2;
-        RaylibKeyMap[323] = ImGuiKey.Keypad3;
-        RaylibKeyMap[324] = ImGuiKey.Keypad4;
-        RaylibKeyMap[325] = ImGuiKey.Keypad5;
-        RaylibKeyMap[326] = ImGuiKey.Keypad6;
-        RaylibKeyMap[327] = ImGuiKey.Keypad7;
-        RaylibKeyMap[328] = ImGuiKey.Keypad8;
-        RaylibKeyMap[329] = ImGuiKey.Keypad9;
-        RaylibKeyMap[330] = ImGuiKey.KeypadDecimal;
-        RaylibKeyMap[331] = ImGuiKey.KeypadDivide;
-        RaylibKeyMap[332] = ImGuiKey.KeypadMultiply;
-        RaylibKeyMap[333] = ImGuiKey.KeypadSubtract;
-        RaylibKeyMap[334] = ImGuiKey.KeypadAdd;
-        RaylibKeyMap[335] = ImGuiKey.KeypadEnter;
-        RaylibKeyMap[336] = ImGuiKey.KeypadEqual;
+        // build up a map of raylib keys to ImGuiKeys
+        RaylibKeyMap[(int)KeyboardKey.KEY_APOSTROPHE] = ImGuiKey.Apostrophe;
+        RaylibKeyMap[(int)KeyboardKey.KEY_COMMA] = ImGuiKey.Comma;
+        RaylibKeyMap[(int)KeyboardKey.KEY_MINUS] = ImGuiKey.Minus;
+        RaylibKeyMap[(int)KeyboardKey.KEY_PERIOD] = ImGuiKey.Period;
+        RaylibKeyMap[(int)KeyboardKey.KEY_SLASH] = ImGuiKey.Slash;
+        RaylibKeyMap[(int)KeyboardKey.KEY_ZERO] = ImGuiKey._0;
+        RaylibKeyMap[(int)KeyboardKey.KEY_ONE] = ImGuiKey._1;
+        RaylibKeyMap[(int)KeyboardKey.KEY_TWO] = ImGuiKey._2;
+        RaylibKeyMap[(int)KeyboardKey.KEY_THREE] = ImGuiKey._3;
+        RaylibKeyMap[(int)KeyboardKey.KEY_FOUR] = ImGuiKey._4;
+        RaylibKeyMap[(int)KeyboardKey.KEY_FIVE] = ImGuiKey._5;
+        RaylibKeyMap[(int)KeyboardKey.KEY_SIX] = ImGuiKey._6;
+        RaylibKeyMap[(int)KeyboardKey.KEY_SEVEN] = ImGuiKey._7;
+        RaylibKeyMap[(int)KeyboardKey.KEY_EIGHT] = ImGuiKey._8;
+        RaylibKeyMap[(int)KeyboardKey.KEY_NINE] = ImGuiKey._9;
+        RaylibKeyMap[(int)KeyboardKey.KEY_SEMICOLON] = ImGuiKey.Semicolon;
+        RaylibKeyMap[(int)KeyboardKey.KEY_EQUAL] = ImGuiKey.Equal;
+        RaylibKeyMap[(int)KeyboardKey.KEY_A] = ImGuiKey.A;
+        RaylibKeyMap[(int)KeyboardKey.KEY_B] = ImGuiKey.B;
+        RaylibKeyMap[(int)KeyboardKey.KEY_C] = ImGuiKey.C;
+        RaylibKeyMap[(int)KeyboardKey.KEY_D] = ImGuiKey.D;
+        RaylibKeyMap[(int)KeyboardKey.KEY_E] = ImGuiKey.E;
+        RaylibKeyMap[(int)KeyboardKey.KEY_F] = ImGuiKey.F;
+        RaylibKeyMap[(int)KeyboardKey.KEY_G] = ImGuiKey.G;
+        RaylibKeyMap[(int)KeyboardKey.KEY_H] = ImGuiKey.H;
+        RaylibKeyMap[(int)KeyboardKey.KEY_I] = ImGuiKey.I;
+        RaylibKeyMap[(int)KeyboardKey.KEY_J] = ImGuiKey.J;
+        RaylibKeyMap[(int)KeyboardKey.KEY_K] = ImGuiKey.K;
+        RaylibKeyMap[(int)KeyboardKey.KEY_L] = ImGuiKey.L;
+        RaylibKeyMap[(int)KeyboardKey.KEY_M] = ImGuiKey.M;
+        RaylibKeyMap[(int)KeyboardKey.KEY_N] = ImGuiKey.N;
+        RaylibKeyMap[(int)KeyboardKey.KEY_O] = ImGuiKey.O;
+        RaylibKeyMap[(int)KeyboardKey.KEY_P] = ImGuiKey.P;
+        RaylibKeyMap[(int)KeyboardKey.KEY_Q] = ImGuiKey.Q;
+        RaylibKeyMap[(int)KeyboardKey.KEY_R] = ImGuiKey.R;
+        RaylibKeyMap[(int)KeyboardKey.KEY_S] = ImGuiKey.S;
+        RaylibKeyMap[(int)KeyboardKey.KEY_T] = ImGuiKey.T;
+        RaylibKeyMap[(int)KeyboardKey.KEY_U] = ImGuiKey.U;
+        RaylibKeyMap[(int)KeyboardKey.KEY_V] = ImGuiKey.V;
+        RaylibKeyMap[(int)KeyboardKey.KEY_W] = ImGuiKey.W;
+        RaylibKeyMap[(int)KeyboardKey.KEY_X] = ImGuiKey.X;
+        RaylibKeyMap[(int)KeyboardKey.KEY_Y] = ImGuiKey.Y;
+        RaylibKeyMap[(int)KeyboardKey.KEY_Z] = ImGuiKey.Z;
+        RaylibKeyMap[(int)KeyboardKey.KEY_SPACE] = ImGuiKey.Space;
+        RaylibKeyMap[(int)KeyboardKey.KEY_ESCAPE] = ImGuiKey.Escape;
+        RaylibKeyMap[(int)KeyboardKey.KEY_ENTER] = ImGuiKey.Enter;
+        RaylibKeyMap[(int)KeyboardKey.KEY_TAB] = ImGuiKey.Tab;
+        RaylibKeyMap[(int)KeyboardKey.KEY_BACKSPACE] = ImGuiKey.Backspace;
+        RaylibKeyMap[(int)KeyboardKey.KEY_INSERT] = ImGuiKey.Insert;
+        RaylibKeyMap[(int)KeyboardKey.KEY_DELETE] = ImGuiKey.Delete;
+        RaylibKeyMap[(int)KeyboardKey.KEY_RIGHT] = ImGuiKey.RightArrow;
+        RaylibKeyMap[(int)KeyboardKey.KEY_LEFT] = ImGuiKey.LeftArrow;
+        RaylibKeyMap[(int)KeyboardKey.KEY_DOWN] = ImGuiKey.DownArrow;
+        RaylibKeyMap[(int)KeyboardKey.KEY_UP] = ImGuiKey.UpArrow;
+        RaylibKeyMap[(int)KeyboardKey.KEY_PAGE_UP] = ImGuiKey.PageUp;
+        RaylibKeyMap[(int)KeyboardKey.KEY_PAGE_DOWN] = ImGuiKey.PageDown;
+        RaylibKeyMap[(int)KeyboardKey.KEY_HOME] = ImGuiKey.Home;
+        RaylibKeyMap[(int)KeyboardKey.KEY_END] = ImGuiKey.End;
+        RaylibKeyMap[(int)KeyboardKey.KEY_CAPS_LOCK] = ImGuiKey.CapsLock;
+        RaylibKeyMap[(int)KeyboardKey.KEY_SCROLL_LOCK] = ImGuiKey.ScrollLock;
+        RaylibKeyMap[(int)KeyboardKey.KEY_NUM_LOCK] = ImGuiKey.NumLock;
+        RaylibKeyMap[(int)KeyboardKey.KEY_PRINT_SCREEN] = ImGuiKey.PrintScreen;
+        RaylibKeyMap[(int)KeyboardKey.KEY_PAUSE] = ImGuiKey.Pause;
+        RaylibKeyMap[(int)KeyboardKey.KEY_F1] = ImGuiKey.F1;
+        RaylibKeyMap[(int)KeyboardKey.KEY_F2] = ImGuiKey.F2;
+        RaylibKeyMap[(int)KeyboardKey.KEY_F3] = ImGuiKey.F3;
+        RaylibKeyMap[(int)KeyboardKey.KEY_F4] = ImGuiKey.F4;
+        RaylibKeyMap[(int)KeyboardKey.KEY_F5] = ImGuiKey.F5;
+        RaylibKeyMap[(int)KeyboardKey.KEY_F6] = ImGuiKey.F6;
+        RaylibKeyMap[(int)KeyboardKey.KEY_F7] = ImGuiKey.F7;
+        RaylibKeyMap[(int)KeyboardKey.KEY_F8] = ImGuiKey.F8;
+        RaylibKeyMap[(int)KeyboardKey.KEY_F9] = ImGuiKey.F9;
+        RaylibKeyMap[(int)KeyboardKey.KEY_F10] = ImGuiKey.F10;
+        RaylibKeyMap[(int)KeyboardKey.KEY_F11] = ImGuiKey.F11;
+        RaylibKeyMap[(int)KeyboardKey.KEY_F12] = ImGuiKey.F12;
+        RaylibKeyMap[(int)KeyboardKey.KEY_LEFT_SHIFT] = ImGuiKey.LeftShift;
+        RaylibKeyMap[(int)KeyboardKey.KEY_LEFT_CONTROL] = ImGuiKey.LeftCtrl;
+        RaylibKeyMap[(int)KeyboardKey.KEY_LEFT_ALT] = ImGuiKey.LeftAlt;
+        RaylibKeyMap[(int)KeyboardKey.KEY_LEFT_SUPER] = ImGuiKey.LeftSuper;
+        RaylibKeyMap[(int)KeyboardKey.KEY_RIGHT_SHIFT] = ImGuiKey.RightShift;
+        RaylibKeyMap[(int)KeyboardKey.KEY_RIGHT_CONTROL] = ImGuiKey.RightCtrl;
+        RaylibKeyMap[(int)KeyboardKey.KEY_RIGHT_ALT] = ImGuiKey.RightAlt;
+        RaylibKeyMap[(int)KeyboardKey.KEY_RIGHT_SUPER] = ImGuiKey.RightSuper;
+        RaylibKeyMap[(int)KeyboardKey.KEY_MENU] = ImGuiKey.Menu;
+        RaylibKeyMap[(int)KeyboardKey.KEY_LEFT_BRACKET] = ImGuiKey.LeftBracket;
+        RaylibKeyMap[(int)KeyboardKey.KEY_BACKSLASH] = ImGuiKey.Backslash;
+        RaylibKeyMap[(int)KeyboardKey.KEY_RIGHT_BRACKET] = ImGuiKey.RightBracket;
+        RaylibKeyMap[(int)KeyboardKey.KEY_GRAVE] = ImGuiKey.GraveAccent;
+        RaylibKeyMap[(int)KeyboardKey.KEY_KP_0] = ImGuiKey.Keypad0;
+        RaylibKeyMap[(int)KeyboardKey.KEY_KP_1] = ImGuiKey.Keypad1;
+        RaylibKeyMap[(int)KeyboardKey.KEY_KP_2] = ImGuiKey.Keypad2;
+        RaylibKeyMap[(int)KeyboardKey.KEY_KP_3] = ImGuiKey.Keypad3;
+        RaylibKeyMap[(int)KeyboardKey.KEY_KP_4] = ImGuiKey.Keypad4;
+        RaylibKeyMap[(int)KeyboardKey.KEY_KP_5] = ImGuiKey.Keypad5;
+        RaylibKeyMap[(int)KeyboardKey.KEY_KP_6] = ImGuiKey.Keypad6;
+        RaylibKeyMap[(int)KeyboardKey.KEY_KP_7] = ImGuiKey.Keypad7;
+        RaylibKeyMap[(int)KeyboardKey.KEY_KP_8] = ImGuiKey.Keypad8;
+        RaylibKeyMap[(int)KeyboardKey.KEY_KP_9] = ImGuiKey.Keypad9;
+        RaylibKeyMap[(int)KeyboardKey.KEY_KP_DECIMAL] = ImGuiKey.KeypadDecimal;
+        RaylibKeyMap[(int)KeyboardKey.KEY_KP_DIVIDE] = ImGuiKey.KeypadDivide;
+        RaylibKeyMap[(int)KeyboardKey.KEY_KP_MULTIPLY] = ImGuiKey.KeypadMultiply;
+        RaylibKeyMap[(int)KeyboardKey.KEY_KP_SUBTRACT] = ImGuiKey.KeypadSubtract;
+        RaylibKeyMap[(int)KeyboardKey.KEY_KP_ADD] = ImGuiKey.KeypadAdd;
+        RaylibKeyMap[(int)KeyboardKey.KEY_KP_ENTER] = ImGuiKey.KeypadEnter;
+        RaylibKeyMap[(int)KeyboardKey.KEY_KP_EQUAL] = ImGuiKey.KeypadEqual;
     }
 
     private static void SetupMouseCursors()
     {
-        MouseCursorMap.Clear();
-        MouseCursorMap[ImGuiMouseCursor.Arrow] = 0;
-        MouseCursorMap[ImGuiMouseCursor.TextInput] = 1;
-        MouseCursorMap[ImGuiMouseCursor.Hand] = 2;
-        MouseCursorMap[ImGuiMouseCursor.ResizeAll] = 9;
-        MouseCursorMap[ImGuiMouseCursor.ResizeEW] = 4;
-        MouseCursorMap[ImGuiMouseCursor.ResizeNESW] = 7;
-        MouseCursorMap[ImGuiMouseCursor.ResizeNS] = 5;
-        MouseCursorMap[ImGuiMouseCursor.ResizeNWSE] = 6;
-        MouseCursorMap[ImGuiMouseCursor.NotAllowed] = 10;
+        if (MouseCursorMap.Count > 0)
+            return;
+
+        MouseCursorMap[ImGuiMouseCursor.Arrow] = (int)MouseCursor.MOUSE_CURSOR_ARROW;
+        MouseCursorMap[ImGuiMouseCursor.TextInput] = (int)MouseCursor.MOUSE_CURSOR_IBEAM;
+        MouseCursorMap[ImGuiMouseCursor.Hand] = (int)MouseCursor.MOUSE_CURSOR_POINTING_HAND;
+        MouseCursorMap[ImGuiMouseCursor.ResizeAll] = (int)MouseCursor.MOUSE_CURSOR_RESIZE_ALL;
+        MouseCursorMap[ImGuiMouseCursor.ResizeEW] = (int)MouseCursor.MOUSE_CURSOR_RESIZE_EW;
+        MouseCursorMap[ImGuiMouseCursor.ResizeNESW] = (int)MouseCursor.MOUSE_CURSOR_RESIZE_NESW;
+        MouseCursorMap[ImGuiMouseCursor.ResizeNS] = (int)MouseCursor.MOUSE_CURSOR_RESIZE_NS;
+        MouseCursorMap[ImGuiMouseCursor.ResizeNWSE] = (int)MouseCursor.MOUSE_CURSOR_RESIZE_NWSE;
+        MouseCursorMap[ImGuiMouseCursor.NotAllowed] = (int)MouseCursor.MOUSE_CURSOR_NOT_ALLOWED;
     }
 
     public static unsafe void ReloadFonts()
@@ -191,8 +187,12 @@ public static class RlImGui
         ImGui.SetCurrentContext(ImGuiContext);
         ImGuiIOPtr io = ImGui.GetIO();
 
-        int width, height, bytesPerPixel;
-        io.Fonts.GetTexDataAsRGBA32(out byte* pixels, out width, out height, out bytesPerPixel);
+        io.Fonts.GetTexDataAsRGBA32(
+                out byte* pixels,
+                out int width,
+                out int height,
+                out int bytesPerPixel
+        );
 
         Image image = new()
         {
@@ -227,8 +227,6 @@ public static class RlImGui
     private static GetClipTextCallback? GetClipCallback;
     private static SetClipTextCallback? SetClipCallback;
 
-    public static bool LoadDefaultFont = true;
-
     public static void EndInitImGui()
     {
         SetupMouseCursors();
@@ -236,17 +234,12 @@ public static class RlImGui
         ImGui.SetCurrentContext(ImGuiContext);
 
         var fonts = ImGui.GetIO().Fonts;
-
-        if (LoadDefaultFont)
-            ImGui.GetIO().Fonts.AddFontDefault();
+        fonts.AddFontDefault();
 
         ImGuiIOPtr io = ImGui.GetIO();
         ImGuiPlatformIOPtr platformIO = ImGui.GetPlatformIO();
 
-        SetupUserFonts?.Invoke(io);
-
         io.BackendFlags |= ImGuiBackendFlags.HasMouseCursors | ImGuiBackendFlags.HasSetMousePos | ImGuiBackendFlags.HasGamepad;
-
         io.MousePos.X = 0;
         io.MousePos.Y = 0;
 
@@ -326,10 +319,10 @@ public static class RlImGui
 
                     if ((io.ConfigFlags & ImGuiConfigFlags.NoMouseCursorChange) == 0)
                     {
-                        if (!MouseCursorMap.ContainsKey(imgui_cursor))
+                        if (!MouseCursorMap.TryGetValue(imgui_cursor, out int value))
                             Raylib.SetMouseCursor(0);
                         else
-                            Raylib.SetMouseCursor(MouseCursorMap[imgui_cursor]);
+                            Raylib.SetMouseCursor(value);
                     }
                 }
             }
@@ -345,22 +338,22 @@ public static class RlImGui
             io.AddFocusEvent(focused);
         LastFrameFocused = focused;
 
-        bool ctrlDown = rlImGuiIsControlDown();
+        bool ctrlDown = IsControlDown();
         if (ctrlDown != LastControlPressed)
             io.AddKeyEvent(ImGuiKey.ModCtrl, ctrlDown);
         LastControlPressed = ctrlDown;
 
-        bool shiftDown = rlImGuiIsShiftDown();
+        bool shiftDown = IsShiftDown();
         if (shiftDown != LastShiftPressed)
             io.AddKeyEvent(ImGuiKey.ModShift, shiftDown);
         LastShiftPressed = shiftDown;
 
-        bool altDown = rlImGuiIsAltDown();
+        bool altDown = IsAltDown();
         if (altDown != LastAltPressed)
             io.AddKeyEvent(ImGuiKey.ModAlt, altDown);
         LastAltPressed = altDown;
 
-        bool superDown = rlImGuiIsSuperDown();
+        bool superDown = IsSuperDown();
         if (superDown != LastSuperPressed)
             io.AddKeyEvent(ImGuiKey.ModSuper, superDown);
         LastSuperPressed = superDown;
@@ -368,8 +361,8 @@ public static class RlImGui
         int keyId = Raylib.GetKeyPressed();
         while (keyId != 0)
         {
-            if (RaylibKeyMap.ContainsKey(keyId))
-                io.AddKeyEvent(RaylibKeyMap[keyId], true);
+            if (RaylibKeyMap.TryGetValue(keyId, out ImGuiKey value))
+                io.AddKeyEvent(value, true);
             keyId = Raylib.GetKeyPressed();
         }
 
@@ -385,6 +378,55 @@ public static class RlImGui
             io.AddInputCharacter((uint)pressed);
             pressed = Raylib.GetCharPressed();
         }
+
+        if ((io.ConfigFlags & ImGuiConfigFlags.NavEnableGamepad) != 0 && Raylib.IsGamepadAvailable(0))
+        {
+            HandleGamepadButtonEvent(io, GamepadButton.GAMEPAD_BUTTON_LEFT_FACE_UP, ImGuiKey.GamepadDpadUp);
+            HandleGamepadButtonEvent(io, GamepadButton.GAMEPAD_BUTTON_LEFT_FACE_RIGHT, ImGuiKey.GamepadDpadRight);
+            HandleGamepadButtonEvent(io, GamepadButton.GAMEPAD_BUTTON_LEFT_FACE_DOWN, ImGuiKey.GamepadDpadDown);
+            HandleGamepadButtonEvent(io, GamepadButton.GAMEPAD_BUTTON_LEFT_FACE_LEFT, ImGuiKey.GamepadDpadLeft);
+
+            HandleGamepadButtonEvent(io, GamepadButton.GAMEPAD_BUTTON_RIGHT_FACE_UP, ImGuiKey.GamepadFaceUp);
+            HandleGamepadButtonEvent(io, GamepadButton.GAMEPAD_BUTTON_RIGHT_FACE_RIGHT, ImGuiKey.GamepadFaceLeft);
+            HandleGamepadButtonEvent(io, GamepadButton.GAMEPAD_BUTTON_RIGHT_FACE_DOWN, ImGuiKey.GamepadFaceDown);
+            HandleGamepadButtonEvent(io, GamepadButton.GAMEPAD_BUTTON_RIGHT_FACE_LEFT, ImGuiKey.GamepadFaceRight);
+
+            HandleGamepadButtonEvent(io, GamepadButton.GAMEPAD_BUTTON_LEFT_TRIGGER_1, ImGuiKey.GamepadL1);
+            HandleGamepadButtonEvent(io, GamepadButton.GAMEPAD_BUTTON_LEFT_TRIGGER_2, ImGuiKey.GamepadL2);
+            HandleGamepadButtonEvent(io, GamepadButton.GAMEPAD_BUTTON_RIGHT_TRIGGER_1, ImGuiKey.GamepadR1);
+            HandleGamepadButtonEvent(io, GamepadButton.GAMEPAD_BUTTON_RIGHT_TRIGGER_2, ImGuiKey.GamepadR2);
+            HandleGamepadButtonEvent(io, GamepadButton.GAMEPAD_BUTTON_LEFT_THUMB, ImGuiKey.GamepadL3);
+            HandleGamepadButtonEvent(io, GamepadButton.GAMEPAD_BUTTON_RIGHT_THUMB, ImGuiKey.GamepadR3);
+
+            HandleGamepadButtonEvent(io, GamepadButton.GAMEPAD_BUTTON_MIDDLE_LEFT, ImGuiKey.GamepadStart);
+            HandleGamepadButtonEvent(io, GamepadButton.GAMEPAD_BUTTON_MIDDLE_RIGHT, ImGuiKey.GamepadBack);
+
+            // left stick
+            HandleGamepadStickEvent(io, GamepadAxis.GAMEPAD_AXIS_LEFT_X, ImGuiKey.GamepadLStickLeft, ImGuiKey.GamepadLStickRight);
+            HandleGamepadStickEvent(io, GamepadAxis.GAMEPAD_AXIS_LEFT_Y, ImGuiKey.GamepadLStickUp, ImGuiKey.GamepadLStickDown);
+
+            // right stick
+            HandleGamepadStickEvent(io, GamepadAxis.GAMEPAD_AXIS_RIGHT_X, ImGuiKey.GamepadRStickLeft, ImGuiKey.GamepadRStickRight);
+            HandleGamepadStickEvent(io, GamepadAxis.GAMEPAD_AXIS_RIGHT_Y, ImGuiKey.GamepadRStickUp, ImGuiKey.GamepadRStickDown);
+        }
+    }
+
+    private static void HandleGamepadButtonEvent(ImGuiIOPtr io, GamepadButton button, ImGuiKey key)
+    {
+        if (Raylib.IsGamepadButtonPressed(0, (int)button))
+            io.AddKeyEvent(key, true);
+        else if (Raylib.IsGamepadButtonReleased(0, (int)button))
+            io.AddKeyEvent(key, false);
+    }
+
+    private static void HandleGamepadStickEvent(ImGuiIOPtr io, GamepadAxis axis, ImGuiKey negKey, ImGuiKey posKey)
+    {
+        const float deadZone = 0.20f;
+
+        float axisValue = Raylib.GetGamepadAxisMovement(0, (int)axis);
+
+        io.AddKeyAnalogEvent(negKey, axisValue < -deadZone, axisValue < -deadZone ? -axisValue : 0);
+        io.AddKeyAnalogEvent(posKey, axisValue > deadZone, axisValue > deadZone ? axisValue : 0);
     }
 
     public static void Begin(float dt = -1)
