@@ -23,22 +23,7 @@ public static class RlImGui
     internal static bool IsAltDown() => Raylib.IsKeyDown((int)KeyboardKey.KEY_LEFT_ALT) || Raylib.IsKeyDown((int)KeyboardKey.KEY_RIGHT_ALT);
     internal static bool IsSuperDown() => Raylib.IsKeyDown((int)KeyboardKey.KEY_LEFT_SUPER) || Raylib.IsKeyDown((int)KeyboardKey.KEY_RIGHT_SUPER);
 
-    public static void Setup(bool darkTheme = true, bool enableDocking = false)
-    {
-        BeginInitImGui();
-
-        if (darkTheme)
-            ImGui.StyleColorsDark();
-        else
-            ImGui.StyleColorsLight();
-
-        if (enableDocking)
-            ImGui.GetIO().ConfigFlags |= ImGuiConfigFlags.DockingEnable;
-
-        EndInitImGui();
-    }
-
-    public static void BeginInitImGui()
+    public static void Setup(bool darkTheme = true, bool enableDocking = false, bool addDefaultFont = true)
     {
         LastFrameFocused = Raylib.IsWindowFocused();
         LastControlPressed = false;
@@ -49,8 +34,42 @@ public static class RlImGui
         FontTexture.Id = 0;
 
         SetupKeymap();
+        SetupMouseCursors();
 
         ImGuiContext = ImGui.CreateContext();
+
+        if (darkTheme)
+            ImGui.StyleColorsDark();
+        else
+            ImGui.StyleColorsLight();
+
+        if (enableDocking)
+            ImGui.GetIO().ConfigFlags |= ImGuiConfigFlags.DockingEnable;
+
+        ImGui.SetCurrentContext(ImGuiContext);
+
+        var fonts = ImGui.GetIO().Fonts;
+        var io = ImGui.GetIO();
+        var platformIO = ImGui.GetPlatformIO();
+
+        if (addDefaultFont)
+            fonts.AddFontDefault();
+
+        io.BackendFlags |= ImGuiBackendFlags.HasMouseCursors | ImGuiBackendFlags.HasSetMousePos | ImGuiBackendFlags.HasGamepad;
+        io.MousePos.X = 0;
+        io.MousePos.Y = 0;
+
+        unsafe
+        {
+            SetClipCallback = new SetClipTextCallback(rlImGuiSetClipText);
+            platformIO.Platform_SetClipboardTextFn = Marshal.GetFunctionPointerForDelegate(SetClipCallback);
+
+            GetClipCallback = new GetClipTextCallback(rImGuiGetClipText);
+            platformIO.Platform_GetClipboardTextFn = Marshal.GetFunctionPointerForDelegate(GetClipCallback);
+        }
+
+        platformIO.Platform_ClipboardUserData = IntPtr.Zero;
+        ReloadFonts();
     }
 
     private static void SetupKeymap()
@@ -185,7 +204,7 @@ public static class RlImGui
     public static unsafe void ReloadFonts()
     {
         ImGui.SetCurrentContext(ImGuiContext);
-        ImGuiIOPtr io = ImGui.GetIO();
+        var io = ImGui.GetIO();
 
         io.Fonts.GetTexDataAsRGBA32(
                 out byte* pixels,
@@ -194,7 +213,7 @@ public static class RlImGui
                 out int bytesPerPixel
         );
 
-        Image image = new()
+        var image = new Image()
         {
             Data = pixels,
             Width = width,
@@ -207,7 +226,6 @@ public static class RlImGui
             Raylib.UnloadTexture(FontTexture);
 
         FontTexture = Raylib.LoadTextureFromImage(image);
-
         io.Fonts.SetTexID(new IntPtr(FontTexture.Id));
     }
 
@@ -226,35 +244,6 @@ public static class RlImGui
 
     private static GetClipTextCallback? GetClipCallback;
     private static SetClipTextCallback? SetClipCallback;
-
-    public static void EndInitImGui()
-    {
-        SetupMouseCursors();
-
-        ImGui.SetCurrentContext(ImGuiContext);
-
-        var fonts = ImGui.GetIO().Fonts;
-        fonts.AddFontDefault();
-
-        ImGuiIOPtr io = ImGui.GetIO();
-        ImGuiPlatformIOPtr platformIO = ImGui.GetPlatformIO();
-
-        io.BackendFlags |= ImGuiBackendFlags.HasMouseCursors | ImGuiBackendFlags.HasSetMousePos | ImGuiBackendFlags.HasGamepad;
-        io.MousePos.X = 0;
-        io.MousePos.Y = 0;
-
-        unsafe
-        {
-            SetClipCallback = new SetClipTextCallback(rlImGuiSetClipText);
-            platformIO.Platform_SetClipboardTextFn = Marshal.GetFunctionPointerForDelegate(SetClipCallback);
-
-            GetClipCallback = new GetClipTextCallback(rImGuiGetClipText);
-            platformIO.Platform_GetClipboardTextFn = Marshal.GetFunctionPointerForDelegate(GetClipCallback);
-        }
-
-        platformIO.Platform_ClipboardUserData = IntPtr.Zero;
-        ReloadFonts();
-    }
 
     private static void SetMouseEvent(ImGuiIOPtr io, int rayMouse, ImGuiMouseButton imGuiMouse)
     {
