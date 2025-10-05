@@ -23,6 +23,14 @@ public static class RlImGui
     internal static bool IsAltDown() => Raylib.IsKeyDown((int)KeyboardKey.KEY_LEFT_ALT) || Raylib.IsKeyDown((int)KeyboardKey.KEY_RIGHT_ALT);
     internal static bool IsSuperDown() => Raylib.IsKeyDown((int)KeyboardKey.KEY_LEFT_SUPER) || Raylib.IsKeyDown((int)KeyboardKey.KEY_RIGHT_SUPER);
 
+
+    public delegate void SetupUserFontsCallback(ImGuiIOPtr imGuiIo);
+
+    /// <summary>
+    /// Callback for cases where the user wants to install additional fonts.
+    /// </summary>
+    public static SetupUserFontsCallback SetupUserFonts = null;
+
     public static void Setup(bool darkTheme = true, bool enableDocking = false, bool addDefaultFont = true)
     {
         LastFrameFocused = Raylib.IsWindowFocused();
@@ -54,6 +62,8 @@ public static class RlImGui
 
         if (addDefaultFont)
             fonts.AddFontDefault();
+
+        SetupUserFonts?.Invoke(io);
 
         io.BackendFlags |= ImGuiBackendFlags.HasMouseCursors | ImGuiBackendFlags.HasSetMousePos | ImGuiBackendFlags.HasGamepad;
         io.MousePos.X = 0;
