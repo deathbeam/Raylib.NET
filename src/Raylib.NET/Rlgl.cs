@@ -1067,6 +1067,20 @@ public static unsafe partial class Rlgl
     public static partial void UnloadFramebuffer(uint id);
 
     /// <summary>
+    /// Copy framebuffer pixel data to internal buffer
+    /// </summary>
+    [LibraryImport(LIBRARY, EntryPoint = "rlCopyFramebuffer", StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static unsafe partial void CopyFramebuffer(int x, int y, int width, int height, int format, void* pixels);
+
+    /// <summary>
+    /// Resize internal framebuffer
+    /// </summary>
+    [LibraryImport(LIBRARY, EntryPoint = "rlResizeFramebuffer", StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ResizeFramebuffer(int width, int height);
+
+    /// <summary>
     /// Load shader from code strings
     /// </summary>
     [LibraryImport(LIBRARY, EntryPoint = "rlLoadShaderCode", StringMarshalling = StringMarshalling.Utf8)]
@@ -1095,14 +1109,14 @@ public static unsafe partial class Rlgl
     public static partial void UnloadShaderProgram(uint id);
 
     /// <summary>
-    /// Get shader location uniform
+    /// Get shader location uniform, requires shader program id
     /// </summary>
     [LibraryImport(LIBRARY, EntryPoint = "rlGetLocationUniform", StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial int GetLocationUniform(uint shaderId, string uniformName);
 
     /// <summary>
-    /// Get shader location attribute
+    /// Get shader location attribute, requires shader program id
     /// </summary>
     [LibraryImport(LIBRARY, EntryPoint = "rlGetLocationAttrib", StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]

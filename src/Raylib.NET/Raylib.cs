@@ -1023,7 +1023,7 @@ public static unsafe partial class Raylib
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial NativeBool ChangeDirectory(string dir);
+    public static partial NativeBool ChangeDirectory(string dirPath);
 
     /// <summary>
     /// Check if a given path is a file or a directory
@@ -1129,6 +1129,13 @@ public static unsafe partial class Raylib
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static unsafe partial uint* ComputeSHA1(byte* data, int dataSize);
+
+    /// <summary>
+    /// Compute SHA256 hash code, returns static int[8] (32 bytes)
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static unsafe partial uint* ComputeSHA256(byte* data, int dataSize);
 
     /// <summary>
     /// Load automation events list from file, NULL for empty list, capacity = MAX_AUTOMATION_EVENTS
@@ -1598,6 +1605,13 @@ public static unsafe partial class Raylib
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial void DrawLineBezier(Vector2 startPos, Vector2 endPos, float thick, Color color);
+
+    /// <summary>
+    /// Draw a dashed line
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void DrawLineDashed(Vector2 startPos, Vector2 endPos, int dashSize, int spaceSize, Color color);
 
     /// <summary>
     /// Draw a color-filled circle
@@ -3812,7 +3826,7 @@ public static unsafe partial class Raylib
     public static partial NativeBool IsSoundValid(Sound sound);
 
     /// <summary>
-    /// Update sound buffer with new data (data and frame count should fit in sound)
+    /// Update sound buffer with new data (default data format: 32 bit float, stereo)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -3903,7 +3917,7 @@ public static unsafe partial class Raylib
     public static partial void SetSoundPitch(Sound sound, float pitch);
 
     /// <summary>
-    /// Set pan for a sound (0.5 is center)
+    /// Set pan for a sound (-1.0 left, 0.0 center, 1.0 right)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -4036,7 +4050,7 @@ public static unsafe partial class Raylib
     public static partial void SetMusicPitch(Music music, float pitch);
 
     /// <summary>
-    /// Set pan for a music (0.5 is center)
+    /// Set pan for a music (-1.0 left, 0.0 center, 1.0 right)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]

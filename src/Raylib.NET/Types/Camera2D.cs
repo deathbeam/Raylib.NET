@@ -9,19 +9,19 @@ namespace RaylibNET;
 public partial struct Camera2D
 {
     /// <summary>
-    /// Camera offset (displacement from target)
+    /// Camera offset (screen space offset from window origin)
     /// </summary>
     public Vector2 Offset;
     /// <summary>
-    /// Camera target (rotation and zoom origin)
+    /// Camera target (world space target point that is mapped to screen space offset)
     /// </summary>
     public Vector2 Target;
     /// <summary>
-    /// Camera rotation in degrees
+    /// Camera rotation in degrees (pivots around target)
     /// </summary>
     public float Rotation;
     /// <summary>
-    /// Camera zoom (scaling), should be 1.0f by default
+    /// Camera zoom (scaling around target), must not be set to 0, set to 1.0f for no scale
     /// </summary>
     public float Zoom;
 

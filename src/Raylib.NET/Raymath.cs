@@ -1026,7 +1026,16 @@ public static unsafe partial class Raymath
     public static partial int QuaternionEquals(Vector4 p, Vector4 q);
 
     /// <summary>
+    /// Compose a transformation matrix from rotational, translational and scaling components
+    /// TODO: This function is not following raymath conventions defined in header: NOT self-contained
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial Matrix4x4 MatrixCompose(Vector3 translation, Vector4 rotation, Vector3 scale);
+
+    /// <summary>
     /// Decompose a transformation matrix into its rotational, translational and scaling components and remove shear
+    /// TODO: This function is not following raymath conventions defined in header: NOT self-contained
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
