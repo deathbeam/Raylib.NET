@@ -2,7 +2,7 @@ const std = @import("std");
 const builtin = @import("builtin");
 
 pub fn compileRaylib(b: *std.Build, target: std.Build.ResolvedTarget, optimize: std.builtin.OptimizeMode, shared: bool) !*std.Build.Step.Compile {
-    const raylib = b.dependency("raylib", .{ .target = target, .optimize = optimize, .linkage = if (shared) std.builtin.LinkMode.dynamic else std.builtin.LinkMode.static, .linux_display_backend = .X11 });
+    const raylib = b.dependency("raylib", .{ .target = target, .optimize = optimize, .linkage = if (shared) std.builtin.LinkMode.dynamic else std.builtin.LinkMode.static, .linux_display_backend = .X11, .opengl_version = .gl_4_3 });
     const raygui = b.dependency("raygui", .{ .target = target, .optimize = optimize });
     const lib = raylib.artifact("raylib");
 
