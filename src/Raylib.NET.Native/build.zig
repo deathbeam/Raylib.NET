@@ -37,29 +37,29 @@ pub fn build(b: *std.Build) !void {
     const raylib = raylib_dep.artifact("raylib");
 
     // Add platform-specific include/library paths for cross-compiling
-    // Note: On Ubuntu/Debian, cross-compilation libraries are installed in multiarch paths.
-    // On other distros (like Arch), these paths don't exist and Zig will warn but continue.
-    // The warnings are cosmetic and don't affect the build - standard paths are added first.
+    // Due to *terrible* zig default behaviour for include paths when cross-compiling I have to do this
+    // The includes are resolved properly only when -Dtarget=native (or omitted) is passed
     switch (target.result.os.tag) {
         .linux => {
-            // Add standard paths that work on all distros
-            raylib.addLibraryPath(.{ .cwd_relative = "/usr/lib" });
-            raylib.addSystemIncludePath(.{ .cwd_relative = "/usr/include" });
-
-            // Add Ubuntu/Debian multiarch paths for cross-compilation
-            // These are needed for CI builds on Ubuntu when cross-compiling to different architectures
             if (target.result.cpu.arch == .aarch64) {
                 raylib.addLibraryPath(.{ .cwd_relative = "/usr/lib/aarch64-linux-gnu/" });
                 raylib.addIncludePath(.{ .cwd_relative = "/usr/include/aarch64-linux-gnu/" });
+                raylib.addSystemIncludePath(.{ .cwd_relative = "/usr/include" });
             } else if (target.result.cpu.arch == .x86) {
                 raylib.addLibraryPath(.{ .cwd_relative = "/usr/lib/i386-linux-gnu/" });
                 raylib.addIncludePath(.{ .cwd_relative = "/usr/include/i386-linux-gnu/" });
+                raylib.addSystemIncludePath(.{ .cwd_relative = "/usr/include" });
                 // https://github.com/ziglang/zig/issues/7935
                 raylib.link_z_notext = true;
             } else if (target.result.cpu.arch == .x86_64) {
                 raylib.addLibraryPath(.{ .cwd_relative = "/usr/lib/x86_64-linux-gnu/" });
                 raylib.addIncludePath(.{ .cwd_relative = "/usr/include/x86_64-linux-gnu/" });
+                raylib.addIncludePath(.{ .cwd_relative = "/usr/include" });
+            } else {
+                raylib.addSystemIncludePath(.{ .cwd_relative = "/usr/include" });
             }
+
+            raylib.addLibraryPath(.{ .cwd_relative = "/usr/lib" });
         },
         else => {},
     }
@@ -98,21 +98,24 @@ pub fn build(b: *std.Build) !void {
         // Add same platform-specific paths for static lib
         switch (target.result.os.tag) {
             .linux => {
-                raylib_static.addLibraryPath(.{ .cwd_relative = "/usr/lib" });
-                raylib_static.addSystemIncludePath(.{ .cwd_relative = "/usr/include" });
-
-                // Add multiarch paths for cross-compilation
                 if (target.result.cpu.arch == .aarch64) {
                     raylib_static.addLibraryPath(.{ .cwd_relative = "/usr/lib/aarch64-linux-gnu/" });
                     raylib_static.addIncludePath(.{ .cwd_relative = "/usr/include/aarch64-linux-gnu/" });
+                    raylib_static.addSystemIncludePath(.{ .cwd_relative = "/usr/include" });
                 } else if (target.result.cpu.arch == .x86) {
                     raylib_static.addLibraryPath(.{ .cwd_relative = "/usr/lib/i386-linux-gnu/" });
                     raylib_static.addIncludePath(.{ .cwd_relative = "/usr/include/i386-linux-gnu/" });
+                    raylib_static.addSystemIncludePath(.{ .cwd_relative = "/usr/include" });
                     raylib_static.link_z_notext = true;
                 } else if (target.result.cpu.arch == .x86_64) {
                     raylib_static.addLibraryPath(.{ .cwd_relative = "/usr/lib/x86_64-linux-gnu/" });
                     raylib_static.addIncludePath(.{ .cwd_relative = "/usr/include/x86_64-linux-gnu/" });
+                    raylib_static.addIncludePath(.{ .cwd_relative = "/usr/include" });
+                } else {
+                    raylib_static.addSystemIncludePath(.{ .cwd_relative = "/usr/include" });
                 }
+
+                raylib_static.addLibraryPath(.{ .cwd_relative = "/usr/lib" });
             },
             else => {},
         }
