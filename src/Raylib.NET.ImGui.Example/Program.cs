@@ -1,5 +1,6 @@
 using RaylibNET;
 using static RaylibNET.Raylib;
+using Hexa.NET.ImGui;
 
 InitWindow(800, 600, "Raylib.NET.ImGui - Example");
 SetTargetFPS(60);
@@ -15,25 +16,26 @@ while (!WindowShouldClose())
     ClearBackground(Color.DARKGRAY);
 
     // Start ImGui frame
-    RaylibNET.RlImGui.Begin();
+    RlImGui.Begin();
 
-    if (ImGuiNET.ImGui.Button("Increment Counter"))
+    if (ImGui.Button("Increment Counter"))
     {
         counter++;
     }
-    ImGuiNET.ImGui.SameLine();
-    ImGuiNET.ImGui.Text($"Counter: {counter}");
+    ImGui.SameLine();
+    ImGui.Text($"Counter: {counter}");
 
-    ImGuiNET.ImGui.Checkbox("Show ImGui Demo Window", ref showDemo);
+    ImGui.Checkbox("Show ImGui Demo Window", ref showDemo);
     if (showDemo)
     {
-        ImGuiNET.ImGui.ShowDemoWindow(ref showDemo);
+        ImGui.ShowDemoWindow(ref showDemo);
     }
 
     // End ImGui frame and render
-    RaylibNET.RlImGui.End();
+    RlImGui.End();
 
     EndDrawing();
 }
 
+RlImGui.Shutdown();
 CloseWindow();
