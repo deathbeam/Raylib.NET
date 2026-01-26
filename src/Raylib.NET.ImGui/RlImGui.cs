@@ -6,34 +6,34 @@ namespace RaylibNET;
 
 /// <summary>
 /// RlImGui - ImGui integration for Raylib.NET using Hexa.NET.ImGui
-/// 
+///
 /// Simple Example:
 /// <code>
 /// Raylib.InitWindow(800, 600, "ImGui Demo");
 /// RlImGui.Setup();
-/// 
+///
 /// while (!Raylib.WindowShouldClose())
 /// {
 ///     RlImGui.Begin();
-///     
+///
 ///     ImGui.Text("Hello, ImGui!");
 ///     if (ImGui.Button("Click me"))
 ///         Console.WriteLine("Clicked!");
-///     
+///
 ///     Raylib.BeginDrawing();
 ///     Raylib.ClearBackground(Color.DARKGRAY);
 ///     RlImGui.End();
 ///     Raylib.EndDrawing();
 /// }
-/// 
+///
 /// RlImGui.Shutdown();
 /// Raylib.CloseWindow();
 /// </code>
-/// 
+///
 /// Advanced Example (Custom Fonts):
 /// <code>
 /// Raylib.InitWindow(800, 600, "ImGui Custom Fonts");
-/// 
+///
 /// RlImGui.BeginSetup();
 /// var io = ImGui.GetIO();
 /// io.Fonts.AddFontDefault();
@@ -41,9 +41,9 @@ namespace RaylibNET;
 /// io.ConfigFlags |= ImGuiConfigFlags.DockingEnable;
 /// ImGui.StyleColorsLight();
 /// RlImGui.EndSetup();
-/// 
+///
 /// // ... main loop same as above ...
-/// 
+///
 /// RlImGui.Shutdown();
 /// Raylib.CloseWindow();
 /// </code>
@@ -62,11 +62,12 @@ public static unsafe class RlImGui
     {
         BeginSetup();
         ImGui.StyleColorsDark();
+        ImGui.GetIO().Fonts.AddFontDefault();
         EndSetup();
     }
 
     /// <summary>
-    /// Begin custom ImGui setup. 
+    /// Begin custom ImGui setup.
     /// Add fonts, configure IO, set styles, etc. between BeginSetup() and EndSetup().
     /// Must be followed by EndSetup().
     /// </summary>
@@ -94,12 +95,6 @@ public static unsafe class RlImGui
             ImGuiContext = ImGui.CreateContext();
 
         ImGui.SetCurrentContext(ImGuiContext);
-
-        var io = ImGui.GetIO();
-        var fonts = io.Fonts;
-
-        // Add default font
-        fonts.AddFontDefault();
     }
 
     /// <summary>
