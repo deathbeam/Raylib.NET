@@ -9,10 +9,6 @@ namespace RaylibNET;
 public partial struct FilePathList
 {
     /// <summary>
-    /// Filepaths max entries
-    /// </summary>
-    public uint Capacity;
-    /// <summary>
     /// Filepaths entries count
     /// </summary>
     public uint Count;
@@ -21,9 +17,8 @@ public partial struct FilePathList
     /// </summary>
     public unsafe sbyte** Paths;
 
-    public unsafe FilePathList(uint capacity, uint count, sbyte** paths)
+    public unsafe FilePathList(uint count, sbyte** paths)
     {
-        this.Capacity = capacity;
         this.Count = count;
         this.Paths = paths;
     }

@@ -767,6 +767,13 @@ public static unsafe partial class Raylib
     public static partial void OpenURL(string url);
 
     /// <summary>
+    /// Set the current threshold (minimum) log level
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void SetTraceLogLevel(int logLevel);
+
+    /// <summary>
     /// Show trace log messages (LOG_DEBUG, LOG_INFO, LOG_WARNING, LOG_ERROR...)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
@@ -774,11 +781,11 @@ public static unsafe partial class Raylib
     public static partial void TraceLog(int logLevel, string text, IntPtr args);
 
     /// <summary>
-    /// Set the current threshold (minimum) log level
+    /// Set custom trace log
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void SetTraceLogLevel(int logLevel);
+    public static unsafe partial void SetTraceLogCallback(delegate* unmanaged[Cdecl]<int, sbyte*, sbyte*, void> callback);
 
     /// <summary>
     /// Internal memory allocator
@@ -800,41 +807,6 @@ public static unsafe partial class Raylib
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static unsafe partial void MemFree(void* ptr);
-
-    /// <summary>
-    /// Set custom trace log
-    /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
-    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void SetTraceLogCallback(delegate* unmanaged[Cdecl]<int, sbyte*, sbyte*, void> callback);
-
-    /// <summary>
-    /// Set custom file binary data loader
-    /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
-    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void SetLoadFileDataCallback(delegate* unmanaged[Cdecl]<sbyte*, int*, byte*> callback);
-
-    /// <summary>
-    /// Set custom file binary data saver
-    /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
-    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void SetSaveFileDataCallback(delegate* unmanaged[Cdecl]<sbyte*, void*, int, sbyte> callback);
-
-    /// <summary>
-    /// Set custom file text data loader
-    /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
-    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void SetLoadFileTextCallback(delegate* unmanaged[Cdecl]<sbyte*, sbyte*> callback);
-
-    /// <summary>
-    /// Set custom file text data saver
-    /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
-    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void SetSaveFileTextCallback(delegate* unmanaged[Cdecl]<sbyte*, sbyte*, sbyte> callback);
 
     /// <summary>
     /// Load file data as byte array (read)
@@ -884,6 +856,34 @@ public static unsafe partial class Raylib
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial NativeBool SaveFileText(string fileName, string text);
+
+    /// <summary>
+    /// Set custom file binary data loader
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static unsafe partial void SetLoadFileDataCallback(delegate* unmanaged[Cdecl]<sbyte*, int*, byte*> callback);
+
+    /// <summary>
+    /// Set custom file binary data saver
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static unsafe partial void SetSaveFileDataCallback(delegate* unmanaged[Cdecl]<sbyte*, void*, int, sbyte> callback);
+
+    /// <summary>
+    /// Set custom file text data loader
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static unsafe partial void SetLoadFileTextCallback(delegate* unmanaged[Cdecl]<sbyte*, sbyte*> callback);
+
+    /// <summary>
+    /// Set custom file text data saver
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static unsafe partial void SetSaveFileTextCallback(delegate* unmanaged[Cdecl]<sbyte*, sbyte*, sbyte> callback);
 
     /// <summary>
     /// Rename file (if exists)
@@ -1080,6 +1080,20 @@ public static unsafe partial class Raylib
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial void UnloadDroppedFiles(FilePathList files);
+
+    /// <summary>
+    /// Get the file count in a directory
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial uint GetDirectoryFileCount(string dirPath);
+
+    /// <summary>
+    /// Get the file count in a directory with extension filtering and recursive directory scan. Use 'DIR' in the filter string to include directories in the result
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial uint GetDirectoryFileCountEx(string basePath, string filter, NativeBool scanSubdirs);
 
     /// <summary>
     /// Compress data (DEFLATE algorithm), memory must be MemFree()

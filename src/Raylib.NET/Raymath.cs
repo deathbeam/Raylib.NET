@@ -516,7 +516,7 @@ public static unsafe partial class Raymath
 
     /// <summary>
     /// Projects a Vector3 from screen space into object space
-    /// NOTE: We are avoiding calling other raymath functions despite available
+    /// NOTE: Self-contained function, no other raymath functions are called
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
