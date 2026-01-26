@@ -7,6 +7,10 @@ namespace RaylibNET;
 /// <summary>
 /// RlImGui - ImGui integration for Raylib.NET using Hexa.NET.ImGui
 ///
+/// Attribution:
+///   - https://github.com/raylib-extras/rlImGui-cs
+///   - https://github.com/raylib-extras/rlImGui
+///
 /// Simple Example:
 /// <code>
 /// Raylib.InitWindow(800, 600, "ImGui Demo");
@@ -36,7 +40,6 @@ namespace RaylibNET;
 ///
 /// RlImGui.BeginSetup();
 /// var io = ImGui.GetIO();
-/// io.Fonts.AddFontDefault();
 /// io.Fonts.AddFontFromFileTTF("Roboto-Regular.ttf", 16.0f);
 /// io.ConfigFlags |= ImGuiConfigFlags.DockingEnable;
 /// ImGui.StyleColorsLight();
@@ -74,7 +77,6 @@ public static unsafe class RlImGui
     /// <example>
     /// RlImGui.BeginSetup();
     /// var io = ImGui.GetIO();
-    /// io.Fonts.AddFontDefault();
     /// io.Fonts.AddFontFromFileTTF("myfont.ttf", 16.0f);
     /// ImGui.StyleColorsDark();
     /// io.ConfigFlags |= ImGuiConfigFlags.DockingEnable;
@@ -778,7 +780,6 @@ public static unsafe class RlImGui
     {
         var data = ImGui.GetDrawData();
 
-        // Process texture updates first (new texture system)
         if (data.Textures.Size > 0)
         {
             for (int i = 0; i < data.Textures.Size; i++)
@@ -809,7 +810,6 @@ public static unsafe class RlImGui
 
                 if (cmd.UserCallback != null)
                 {
-                    // Call the user callback directly - it's a function pointer
                     ((delegate* unmanaged<ImDrawList*, ImDrawCmd*, void>)cmd.UserCallback)(commandList.Handle, &cmd);
                     continue;
                 }
