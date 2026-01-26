@@ -175,36 +175,26 @@ public static unsafe class RlImGui
     }
 
     /// <summary>
+    /// Display a texture as an image with custom size and UV coordinates.
+    /// </summary>
+    public static void Image(Texture image, Vector2 size = default, Vector2 uv0 = default, Vector2 uv1 = default)
+    {
+        var texRef = new ImTextureRef(null, (nint)(ulong)image.Id);
+        ImGui.Image(texRef, size, uv0, uv1);
+    }
+
+    /// <summary>
     /// Display a texture as an image in ImGui.
     /// </summary>
-    public static void Image(Texture image)
-    {
-        var texRef = new ImTextureRef(null, (nint)(ulong)image.Id);
-        ImGui.Image(texRef, new Vector2(image.Width, image.Height));
-    }
+    public static void Image(Texture image) =>
+        Image(image, new Vector2(image.Width, image.Height));
+
 
     /// <summary>
-    /// Display a texture as an image with custom size.
+    /// Display a portion of a texture as an image using source rectangle (x, y, width, height).
+    /// Negative width/height values will flip the image on that axis.
     /// </summary>
-    public static void ImageSize(Texture image, int width, int height)
-    {
-        var texRef = new ImTextureRef(null, (nint)(ulong)image.Id);
-        ImGui.Image(texRef, new Vector2(width, height));
-    }
-
-    /// <summary>
-    /// Display a texture as an image with custom size.
-    /// </summary>
-    public static void ImageSize(Texture image, Vector2 size)
-    {
-        var texRef = new ImTextureRef(null, (nint)(ulong)image.Id);
-        ImGui.Image(texRef, size);
-    }
-
-    /// <summary>
-    /// Display a portion of a texture as an image.
-    /// </summary>
-    public static void ImageRect(Texture image, int destWidth, int destHeight, Vector4 sourceRect)
+    public static void Image(Texture image, Vector2 size, Vector4 sourceRect)
     {
         Vector2 uv0 = new();
         Vector2 uv1 = new();
@@ -231,64 +221,62 @@ public static unsafe class RlImGui
             uv1.Y = uv0.Y + (float)(sourceRect.W / image.Height);
         }
 
-        var texRef = new ImTextureRef(null, (nint)(ulong)image.Id);
-        ImGui.Image(texRef, new Vector2(destWidth, destHeight), uv0, uv1);
+        Image(image, size, uv0, uv1);
     }
 
     /// <summary>
     /// Display a render texture, automatically flipping Y axis.
     /// </summary>
-    public static void ImageRenderTexture(RenderTexture image)
-    {
-        ImageRect(image.Texture, image.Texture.Width, image.Texture.Height, new Vector4(0, 0, image.Texture.Width, -image.Texture.Height));
-    }
+    public static void Image(RenderTexture image) =>
+        Image(image.Texture, new Vector2(image.Texture.Width, image.Texture.Height), new Vector4(0, 0, image.Texture.Width, -image.Texture.Height));
 
     /// <summary>
-    /// Display a render texture fitted to content area.
+    /// Display a render texture with custom size, automatically flipping Y axis.
     /// </summary>
-    public static void ImageRenderTextureFit(RenderTexture image, bool center = true)
-    {
-        Vector2 area = ImGui.GetContentRegionAvail();
-
-        float scale = area.X / image.Texture.Width;
-
-        float y = image.Texture.Height * scale;
-        if (y > area.Y)
-        {
-            scale = area.Y / image.Texture.Height;
-        }
-
-        int sizeX = (int)(image.Texture.Width * scale);
-        int sizeY = (int)(image.Texture.Height * scale);
-
-        if (center)
-        {
-            ImGui.SetCursorPosX(0);
-            ImGui.SetCursorPosX(area.X / 2 - sizeX / 2);
-            ImGui.SetCursorPosY(ImGui.GetCursorPosY() + (area.Y / 2 - sizeY / 2));
-        }
-
-        ImageRect(image.Texture, sizeX, sizeY, new Vector4(0, 0, image.Texture.Width, -image.Texture.Height));
-    }
+    public static void Image(RenderTexture image, Vector2 size) =>
+        Image(image.Texture, size, new Vector4(0, 0, image.Texture.Width, -image.Texture.Height));
 
     /// <summary>
     /// Display a texture as a clickable button.
     /// </summary>
-    public static bool ImageButton(string name, Texture image)
+    public static bool ImageButton(string name, Texture image, Vector2 size = default, Vector2 uv0 = default, Vector2 uv1 = default)
     {
-        return ImageButtonSize(name, image, new Vector2(image.Width, image.Height));
+        var texRef = new ImTextureRef(null, (nint)(ulong)image.Id);
+        return ImGui.ImageButton(name, texRef, size, uv0, uv1);
     }
 
     /// <summary>
-    /// Display a texture as a clickable button with custom size.
+    /// Display a portion of a texture as a clickable button using source rectangle (x, y, width, height).
+    /// Negative width/height values will flip the image on that axis.
     /// </summary>
-    public static bool ImageButtonSize(string name, Texture image, Vector2 size)
+    public static bool ImageButton(string name, Texture image, Vector2 size, Vector4 sourceRect)
     {
-        var texRef = new ImTextureRef(null, (nint)(ulong)image.Id);
-        fixed (byte* namePtr = System.Text.Encoding.UTF8.GetBytes(name + "\0"))
+        Vector2 uv0 = new();
+        Vector2 uv1 = new();
+
+        if (sourceRect.Z < 0)
         {
-            return ImGui.ImageButton(namePtr, texRef, size);
+            uv0.X = -((float)sourceRect.X / image.Width);
+            uv1.X = (uv0.X - (float)(Math.Abs(sourceRect.Z) / image.Width));
         }
+        else
+        {
+            uv0.X = (float)sourceRect.X / image.Width;
+            uv1.X = uv0.X + (float)(sourceRect.Z / image.Width);
+        }
+
+        if (sourceRect.W < 0)
+        {
+            uv0.Y = -((float)sourceRect.Y / image.Height);
+            uv1.Y = (uv0.Y - (float)(Math.Abs(sourceRect.W) / image.Height));
+        }
+        else
+        {
+            uv0.Y = (float)sourceRect.Y / image.Height;
+            uv1.Y = uv0.Y + (float)(sourceRect.W / image.Height);
+        }
+
+        return ImageButton(name, image, size, uv0, uv1);
     }
 
     //----------------------------------------------------------------------
