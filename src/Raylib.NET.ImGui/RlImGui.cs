@@ -65,7 +65,13 @@ public static unsafe class RlImGui
     {
         BeginSetup();
         ImGui.StyleColorsDark();
-        ImGui.GetIO().Fonts.AddFontDefault();
+
+        // Configure default font with proper C++ defaults and DPI scaling
+        var io = ImGui.GetIO();
+        var defaultConfig = FontConfig(13);
+        defaultConfig.PixelSnapH = true;
+        io.Fonts.AddFontDefault(defaultConfig);
+
         EndSetup();
     }
 
@@ -103,10 +109,12 @@ public static unsafe class RlImGui
     /// Finish ImGui setup.
     /// Must be called after BeginSetup().
     /// Font textures will be created automatically on first render.
+    /// FontAwesome icons are automatically merged with your fonts.
     /// </summary>
     public static void EndSetup()
     {
         ImGui.SetCurrentContext(ImGuiContext);
+        SetupFontAwesome();
         SetupMouseCursors();
         SetupBackend();
     }
@@ -174,6 +182,27 @@ public static unsafe class RlImGui
 
         ImGui.DestroyContext(ImGuiContext);
         ImGuiContext = default;
+    }
+
+    /// <summary>
+    /// Create ImFontConfig with proper C++ defaults and DPI scaling.
+    /// Uses ImGui.ImFontConfig() which calls the C++ constructor with proper defaults.
+    /// </summary>
+    public static ImFontConfigPtr FontConfig(int fontSize)
+    {
+        // Use Hexa.NET.ImGui's helper that calls the C++ constructor
+        var config = ImGui.ImFontConfig();
+        config.SizePixels = fontSize;
+
+        // Apply DPI scaling (matching C++ rlImGui logic)
+        if (!Raylib.IsWindowState((int)ConfigFlags.FLAG_WINDOW_HIGHDPI))
+        {
+            var scale = Raylib.GetWindowScaleDPI();
+            config.RasterizerMultiply = scale.Y;
+            config.SizePixels = MathF.Ceiling(config.SizePixels * scale.Y);
+        }
+
+        return config;
     }
 
     /// <summary>
@@ -465,6 +494,54 @@ public static unsafe class RlImGui
     }
 
     /// <summary>
+    /// Setup FontAwesome icons by merging them with existing fonts.
+    /// </summary>
+    private static void SetupFontAwesome()
+    {
+        var io = ImGui.GetIO();
+
+        // Define the icon ranges for FontAwesome (ImWchar is 16-bit ushort)
+        ushort[] iconRanges =
+        [
+            FontAwesome.IconMin,
+            FontAwesome.IconMax,
+            0
+        ];
+
+        // Prepare font config with merge settings
+        var fontConfig = FontConfig(11);
+        fontConfig.MergeMode = true;                    // Merge icons into the previously added font
+        fontConfig.PixelSnapH = true;
+        fontConfig.FontDataOwnedByAtlas = false;        // Data is owned by us (decoded base64), not ImGui
+        fontConfig.OversampleH = 2;                     // FontAwesome uses explicit oversampling
+        fontConfig.OversampleV = 1;
+
+        // Decode base64 font data
+        byte[] fontData = Convert.FromBase64String(FontAwesomeData.CompressedDataBase64);
+
+        // Set glyph ranges and add font
+        unsafe
+        {
+            fixed (ushort* rangesPtr = iconRanges)
+            {
+                fixed (byte* dataPtr = fontData)
+                {
+                    fontConfig.GlyphRanges = (uint*)rangesPtr;
+
+                    // Add FontAwesome font from uncompressed TTF data
+                    io.Fonts.AddFontFromMemoryTTF(
+                        dataPtr,
+                        fontData.Length,
+                        fontConfig.SizePixels,
+                        fontConfig,
+                        (uint*)rangesPtr
+                    );
+                }
+            }
+        }
+    }
+
+    /// <summary>
     /// Update a texture based on its status (internal backend function).
     /// </summary>
     private static void UpdateTexture(ImTextureData* tex)
@@ -567,11 +644,11 @@ public static unsafe class RlImGui
             io.DisplaySize = new Vector2(Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
         }
 
-        io.DisplayFramebufferScale = new Vector2(1, 1);
+        Vector2 resolutionScale = Raylib.GetWindowScaleDPI();
+        if (!Raylib.IsWindowState((int)ConfigFlags.FLAG_WINDOW_HIGHDPI))
+            resolutionScale = new Vector2(1, 1);
 
-        if (Raylib.IsWindowState(0x00002000) /* ConfigFlags.HighDpiWindow */)
-            io.DisplayFramebufferScale = Raylib.GetWindowScaleDPI();
-
+        io.DisplayFramebufferScale = resolutionScale;
         io.DeltaTime = dt >= 0 ? dt : Raylib.GetFrameTime();
 
         if (io.WantSetMousePos)
@@ -722,10 +799,7 @@ public static unsafe class RlImGui
     {
         Rlgl.EnableScissorTest();
         ImGuiIOPtr io = ImGui.GetIO();
-
-        Vector2 scale = new(1.0f, 1.0f);
-        if (Raylib.IsWindowState(0x00002000))
-            scale = io.DisplayFramebufferScale;
+        Vector2 scale = io.DisplayFramebufferScale;
 
         Rlgl.Scissor(
             (int)(x * scale.X),
