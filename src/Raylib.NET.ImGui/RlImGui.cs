@@ -270,23 +270,23 @@ public static unsafe class RlImGui
     /// <summary>
     /// Draw a texture as an image with custom size and UV coordinates.
     /// </summary>
-    public static void AddImage(this ImDrawListPtr drawList, Texture image, Vector2 size = default, Vector2 uv0 = default, Vector2 uv1 = default)
+    public static void AddImage(this ImDrawListPtr drawList, Texture image, Vector2 position = default, Vector2 size = default, Vector2 uv0 = default, Vector2 uv1 = default)
     {
         var texRef = new ImTextureRef(null, (nint)(ulong)image.Id);
-        drawList.AddImage(texRef, size, uv0, uv1);
+        drawList.AddImage(texRef, position, position + size, uv0, uv1);
     }
 
     /// <summary>
     /// Draw a texture as an image in ImGui.
     /// </summary>
-    public static void AddImage(this ImDrawListPtr drawList, Texture image) =>
-        AddImage(drawList, image, new Vector2(image.Width, image.Height));
+    public static void AddImage(this ImDrawListPtr drawList, Texture image, Vector2 position = default) =>
+        AddImage(drawList, image, position, new Vector2(image.Width, image.Height));
 
     /// <summary>
     /// Draw a portion of a texture as an image using source rectangle (x, y, width, height).
     /// Negative width/height values will flip the image on that axis.
      /// </summary>
-    public static void AddImage(this ImDrawListPtr drawList, Texture image, Vector2 size, Vector4 sourceRect)
+    public static void AddImage(this ImDrawListPtr drawList, Texture image, Vector2 position, Vector2 size, Vector4 sourceRect)
     {
         Vector2 uv0 = new();
         Vector2 uv1 = new();
@@ -313,7 +313,7 @@ public static unsafe class RlImGui
             uv1.Y = uv0.Y + (float)(sourceRect.W / image.Height);
         }
 
-        AddImage(drawList, image, size, uv0, uv1);
+        AddImage(drawList, image, position, size, uv0, uv1);
     }
 
     /// <summary>
