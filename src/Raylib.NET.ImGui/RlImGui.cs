@@ -268,6 +268,55 @@ public static unsafe class RlImGui
         Image(image.Texture, size, new Vector4(0, 0, image.Texture.Width, -image.Texture.Height));
 
     /// <summary>
+    /// Draw a texture as an image with custom size and UV coordinates.
+    /// </summary>
+    public static void AddImage(this ImDrawListPtr drawList, Texture image, Vector2 size = default, Vector2 uv0 = default, Vector2 uv1 = default)
+    {
+        var texRef = new ImTextureRef(null, (nint)(ulong)image.Id);
+        drawList.AddImage(texRef, size, uv0, uv1);
+    }
+
+    /// <summary>
+    /// Draw a texture as an image in ImGui.
+    /// </summary>
+    public static void AddImage(this ImDrawListPtr drawList, Texture image) =>
+        AddImage(drawList, image, new Vector2(image.Width, image.Height));
+
+    /// <summary>
+    /// Draw a portion of a texture as an image using source rectangle (x, y, width, height).
+    /// Negative width/height values will flip the image on that axis.
+     /// </summary>
+    public static void AddImage(this ImDrawListPtr drawList, Texture image, Vector2 size, Vector4 sourceRect)
+    {
+        Vector2 uv0 = new();
+        Vector2 uv1 = new();
+
+        if (sourceRect.Z < 0)
+        {
+            uv0.X = -((float)sourceRect.X / image.Width);
+            uv1.X = (uv0.X - (float)(Math.Abs(sourceRect.Z) / image.Width));
+        }
+        else
+        {
+            uv0.X = (float)sourceRect.X / image.Width;
+            uv1.X = uv0.X + (float)(sourceRect.Z / image.Width);
+        }
+
+        if (sourceRect.W < 0)
+        {
+            uv0.Y = -((float)sourceRect.Y / image.Height);
+            uv1.Y = (uv0.Y - (float)(Math.Abs(sourceRect.W) / image.Height));
+        }
+        else
+        {
+            uv0.Y = (float)sourceRect.Y / image.Height;
+            uv1.Y = uv0.Y + (float)(sourceRect.W / image.Height);
+        }
+
+        AddImage(drawList, image, size, uv0, uv1);
+    }
+
+    /// <summary>
     /// Display a texture as a clickable button.
     /// </summary>
     public static bool ImageButton(string name, Texture image, Vector2 size = default, Vector2 uv0 = default, Vector2 uv1 = default)
