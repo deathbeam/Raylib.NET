@@ -53,11 +53,11 @@ while (!WindowShouldClose())
 
     // Demonstrate color extensions
     var raylibColor = Color.RAYWHITE;
-    var imguiColor = raylibColor.ToImGui();
+    var imguiColor = raylibColor.ToVector();
     ImGui.TextColored(imguiColor, "This text uses Raylib.RAYWHITE converted to ImGui color!");
 
     var customImGuiColor = new Vector4(0.2f, 0.8f, 0.4f, 1.0f);
-    var convertedBack = customImGuiColor.ToRaylib();
+    var convertedBack = customImGuiColor.ToColor();
     ImGui.Text($"Custom color RGB: {convertedBack.R}, {convertedBack.G}, {convertedBack.B}");
 
     ImGui.Spacing();

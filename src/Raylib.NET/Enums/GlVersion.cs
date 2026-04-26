@@ -6,7 +6,7 @@ public enum GlVersion
     /// <summary>
     /// Software rendering
     /// </summary>
-    RL_OPENGL_11_SOFTWARE = 0,
+    RL_OPENGL_SOFTWARE = 0,
     /// <summary>
     /// OpenGL 1.1
     /// </summary>

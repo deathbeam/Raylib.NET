@@ -9,23 +9,19 @@ namespace RaylibNET;
 public partial struct ModelAnimation
 {
     /// <summary>
-    /// Number of bones
-    /// </summary>
-    public int BoneCount;
-    /// <summary>
-    /// Number of animation frames
-    /// </summary>
-    public int FrameCount;
-    /// <summary>
-    /// Bones information (skeleton)
-    /// </summary>
-    public unsafe BoneInfo* Bones;
-    /// <summary>
-    /// Poses array by frame
-    /// </summary>
-    public unsafe Transform** FramePoses;
-    /// <summary>
     /// Animation name
     /// </summary>
     public unsafe fixed sbyte Name[32];
+    /// <summary>
+    /// Number of bones (per pose)
+    /// </summary>
+    public int BoneCount;
+    /// <summary>
+    /// Number of animation key frames
+    /// </summary>
+    public int KeyframeCount;
+    /// <summary>
+    /// Animation sequence keyframe poses [keyframe][pose]
+    /// </summary>
+    public unsafe Transform** KeyframePoses;
 }

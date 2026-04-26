@@ -573,39 +573,64 @@ public static unsafe partial class Raymath
     /// ----------------------------------------------------------------------------------
     /// Module Functions Definition - Vector4 math
     /// ----------------------------------------------------------------------------------
+    /// Get  vector zero
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial Vector4 Vector4Zero();
 
+    /// <summary>
+    /// Get vector one
+    /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial Vector4 Vector4One();
 
+    /// <summary>
+    /// Add two vectors
+    /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial Vector4 Vector4Add(Vector4 v1, Vector4 v2);
 
+    /// <summary>
+    /// Add value to vector components
+    /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial Vector4 Vector4AddValue(Vector4 v, float @add);
 
+    /// <summary>
+    /// Substract vectors
+    /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial Vector4 Vector4Subtract(Vector4 v1, Vector4 v2);
 
+    /// <summary>
+    /// Substract value from vector components
+    /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial Vector4 Vector4SubtractValue(Vector4 v, float @add);
 
+    /// <summary>
+    /// Vector length
+    /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial float Vector4Length(Vector4 v);
 
+    /// <summary>
+    /// Vector square length
+    /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial float Vector4LengthSqr(Vector4 v);
 
+    /// <summary>
+    /// Vectors dot product
+    /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial float Vector4DotProduct(Vector4 v1, Vector4 v2);
@@ -624,6 +649,9 @@ public static unsafe partial class Raymath
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial float Vector4DistanceSqr(Vector4 v1, Vector4 v2);
 
+    /// <summary>
+    /// Scale vector components by value (multiply)
+    /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial Vector4 Vector4Scale(Vector4 v, float scale);
@@ -754,6 +782,13 @@ public static unsafe partial class Raymath
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial Matrix4x4 MatrixMultiply(Matrix4x4 left, Matrix4x4 right);
+
+    /// <summary>
+    /// Multiply matrix components by value
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial Matrix4x4 MatrixMultiplyValue(Matrix4x4 left, float value);
 
     /// <summary>
     /// Get translation matrix

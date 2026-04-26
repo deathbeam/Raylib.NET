@@ -88,7 +88,7 @@ public enum ShaderLocationIndex
     /// </summary>
     SHADER_LOC_MAP_EMISSION,
     /// <summary>
-    /// Shader location: sampler2d texture: height
+    /// Shader location: sampler2d texture: heightmap
     /// </summary>
     SHADER_LOC_MAP_HEIGHT,
     /// <summary>
@@ -108,19 +108,19 @@ public enum ShaderLocationIndex
     /// </summary>
     SHADER_LOC_MAP_BRDF,
     /// <summary>
-    /// Shader location: vertex attribute: boneIds
+    /// Shader location: vertex attribute: bone indices
     /// </summary>
     SHADER_LOC_VERTEX_BONEIDS,
     /// <summary>
-    /// Shader location: vertex attribute: boneWeights
+    /// Shader location: vertex attribute: bone weights
     /// </summary>
     SHADER_LOC_VERTEX_BONEWEIGHTS,
     /// <summary>
-    /// Shader location: array of matrices uniform: boneMatrices
+    /// Shader location: matrix attribute: bone transforms (animation)
     /// </summary>
-    SHADER_LOC_BONE_MATRICES,
+    SHADER_LOC_MATRIX_BONETRANSFORMS,
     /// <summary>
-    /// Shader location: vertex attribute: instanceTransform
+    /// Shader location: vertex attribute: instance transforms
     /// </summary>
-    SHADER_LOC_VERTEX_INSTANCE_TX,
+    SHADER_LOC_VERTEX_INSTANCETRANSFORM,
 }

@@ -45,6 +45,18 @@ public partial struct Mesh
     /// </summary>
     public unsafe ushort* Indices;
     /// <summary>
+    /// Number of bones (MAX: 256 bones)
+    /// </summary>
+    public int BoneCount;
+    /// <summary>
+    /// Vertex bone indices, up to 4 bones influence by vertex (skinning) (shader-location = 6)
+    /// </summary>
+    public unsafe byte* BoneIndices;
+    /// <summary>
+    /// Vertex bone weight, up to 4 bones influence by vertex (skinning) (shader-location = 7)
+    /// </summary>
+    public unsafe float* BoneWeights;
+    /// <summary>
     /// Animated vertex positions (after bones transformations)
     /// </summary>
     public unsafe float* AnimVertices;
@@ -52,22 +64,6 @@ public partial struct Mesh
     /// Animated normals (after bones transformations)
     /// </summary>
     public unsafe float* AnimNormals;
-    /// <summary>
-    /// Vertex bone ids, max 255 bone ids, up to 4 bones influence by vertex (skinning) (shader-location = 6)
-    /// </summary>
-    public unsafe byte* BoneIds;
-    /// <summary>
-    /// Vertex bone weight, up to 4 bones influence by vertex (skinning) (shader-location = 7)
-    /// </summary>
-    public unsafe float* BoneWeights;
-    /// <summary>
-    /// Bones animated transformation matrices
-    /// </summary>
-    public unsafe Matrix4x4* BoneMatrices;
-    /// <summary>
-    /// Number of bones
-    /// </summary>
-    public int BoneCount;
     /// <summary>
     /// OpenGL Vertex Array Object id
     /// </summary>
@@ -77,7 +73,7 @@ public partial struct Mesh
     /// </summary>
     public unsafe uint* VboId;
 
-    public unsafe Mesh(int vertexCount, int triangleCount, float* vertices, float* texcoords, float* texcoords2, float* normals, float* tangents, byte* colors, ushort* indices, float* animVertices, float* animNormals, byte* boneIds, float* boneWeights, Matrix4x4* boneMatrices, int boneCount, uint vaoId, uint* vboId)
+    public unsafe Mesh(int vertexCount, int triangleCount, float* vertices, float* texcoords, float* texcoords2, float* normals, float* tangents, byte* colors, ushort* indices, int boneCount, byte* boneIndices, float* boneWeights, float* animVertices, float* animNormals, uint vaoId, uint* vboId)
     {
         this.VertexCount = vertexCount;
         this.TriangleCount = triangleCount;
@@ -88,12 +84,11 @@ public partial struct Mesh
         this.Tangents = tangents;
         this.Colors = colors;
         this.Indices = indices;
+        this.BoneCount = boneCount;
+        this.BoneIndices = boneIndices;
+        this.BoneWeights = boneWeights;
         this.AnimVertices = animVertices;
         this.AnimNormals = animNormals;
-        this.BoneIds = boneIds;
-        this.BoneWeights = boneWeights;
-        this.BoneMatrices = boneMatrices;
-        this.BoneCount = boneCount;
         this.VaoId = vaoId;
         this.VboId = vboId;
     }

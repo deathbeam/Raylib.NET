@@ -33,19 +33,19 @@ public partial struct Model
     /// </summary>
     public unsafe int* MeshMaterial;
     /// <summary>
-    /// Number of bones
+    /// Skeleton for animation
     /// </summary>
-    public int BoneCount;
+    public ModelSkeleton Skeleton;
     /// <summary>
-    /// Bones information (skeleton)
+    /// Current animation pose (Transform[])
     /// </summary>
-    public unsafe BoneInfo* Bones;
+    public unsafe Transform* CurrentPose;
     /// <summary>
-    /// Bones base transformation (pose)
+    /// Bones animated transformation matrices
     /// </summary>
-    public unsafe Transform* BindPose;
+    public unsafe Matrix4x4* BoneMatrices;
 
-    public unsafe Model(Matrix4x4 transform, int meshCount, int materialCount, Mesh* meshes, Material* materials, int* meshMaterial, int boneCount, BoneInfo* bones, Transform* bindPose)
+    public unsafe Model(Matrix4x4 transform, int meshCount, int materialCount, Mesh* meshes, Material* materials, int* meshMaterial, ModelSkeleton skeleton, Transform* currentPose, Matrix4x4* boneMatrices)
     {
         this.Transform = transform;
         this.MeshCount = meshCount;
@@ -53,8 +53,8 @@ public partial struct Model
         this.Meshes = meshes;
         this.Materials = materials;
         this.MeshMaterial = meshMaterial;
-        this.BoneCount = boneCount;
-        this.Bones = bones;
-        this.BindPose = bindPose;
+        this.Skeleton = skeleton;
+        this.CurrentPose = currentPose;
+        this.BoneMatrices = boneMatrices;
     }
 }

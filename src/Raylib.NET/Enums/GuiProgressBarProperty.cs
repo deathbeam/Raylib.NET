@@ -7,4 +7,8 @@ public enum GuiProgressBarProperty
     /// ProgressBar internal padding
     /// </summary>
     PROGRESS_PADDING = 16,
+    /// <summary>
+    /// ProgressBar increment side: 0-left-&gt;right, 1-right-left
+    /// </summary>
+    PROGRESS_SIDE,
 }

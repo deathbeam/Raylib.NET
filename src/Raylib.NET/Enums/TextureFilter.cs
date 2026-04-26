@@ -4,7 +4,7 @@ namespace RaylibNET;
 public enum TextureFilter
 {
     /// <summary>
-    /// No filter, just pixel approximation
+    /// No filter, pixel approximation
     /// </summary>
     TEXTURE_FILTER_POINT = 0,
     /// <summary>

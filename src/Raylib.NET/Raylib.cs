@@ -10,13 +10,13 @@ public static unsafe partial class Raylib
 {
     public const string LIBRARY = "raylib";
 
-    public const int RAYLIB_VERSION_MAJOR = 5;
+    public const int RAYLIB_VERSION_MAJOR = 6;
 
-    public const int RAYLIB_VERSION_MINOR = 6;
+    public const int RAYLIB_VERSION_MINOR = 0;
 
     public const int RAYLIB_VERSION_PATCH = 0;
 
-    public const string RAYLIB_VERSION = "5.6-dev";
+    public const string RAYLIB_VERSION = "6.0";
 
     public const float PI = 3.14159265358979323846f;
 
@@ -1040,14 +1040,14 @@ public static unsafe partial class Raylib
     public static partial NativeBool IsFileNameValid(string fileName);
 
     /// <summary>
-    /// Load directory filepaths
+    /// Load directory filepaths, files and directories, no subdirs scan
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial FilePathList LoadDirectoryFiles(string dirPath);
 
     /// <summary>
-    /// Load directory filepaths with extension filtering and recursive directory scan. Use 'DIR' in the filter string to include directories in the result
+    /// Load directory filepaths with extension filtering and subdir scan; some filters available: "*.*", "FILES*", "DIRS*"
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -1635,6 +1635,20 @@ public static unsafe partial class Raylib
     public static partial void DrawCircle(int centerX, int centerY, float radius, Color color);
 
     /// <summary>
+    /// Draw a color-filled circle (Vector version)
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void DrawCircleV(Vector2 center, float radius, Color color);
+
+    /// <summary>
+    /// Draw a gradient-filled circle
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void DrawCircleGradient(Vector2 center, float radius, Color inner, Color outer);
+
+    /// <summary>
     /// Draw a piece of a circle
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
@@ -1647,20 +1661,6 @@ public static unsafe partial class Raylib
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial void DrawCircleSectorLines(Vector2 center, float radius, float startAngle, float endAngle, int segments, Color color);
-
-    /// <summary>
-    /// Draw a gradient-filled circle
-    /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
-    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DrawCircleGradient(int centerX, int centerY, float radius, Color inner, Color outer);
-
-    /// <summary>
-    /// Draw a color-filled circle (Vector version)
-    /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
-    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DrawCircleV(Vector2 center, float radius, Color color);
 
     /// <summary>
     /// Draw circle outline
@@ -2104,7 +2104,7 @@ public static unsafe partial class Raylib
     public static partial NativeBool ExportImage(Image image, string fileName);
 
     /// <summary>
-    /// Export image to memory buffer
+    /// Export image to memory buffer, memory must be MemFree()
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -2979,6 +2979,13 @@ public static unsafe partial class Raylib
     public static partial Vector2 MeasureTextEx(Font font, string text, float fontSize, float spacing);
 
     /// <summary>
+    /// Measure string size for an existing array of codepoints for Font
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static unsafe partial Vector2 MeasureTextCodepoints(Font font, int* codepoints, int length, float fontSize, float spacing);
+
+    /// <summary>
     /// Get glyph index position in font for a codepoint (unicode character), fallback to '?' if not found
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
@@ -3126,25 +3133,46 @@ public static unsafe partial class Raylib
     public static partial string GetTextBetween(string text, string begin, string end);
 
     /// <summary>
-    /// Replace text string (WARNING: memory must be freed!)
+    /// Replace text string with new string
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial string TextReplace(string text, string search, string replacement);
 
     /// <summary>
-    /// Replace text between two specific strings (WARNING: memory must be freed!)
+    /// Replace text string with new string, memory must be MemFree()
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial string TextReplaceAlloc(string text, string search, string replacement);
+
+    /// <summary>
+    /// Replace text between two specific strings
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial string TextReplaceBetween(string text, string begin, string end, string replacement);
 
     /// <summary>
-    /// Insert text in a position (WARNING: memory must be freed!)
+    /// Replace text between two specific strings, memory must be MemFree()
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial string TextReplaceBetweenAlloc(string text, string begin, string end, string replacement);
+
+    /// <summary>
+    /// Insert text in a defined byte position
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial string TextInsert(string text, string insert, int position);
+
+    /// <summary>
+    /// Insert text in a defined byte position, memory must be MemFree()
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial string TextInsertAlloc(string text, string insert, int position);
 
     /// <summary>
     /// Join text strings with delimiter
@@ -3434,20 +3462,6 @@ public static unsafe partial class Raylib
     public static partial void DrawModelWiresEx(Model model, Vector3 position, Vector3 rotationAxis, float rotationAngle, Vector3 scale, Color tint);
 
     /// <summary>
-    /// Draw a model as points
-    /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
-    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DrawModelPoints(Model model, Vector3 position, float scale, Color tint);
-
-    /// <summary>
-    /// Draw a model as points with extended parameters
-    /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
-    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DrawModelPointsEx(Model model, Vector3 position, Vector3 rotationAxis, float rotationAngle, Vector3 scale, Color tint);
-
-    /// <summary>
     /// Draw bounding box (wires)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
@@ -3665,25 +3679,18 @@ public static unsafe partial class Raylib
     public static unsafe partial ModelAnimation* LoadModelAnimations(string fileName, ref int animCount);
 
     /// <summary>
-    /// Update model animation pose (CPU)
+    /// Update model animation pose (vertex buffers and bone matrices)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void UpdateModelAnimation(Model model, ModelAnimation anim, int frame);
+    public static partial void UpdateModelAnimation(Model model, ModelAnimation anim, float frame);
 
     /// <summary>
-    /// Update model animation mesh bone matrices (GPU skinning)
+    /// Update model animation pose, blending two animations
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void UpdateModelAnimationBones(Model model, ModelAnimation anim, int frame);
-
-    /// <summary>
-    /// Unload animation data
-    /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
-    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void UnloadModelAnimation(ModelAnimation anim);
+    public static partial void UpdateModelAnimationEx(Model model, ModelAnimation animA, float frameA, ModelAnimation animB, float frameB, float blend);
 
     /// <summary>
     /// Unload animation array data
@@ -4169,7 +4176,7 @@ public static unsafe partial class Raylib
     public static partial void SetAudioStreamPitch(AudioStream stream, float pitch);
 
     /// <summary>
-    /// Set pan for audio stream (0.5 is centered)
+    /// Set pan for audio stream (-1.0 to 1.0 range, 0.0 is centered)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]

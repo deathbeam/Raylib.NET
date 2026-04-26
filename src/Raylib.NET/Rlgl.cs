@@ -10,7 +10,7 @@ public static unsafe partial class Rlgl
 {
     public const string LIBRARY = "raylib";
 
-    public const string RLGL_VERSION = "5.0";
+    public const string RLGL_VERSION = "6.0";
 
     public const int RL_DEFAULT_BATCH_BUFFER_ELEMENTS = 8192;
 
@@ -174,7 +174,11 @@ public static unsafe partial class Rlgl
 
     public const int RL_DEFAULT_SHADER_ATTRIB_LOCATION_INDICES = 6;
 
-    public const int RL_DEFAULT_SHADER_ATTRIB_LOCATION_INSTANCE_TX = 9;
+    public const int RL_DEFAULT_SHADER_ATTRIB_LOCATION_BONEINDICES = 7;
+
+    public const int RL_DEFAULT_SHADER_ATTRIB_LOCATION_BONEWEIGHTS = 8;
+
+    public const int RL_DEFAULT_SHADER_ATTRIB_LOCATION_INSTANCETRANSFORM = 9;
 
     /// <summary>
     /// Choose the current matrix to be transformed
@@ -1050,7 +1054,7 @@ public static unsafe partial class Rlgl
     /// </summary>
     [LibraryImport(LIBRARY, EntryPoint = "rlFramebufferAttach", StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void FramebufferAttach(uint fboId, uint texId, int attachType, int texType, int mipLevel);
+    public static partial void FramebufferAttach(uint id, uint texId, int attachType, int texType, int mipLevel);
 
     /// <summary>
     /// Verify framebuffer is complete
@@ -1081,25 +1085,39 @@ public static unsafe partial class Rlgl
     public static partial void ResizeFramebuffer(int width, int height);
 
     /// <summary>
+    /// Load (compile) shader and return shader id (type: RL_VERTEX_SHADER, RL_FRAGMENT_SHADER, RL_COMPUTE_SHADER)
+    /// </summary>
+    [LibraryImport(LIBRARY, EntryPoint = "rlLoadShader", StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial uint LoadShader(string code, int @type);
+
+    /// <summary>
     /// Load shader from code strings
-    /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlLoadShaderCode", StringMarshalling = StringMarshalling.Utf8)]
-    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint LoadShaderCode(string vsCode, string fsCode);
-
-    /// <summary>
-    /// Compile custom shader and return shader id (type: RL_VERTEX_SHADER, RL_FRAGMENT_SHADER, RL_COMPUTE_SHADER)
-    /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlCompileShader", StringMarshalling = StringMarshalling.Utf8)]
-    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint CompileShader(string shaderCode, int @type);
-
-    /// <summary>
-    /// Load custom shader program
     /// </summary>
     [LibraryImport(LIBRARY, EntryPoint = "rlLoadShaderProgram", StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint LoadShaderProgram(uint vShaderId, uint fShaderId);
+    public static partial uint LoadShaderProgram(string vsCode, string fsCode);
+
+    /// <summary>
+    /// Load shader program, using already loaded shader ids
+    /// </summary>
+    [LibraryImport(LIBRARY, EntryPoint = "rlLoadShaderProgramEx", StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial uint LoadShaderProgramEx(uint vsId, uint fsId);
+
+    /// <summary>
+    /// Load compute shader program
+    /// </summary>
+    [LibraryImport(LIBRARY, EntryPoint = "rlLoadShaderProgramCompute", StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial uint LoadShaderProgramCompute(uint csId);
+
+    /// <summary>
+    /// Unload shader, loaded with rlLoadShader()
+    /// </summary>
+    [LibraryImport(LIBRARY, EntryPoint = "rlUnloadShader", StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void UnloadShader(uint id);
 
     /// <summary>
     /// Unload shader program
@@ -1113,14 +1131,14 @@ public static unsafe partial class Rlgl
     /// </summary>
     [LibraryImport(LIBRARY, EntryPoint = "rlGetLocationUniform", StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial int GetLocationUniform(uint shaderId, string uniformName);
+    public static partial int GetLocationUniform(uint id, string uniformName);
 
     /// <summary>
     /// Get shader location attribute, requires shader program id
     /// </summary>
     [LibraryImport(LIBRARY, EntryPoint = "rlGetLocationAttrib", StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial int GetLocationAttrib(uint shaderId, string attribName);
+    public static partial int GetLocationAttrib(uint id, string attribName);
 
     /// <summary>
     /// Set shader value uniform
@@ -1156,13 +1174,6 @@ public static unsafe partial class Rlgl
     [LibraryImport(LIBRARY, EntryPoint = "rlSetShader", StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static unsafe partial void SetShader(uint id, int* locs);
-
-    /// <summary>
-    /// Load compute shader program
-    /// </summary>
-    [LibraryImport(LIBRARY, EntryPoint = "rlLoadComputeShaderProgram", StringMarshalling = StringMarshalling.Utf8)]
-    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint LoadComputeShaderProgram(uint shaderId);
 
     /// <summary>
     /// Dispatch compute shader (equivalent to *draw* for graphics pipeline)

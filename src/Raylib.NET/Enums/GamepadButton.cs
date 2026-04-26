@@ -4,7 +4,7 @@ namespace RaylibNET;
 public enum GamepadButton
 {
     /// <summary>
-    /// Unknown button, just for error checking
+    /// Unknown button, for error checking
     /// </summary>
     GAMEPAD_BUTTON_UNKNOWN = 0,
     /// <summary>
