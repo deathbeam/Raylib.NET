@@ -13,18 +13,61 @@ jobs:
   natives:
     strategy:
       matrix:
-        runtime:
-          - linux-x64
-          - linux-x86
-          - linux-arm64
-          - browser-wasm
-          # - osx-x64
-          # - osx-arm64
-          - win-x64
-          - win-x86
-          - win-arm64
-        config: [Debug, Release]
-        os: [ubuntu-latest]
+        include:
+          - runtime: linux-x64
+            config: Debug
+            os: ubuntu-latest
+          - runtime: linux-x64
+            config: Release
+            os: ubuntu-latest
+          - runtime: linux-x86
+            config: Debug
+            os: ubuntu-latest
+          - runtime: linux-x86
+            config: Release
+            os: ubuntu-latest
+          - runtime: linux-arm64
+            config: Debug
+            os: ubuntu-latest
+          - runtime: linux-arm64
+            config: Release
+            os: ubuntu-latest
+          - runtime: browser-wasm
+            config: Debug
+            os: ubuntu-latest
+          - runtime: browser-wasm
+            config: Release
+            os: ubuntu-latest
+          - runtime: osx-x64
+            config: Debug
+            os: macos-latest
+          - runtime: osx-x64
+            config: Release
+            os: macos-latest
+          - runtime: osx-arm64
+            config: Debug
+            os: macos-latest
+          - runtime: osx-arm64
+            config: Release
+            os: macos-latest
+          - runtime: win-x64
+            config: Debug
+            os: ubuntu-latest
+          - runtime: win-x64
+            config: Release
+            os: ubuntu-latest
+          - runtime: win-x86
+            config: Debug
+            os: ubuntu-latest
+          - runtime: win-x86
+            config: Release
+            os: ubuntu-latest
+          - runtime: win-arm64
+            config: Debug
+            os: ubuntu-latest
+          - runtime: win-arm64
+            config: Release
+            os: ubuntu-latest
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout Repository
