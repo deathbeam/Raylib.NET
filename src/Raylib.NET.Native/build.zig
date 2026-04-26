@@ -68,12 +68,18 @@ pub fn build(b: *std.Build) !void {
     else
         std.builtin.LinkMode.dynamic;
 
+    // Determine OpenGL version based on target
+    const opengl_version = if (target.result.os.tag == .emscripten)
+        rl.OpenglVersion.gles_3
+    else
+        rl.OpenglVersion.gl_4_3;
+
     // Get raylib options for configuring the build
     const options = rl.Options{
         .linkage = linkage,
         .raygui = true,
         .linux_display_backend = .Wayland,
-        .opengl_version = .gl_4_3,
+        .opengl_version = opengl_version,
     };
 
     // Build raylib with raygui using raylib's build system
