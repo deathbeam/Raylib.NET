@@ -80,6 +80,7 @@ pub fn build(b: *std.Build) !void {
         .raygui = true,
         .linux_display_backend = .Wayland,
         .opengl_version = opengl_version,
+        .platform = .sdl3
     };
 
     // Build raylib with raygui using raylib's build system
