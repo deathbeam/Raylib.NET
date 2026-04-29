@@ -74,13 +74,18 @@ pub fn build(b: *std.Build) !void {
     else
         rl.OpenglVersion.gl_4_3;
 
+    const platform = if (target.result.os.tag == .emscripten)
+        rl.Platform.glfw
+    else
+        rl.Platform.sdl3;
+
     // Get raylib options for configuring the build
     const options = rl.Options{
         .linkage = linkage,
         .raygui = true,
         .linux_display_backend = .Wayland,
         .opengl_version = opengl_version,
-        .platform = .sdl3
+        .platform = platform
     };
 
     // Build raylib with raygui using raylib's build system
