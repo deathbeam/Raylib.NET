@@ -75,7 +75,7 @@ pub fn build(b: *std.Build) !void {
         rl.OpenglVersion.gl_4_3;
 
     const platform = if (target.result.os.tag == .emscripten)
-        rl.PlatformBackend.glfw
+        rl.PlatformBackend.rgfw
     else
         rl.PlatformBackend.sdl3;
 
