@@ -77,13 +77,13 @@ pub fn build(b: *std.Build) !void {
     const platform = if (target.result.os.tag == .emscripten)
         rl.PlatformBackend.glfw
     else
-        rl.PlatformBackend.glfw; // TODO: try something else later?
+        rl.PlatformBackend.sdl3;
 
     // Get raylib options for configuring the build
     const options = rl.Options{
         .linkage = linkage,
         .raygui = true,
-        .linux_display_backend = .X11,
+        .linux_display_backend = .Wayland,
         .opengl_version = opengl_version,
         .platform = platform
     };

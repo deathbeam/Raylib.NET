@@ -38,18 +38,18 @@ jobs:
           - runtime: browser-wasm
             config: Release
             os: ubuntu-latest
-          - runtime: osx-x64
-            config: Debug
-            os: macos-latest
-          - runtime: osx-x64
-            config: Release
-            os: macos-latest
-          - runtime: osx-arm64
-            config: Debug
-            os: macos-latest
-          - runtime: osx-arm64
-            config: Release
-            os: macos-latest
+          # - runtime: osx-x64
+          #   config: Debug
+          #   os: macos-latest
+          # - runtime: osx-x64
+          #   config: Release
+          #   os: macos-latest
+          # - runtime: osx-arm64
+          #   config: Debug
+          #   os: macos-latest
+          # - runtime: osx-arm64
+          #   config: Release
+          #   os: macos-latest
           - runtime: win-x64
             config: Debug
             os: ubuntu-latest
