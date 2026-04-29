@@ -12,11 +12,11 @@ public static unsafe partial class Raylib
 
     public const int RAYLIB_VERSION_MAJOR = 6;
 
-    public const int RAYLIB_VERSION_MINOR = 0;
+    public const int RAYLIB_VERSION_MINOR = 1;
 
     public const int RAYLIB_VERSION_PATCH = 0;
 
-    public const string RAYLIB_VERSION = "6.0";
+    public const string RAYLIB_VERSION = "6.1-dev";
 
     public const float PI = 3.14159265358979323846f;
 
@@ -368,14 +368,14 @@ public static unsafe partial class Raylib
     public static partial void DisableEventWaiting();
 
     /// <summary>
-    /// Shows cursor
+    /// Show cursor
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial void ShowCursor();
 
     /// <summary>
-    /// Hides cursor
+    /// Hide cursor
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -389,14 +389,14 @@ public static unsafe partial class Raylib
     public static partial NativeBool IsCursorHidden();
 
     /// <summary>
-    /// Enables cursor (unlock cursor)
+    /// Enable cursor (unlock cursor)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial void EnableCursor();
 
     /// <summary>
-    /// Disables cursor (lock cursor)
+    /// Disable cursor (lock cursor)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -410,21 +410,21 @@ public static unsafe partial class Raylib
     public static partial NativeBool IsCursorOnScreen();
 
     /// <summary>
-    /// Set background color (framebuffer clear color)
+    /// Clear background (framebuffer) to color
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial void ClearBackground(Color color);
 
     /// <summary>
-    /// Setup canvas (framebuffer) to start drawing
+    /// Begin canvas (framebuffer) drawing
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial void BeginDrawing();
 
     /// <summary>
-    /// End canvas drawing and swap buffers (double buffering)
+    /// End canvas (framebuffer) drawing and swap buffers (double buffering)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -438,7 +438,7 @@ public static unsafe partial class Raylib
     public static partial void BeginMode2D(Camera2D camera);
 
     /// <summary>
-    /// Ends 2D mode with custom camera
+    /// End 2D mode with custom camera
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -452,7 +452,7 @@ public static unsafe partial class Raylib
     public static partial void BeginMode3D(Camera3D camera);
 
     /// <summary>
-    /// Ends 3D mode and returns to default 2D orthographic mode
+    /// End 3D mode and returns to default 2D orthographic mode
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -466,7 +466,7 @@ public static unsafe partial class Raylib
     public static partial void BeginTextureMode(RenderTexture target);
 
     /// <summary>
-    /// Ends drawing to render texture
+    /// End drawing to render texture
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -627,28 +627,28 @@ public static unsafe partial class Raylib
     public static partial Ray GetScreenToWorldRayEx(Vector2 position, Camera3D camera, int width, int height);
 
     /// <summary>
-    /// Get the screen space position for a 3d world space position
+    /// Get screen space position for a 3d world space position
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial Vector2 GetWorldToScreen(Vector3 position, Camera3D camera);
 
     /// <summary>
-    /// Get size position for a 3d world space position
+    /// Get sized screen space position for a 3d world space position
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial Vector2 GetWorldToScreenEx(Vector3 position, Camera3D camera, int width, int height);
 
     /// <summary>
-    /// Get the screen space position for a 2d camera world space position
+    /// Get screen space position for a 2d camera world space position
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial Vector2 GetWorldToScreen2D(Vector2 position, Camera2D camera);
 
     /// <summary>
-    /// Get the world space position for a 2d camera screen space position
+    /// Get world space position for a 2d camera screen space position
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -753,7 +753,7 @@ public static unsafe partial class Raylib
     public static partial void TakeScreenshot(string fileName);
 
     /// <summary>
-    /// Setup init configuration flags (view FLAGS)
+    /// Set up init configuration flags (view FLAGS)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -1047,7 +1047,7 @@ public static unsafe partial class Raylib
     public static partial FilePathList LoadDirectoryFiles(string dirPath);
 
     /// <summary>
-    /// Load directory filepaths with extension filtering and subdir scan; some filters available: "*.*", "FILES*", "DIRS*"
+    /// Load directory filepaths with extension filtering and subdir scan; some filters available: `*.*`,`FILES*`,`DIRS*`
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -1488,7 +1488,7 @@ public static unsafe partial class Raylib
     public static partial void SetGesturesEnabled(uint flags);
 
     /// <summary>
-    /// Check if a gesture have been detected
+    /// Check if a gesture has been detected
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -1796,7 +1796,7 @@ public static unsafe partial class Raylib
     public static partial void DrawRectangleRoundedLines(Vector4 rec, float roundness, int segments, Color color);
 
     /// <summary>
-    /// Draw rectangle with rounded edges outline
+    /// Draw rectangle lines with rounded edges outline
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -1808,6 +1808,13 @@ public static unsafe partial class Raylib
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial void DrawTriangle(Vector2 v1, Vector2 v2, Vector2 v3, Color color);
+
+    /// <summary>
+    /// Draw triangle with interpolated colors (vertex in counter-clockwise order!)
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void DrawTriangleGradient(Vector2 v1, Vector2 v2, Vector2 v3, Color c1, Color c2, Color c3);
 
     /// <summary>
     /// Draw triangle outline (vertex in counter-clockwise order!)
@@ -1831,7 +1838,7 @@ public static unsafe partial class Raylib
     public static unsafe partial void DrawTriangleStrip(Vector2* points, int pointCount, Color color);
 
     /// <summary>
-    /// Draw a regular polygon (Vector version)
+    /// Draw a polygon of n sides
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -1947,7 +1954,7 @@ public static unsafe partial class Raylib
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial Vector2 GetSplinePointBezierQuad(Vector2 p1, Vector2 c2, Vector2 p3, float t);
+    public static partial Vector2 GetSplinePointBezierQuadratic(Vector2 p1, Vector2 c2, Vector2 p3, float t);
 
     /// <summary>
     /// Get (evaluate) spline point: Cubic Bezier
@@ -1978,7 +1985,7 @@ public static unsafe partial class Raylib
     public static partial NativeBool CheckCollisionCircleRec(Vector2 center, float radius, Vector4 rec);
 
     /// <summary>
-    /// Check if circle collides with a line created betweeen two points [p1] and [p2]
+    /// Check if circle collides with a line created between two points [p1] and [p2]
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -2076,7 +2083,7 @@ public static unsafe partial class Raylib
     public static partial Image LoadImageFromTexture(Texture texture);
 
     /// <summary>
-    /// Load image from screen buffer and (screenshot)
+    /// Load image from screen buffer (screenshot)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -2374,7 +2381,7 @@ public static unsafe partial class Raylib
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ImageColorContrast(ref Image image, float contrast);
+    public static partial void ImageColorContrast(ref Image image, int contrast);
 
     /// <summary>
     /// Modify image color: brightness (-255 to 255)
@@ -2528,7 +2535,14 @@ public static unsafe partial class Raylib
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ImageDrawRectangleLines(ref Image dst, Vector4 rec, int thick, Color color);
+    public static partial void ImageDrawRectangleLines(ref Image dst, int posX, int posY, int width, int height, Color color);
+
+    /// <summary>
+    /// Draw rectangle lines within an image with extended parameters
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ImageDrawRectangleLinesEx(ref Image dst, Vector4 rec, int thick, Color color);
 
     /// <summary>
     /// Draw triangle within an image
@@ -2542,7 +2556,7 @@ public static unsafe partial class Raylib
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ImageDrawTriangleEx(ref Image dst, Vector2 v1, Vector2 v2, Vector2 v3, Color c1, Color c2, Color c3);
+    public static partial void ImageDrawTriangleGradient(ref Image dst, Vector2 v1, Vector2 v2, Vector2 v3, Color c1, Color c2, Color c3);
 
     /// <summary>
     /// Draw triangle outline within an image
@@ -2713,7 +2727,7 @@ public static unsafe partial class Raylib
     public static partial void DrawTexturePro(Texture texture, Vector4 source, Vector4 dest, Vector2 origin, float rotation, Color tint);
 
     /// <summary>
-    /// Draws a texture (or part of it) that stretches or shrinks nicely
+    /// Draw a texture (or part of it) that stretches or shrinks nicely
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -2951,7 +2965,7 @@ public static unsafe partial class Raylib
     public static partial void DrawTextCodepoint(Font font, int codepoint, Vector2 position, float fontSize, Color tint);
 
     /// <summary>
-    /// Draw multiple character (codepoint)
+    /// Draw multiple characters (codepoint)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -3091,7 +3105,7 @@ public static unsafe partial class Raylib
     public static partial int TextCopy(string dst, string src);
 
     /// <summary>
-    /// Check if two text string are equal
+    /// Check if two text strings are equal
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -3361,21 +3375,21 @@ public static unsafe partial class Raylib
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DrawCylinderWiresEx(Vector3 startPos, Vector3 endPos, float startRadius, float endRadius, int sides, Color color);
+    public static partial void DrawCylinderWiresEx(Vector3 startPos, Vector3 endPos, float startRadius, float endRadius, int slices, Color color);
 
     /// <summary>
     /// Draw a capsule with the center of its sphere caps at startPos and endPos
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DrawCapsule(Vector3 startPos, Vector3 endPos, float radius, int slices, int rings, Color color);
+    public static partial void DrawCapsule(Vector3 startPos, Vector3 endPos, float radius, int rings, int slices, Color color);
 
     /// <summary>
     /// Draw capsule wireframe with the center of its sphere caps at startPos and endPos
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DrawCapsuleWires(Vector3 startPos, Vector3 endPos, float radius, int slices, int rings, Color color);
+    public static partial void DrawCapsuleWires(Vector3 startPos, Vector3 endPos, float radius, int rings, int slices, Color color);
 
     /// <summary>
     /// Draw a plane XZ
@@ -3812,7 +3826,7 @@ public static unsafe partial class Raylib
     public static unsafe partial Wave LoadWaveFromMemory(string fileType, byte* fileData, int dataSize);
 
     /// <summary>
-    /// Checks if wave data is valid (data loaded and parameters)
+    /// Check if wave data is valid (data loaded and parameters)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -3833,14 +3847,14 @@ public static unsafe partial class Raylib
     public static partial Sound LoadSoundFromWave(Wave wave);
 
     /// <summary>
-    /// Create a new sound that shares the same sample data as the source sound, does not own the sound data
+    /// Load sound alias, new sound that shares the same sample data as the source sound, does not own the sound data
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial Sound LoadSoundAlias(Sound source);
 
     /// <summary>
-    /// Checks if a sound is valid (data loaded and buffers initialized)
+    /// Check if a sound is valid (data loaded and buffers initialized)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -3851,7 +3865,7 @@ public static unsafe partial class Raylib
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void UpdateSound(Sound sound, void* data, int sampleCount);
+    public static unsafe partial void UpdateSound(Sound sound, void* data, int frameCount);
 
     /// <summary>
     /// Unload wave data
@@ -3868,7 +3882,7 @@ public static unsafe partial class Raylib
     public static partial void UnloadSound(Sound sound);
 
     /// <summary>
-    /// Unload a sound alias (does not deallocate sample data)
+    /// Unload sound alias (does not deallocate sample data)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -3994,7 +4008,7 @@ public static unsafe partial class Raylib
     public static unsafe partial Music LoadMusicStreamFromMemory(string fileType, byte* data, int dataSize);
 
     /// <summary>
-    /// Checks if a music stream is valid (context and buffers initialized)
+    /// Check if a music stream is valid (context and buffers initialized)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -4022,7 +4036,7 @@ public static unsafe partial class Raylib
     public static partial NativeBool IsMusicStreamPlaying(Music music);
 
     /// <summary>
-    /// Updates buffers for music streaming
+    /// Update buffers for music streaming
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -4064,14 +4078,14 @@ public static unsafe partial class Raylib
     public static partial void SetMusicVolume(Music music, float volume);
 
     /// <summary>
-    /// Set pitch for a music (1.0 is base level)
+    /// Set pitch for music (1.0 is base level)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial void SetMusicPitch(Music music, float pitch);
 
     /// <summary>
-    /// Set pan for a music (-1.0 left, 0.0 center, 1.0 right)
+    /// Set pan for music (-1.0 left, 0.0 center, 1.0 right)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -4099,7 +4113,7 @@ public static unsafe partial class Raylib
     public static partial AudioStream LoadAudioStream(uint sampleRate, uint sampleSize, uint channels);
 
     /// <summary>
-    /// Checks if an audio stream is valid (buffers initialized)
+    /// Check if an audio stream is valid (buffers initialized)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -4176,7 +4190,7 @@ public static unsafe partial class Raylib
     public static partial void SetAudioStreamPitch(AudioStream stream, float pitch);
 
     /// <summary>
-    /// Set pan for audio stream (-1.0 to 1.0 range, 0.0 is centered)
+    /// Set pan for audio stream (-1.0 left, 0.0 center, 1.0 right)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
