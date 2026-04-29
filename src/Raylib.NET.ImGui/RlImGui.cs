@@ -115,7 +115,6 @@ public static unsafe class RlImGui
     {
         ImGui.SetCurrentContext(ImGuiContext);
         SetupFontAwesome();
-        SetupMouseCursors();
         SetupBackend();
     }
 
@@ -190,16 +189,19 @@ public static unsafe class RlImGui
     /// </summary>
     public static ImFontConfigPtr FontConfig(int fontSize)
     {
-        // Use Hexa.NET.ImGui's helper that calls the C++ constructor
         var config = ImGui.ImFontConfig();
         config.SizePixels = fontSize;
 
-        // Apply DPI scaling (matching C++ rlImGui logic)
-        if (!Raylib.IsWindowState((int)ConfigFlags.FLAG_WINDOW_HIGHDPI))
+        // Apply DPI scaling (matching C++ rlImGui logic):
+        // On macOS the system handles DPI scaling, so we skip it entirely.
+        // On other platforms, always set RasterizerMultiply to the DPI scale,
+        // and scale the font size when not in HIGHDPI mode (HIGHDPI already handles it).
+        if (!RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
         {
             var scale = Raylib.GetWindowScaleDPI();
             config.RasterizerMultiply = scale.Y;
-            config.SizePixels = MathF.Ceiling(config.SizePixels * scale.Y);
+            if (!Raylib.IsWindowState((int)ConfigFlags.FLAG_WINDOW_HIGHDPI))
+                config.SizePixels = MathF.Ceiling(config.SizePixels * scale.Y);
         }
 
         return config;
@@ -694,31 +696,24 @@ public static unsafe class RlImGui
         }
 
         Vector2 resolutionScale = Raylib.GetWindowScaleDPI();
-        if (!Raylib.IsWindowState((int)ConfigFlags.FLAG_WINDOW_HIGHDPI))
+        // On macOS the system handles DPI scaling, so keep the DPI scale as-is.
+        // On other platforms, reset scale to 1:1 when not in HIGHDPI mode.
+        if (!RuntimeInformation.IsOSPlatform(OSPlatform.OSX) &&
+            !Raylib.IsWindowState((int)ConfigFlags.FLAG_WINDOW_HIGHDPI))
+        {
             resolutionScale = new Vector2(1, 1);
+        }
 
         io.DisplayFramebufferScale = resolutionScale;
-        io.DeltaTime = dt >= 0 ? dt : Raylib.GetFrameTime();
 
-        if (io.WantSetMousePos)
-        {
-            Raylib.SetMousePosition((int)io.MousePos.X, (int)io.MousePos.Y);
-        }
-        else
-        {
-            io.AddMousePosEvent(Raylib.GetMouseX(), Raylib.GetMouseY());
-        }
+        float deltaTime = dt >= 0 ? dt : Raylib.GetFrameTime();
+        if (deltaTime <= 0)
+            deltaTime = 0.001f;
+        io.DeltaTime = deltaTime;
 
-        SetMouseEvent(io, 0, ImGuiMouseButton.Left);
-        SetMouseEvent(io, 1, ImGuiMouseButton.Right);
-        SetMouseEvent(io, 2, ImGuiMouseButton.Middle);
-        SetMouseEvent(io, 3, ImGuiMouseButton.Middle + 1);
-        SetMouseEvent(io, 4, ImGuiMouseButton.Middle + 2);
-
-        var wheelMove = Raylib.GetMouseWheelMoveV();
-        io.AddMouseWheelEvent(wheelMove.X, wheelMove.Y);
-
-        if ((io.ConfigFlags & ImGuiConfigFlags.NoMouseCursorChange) == 0)
+        // Mouse cursor visibility (matching C++ ImGuiNewFrame cursor handling)
+        if ((io.BackendFlags & ImGuiBackendFlags.HasMouseCursors) != 0 &&
+            (io.ConfigFlags & ImGuiConfigFlags.NoMouseCursorChange) == 0)
         {
             ImGuiMouseCursor imgui_cursor = ImGui.GetMouseCursor();
             if (imgui_cursor != CurrentMouseCursor || io.MouseDrawCursor)
@@ -773,6 +768,7 @@ public static unsafe class RlImGui
             io.AddKeyEvent(ImGuiKey.ModSuper, superDown);
         LastSuperPressed = superDown;
 
+        // Walk the keymap and check for up and down events
         int keyId = Raylib.GetKeyPressed();
         while (keyId != 0)
         {
@@ -787,11 +783,37 @@ public static unsafe class RlImGui
                 io.AddKeyEvent(keyItr.Value, false);
         }
 
-        var pressed = Raylib.GetCharPressed();
-        while (pressed != 0)
+        // Only process text input when ImGui wants keyboard capture
+        if (io.WantCaptureKeyboard)
         {
-            io.AddInputCharacter((uint)pressed);
-            pressed = Raylib.GetCharPressed();
+            var pressed = Raylib.GetCharPressed();
+            while (pressed != 0)
+            {
+                io.AddInputCharacter((uint)pressed);
+                pressed = Raylib.GetCharPressed();
+            }
+        }
+
+        // Only process mouse events when window is focused (matching C++ ProcessEvents)
+        if (focused)
+        {
+            if (!io.WantSetMousePos)
+                io.AddMousePosEvent(Raylib.GetMouseX(), Raylib.GetMouseY());
+            else
+                Raylib.SetMousePosition((int)io.MousePos.X, (int)io.MousePos.Y);
+
+            SetMouseEvent(io, 0, ImGuiMouseButton.Left);
+            SetMouseEvent(io, 1, ImGuiMouseButton.Right);
+            SetMouseEvent(io, 2, ImGuiMouseButton.Middle);
+            SetMouseEvent(io, 3, ImGuiMouseButton.Middle + 1);
+            SetMouseEvent(io, 4, ImGuiMouseButton.Middle + 2);
+
+            var wheelMove = Raylib.GetMouseWheelMoveV();
+            io.AddMouseWheelEvent(wheelMove.X, wheelMove.Y);
+        }
+        else
+        {
+            io.AddMousePosEvent(float.MinValue, float.MinValue);
         }
 
         if ((io.ConfigFlags & ImGuiConfigFlags.NavEnableGamepad) != 0 && Raylib.IsGamepadAvailable(0))
@@ -849,6 +871,14 @@ public static unsafe class RlImGui
         Rlgl.EnableScissorTest();
         ImGuiIOPtr io = ImGui.GetIO();
         Vector2 scale = io.DisplayFramebufferScale;
+
+        // On non-macOS platforms, when not in HIGHDPI mode, force scale to 1:1
+        // (matching C++ EnableScissor logic)
+        if (!RuntimeInformation.IsOSPlatform(OSPlatform.OSX) &&
+            !Raylib.IsWindowState((int)ConfigFlags.FLAG_WINDOW_HIGHDPI))
+        {
+            scale = new Vector2(1, 1);
+        }
 
         Rlgl.Scissor(
             (int)(x * scale.X),
