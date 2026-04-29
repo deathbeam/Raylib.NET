@@ -75,9 +75,9 @@ pub fn build(b: *std.Build) !void {
         rl.OpenglVersion.gl_4_3;
 
     const platform = if (target.result.os.tag == .emscripten)
-        rl.PlatformBackend.rgfw
+        rl.PlatformBackend.glfw
     else
-        rl.PlatformBackend.sdl3;
+        rl.PlatformBackend.rgfw;
 
     // Get raylib options for configuring the build
     const options = rl.Options{
