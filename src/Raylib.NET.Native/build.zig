@@ -83,7 +83,7 @@ pub fn build(b: *std.Build) !void {
     const options = rl.Options{
         .linkage = linkage,
         .raygui = true,
-        .linux_display_backend = .X11,
+        .linux_display_backend = .Wayland,
         .opengl_version = opengl_version,
         .platform = platform
     };
