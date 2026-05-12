@@ -1,6 +1,8 @@
 using System.Numerics;
 using System.Runtime.InteropServices;
 using Hexa.NET.ImGui;
+using Hexa.NET.ImNodes;
+using Hexa.NET.ImPlot;
 
 namespace RaylibNET;
 
@@ -99,10 +101,24 @@ public static unsafe class RlImGui
         SetupKeymap();
         SetupMouseCursors();
 
-        if (ImGuiContext.Handle == null)
+        if (ImGuiContext.Handle == null) {
             ImGuiContext = ImGui.CreateContext();
+            ImGui.SetCurrentContext(ImGuiContext);
+        }
 
-        ImGui.SetCurrentContext(ImGuiContext);
+        if (ImNodesContext.Handle == null)
+        {
+            ImNodes.SetImGuiContext(ImGuiContext);
+            ImNodesContext = ImNodes.CreateContext();
+        }
+
+        if (ImPlotContext.Handle == null)
+        {
+            ImPlot.SetImGuiContext(ImGuiContext);
+            ImPlotContext = ImPlot.CreateContext();
+        }
+
+        SetContexts();
     }
 
     /// <summary>
@@ -113,7 +129,7 @@ public static unsafe class RlImGui
     /// </summary>
     public static void EndSetup()
     {
-        ImGui.SetCurrentContext(ImGuiContext);
+        SetContexts();
         SetupFontAwesome();
         SetupBackend();
     }
@@ -124,8 +140,7 @@ public static unsafe class RlImGui
     /// <param name="dt">Delta time (optional, uses GetFrameTime if negative)</param>
     public static void Begin(float dt = -1)
     {
-        ImGui.SetCurrentContext(ImGuiContext);
-
+        SetContexts();
         NewFrame(dt);
         FrameEvents();
         ImGui.NewFrame();
@@ -181,6 +196,18 @@ public static unsafe class RlImGui
 
         ImGui.DestroyContext(ImGuiContext);
         ImGuiContext = default;
+
+        if (ImPlotContext.Handle != null)
+        {
+            ImPlot.DestroyContext(ImPlotContext);
+            ImPlotContext = default;
+        }
+
+        if (ImNodesContext.Handle != null)
+        {
+            ImNodes.DestroyContext(ImNodesContext);
+            ImNodesContext = default;
+        }
     }
 
     /// <summary>
@@ -366,6 +393,8 @@ public static unsafe class RlImGui
     //----------------------------------------------------------------------
 
     private static ImGuiContextPtr ImGuiContext;
+    private static ImNodesContextPtr ImNodesContext;
+    private static ImPlotContextPtr ImPlotContext;
     private static ImGuiMouseCursor CurrentMouseCursor = ImGuiMouseCursor.Count;
     private static readonly Dictionary<ImGuiMouseCursor, int> MouseCursorMap = [];
     private static readonly Dictionary<int, ImGuiKey> RaylibKeyMap = [];
@@ -383,6 +412,23 @@ public static unsafe class RlImGui
     private static bool IsShiftDown() => Raylib.IsKeyDown((int)KeyboardKey.KEY_LEFT_SHIFT) || Raylib.IsKeyDown((int)KeyboardKey.KEY_RIGHT_SHIFT);
     private static bool IsAltDown() => Raylib.IsKeyDown((int)KeyboardKey.KEY_LEFT_ALT) || Raylib.IsKeyDown((int)KeyboardKey.KEY_RIGHT_ALT);
     private static bool IsSuperDown() => Raylib.IsKeyDown((int)KeyboardKey.KEY_LEFT_SUPER) || Raylib.IsKeyDown((int)KeyboardKey.KEY_RIGHT_SUPER);
+
+    private static void SetContexts()
+    {
+        ImGui.SetCurrentContext(ImGuiContext);
+
+        if (ImPlotContext.Handle != null)
+        {
+            ImPlot.SetImGuiContext(ImGuiContext);
+            ImPlot.SetCurrentContext(ImPlotContext);
+        }
+
+        if (ImNodesContext.Handle != null)
+        {
+            ImNodes.SetImGuiContext(ImGuiContext);
+            ImNodes.SetCurrentContext(ImNodesContext);
+        }
+    }
 
     private static void SetupBackend()
     {
