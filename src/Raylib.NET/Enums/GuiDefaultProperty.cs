@@ -10,25 +10,29 @@ public enum GuiDefaultProperty
     /// <summary>
     /// Text spacing between glyphs
     /// </summary>
-    TEXT_SPACING,
+    TEXT_SPACING = 17,
     /// <summary>
     /// Line control color
     /// </summary>
-    LINE_COLOR,
+    LINE_COLOR = 18,
     /// <summary>
     /// Background color
     /// </summary>
-    BACKGROUND_COLOR,
+    BACKGROUND_COLOR = 19,
     /// <summary>
     /// Text spacing between lines
     /// </summary>
-    TEXT_LINE_SPACING,
+    TEXT_LINE_SPACING = 20,
     /// <summary>
-    /// Text vertical alignment inside text bounds (after border and padding)
+    /// Text vertical alignment inside text bounds (after border and padding): 0-Top, 1-Middle, 2-Bottom
     /// </summary>
-    TEXT_ALIGNMENT_VERTICAL,
+    TEXT_ALIGNMENT_VERTICAL = 21,
     /// <summary>
     /// Text wrap-mode inside text bounds
     /// </summary>
-    TEXT_WRAP_MODE,
+    TEXT_WRAP_MODE = 22,
+    /// <summary>
+    /// Not used yet...
+    /// </summary>
+    EXTPROP08 = 23,
 }

@@ -10,28 +10,28 @@ public enum GuiControl
     /// <summary>
     /// Used also for: LABELBUTTON
     /// </summary>
-    LABEL,
-    BUTTON,
+    LABEL = 1,
+    BUTTON = 2,
     /// <summary>
     /// Used also for: TOGGLEGROUP
     /// </summary>
-    TOGGLE,
+    TOGGLE = 3,
     /// <summary>
     /// Used also for: SLIDERBAR, TOGGLESLIDER
     /// </summary>
-    SLIDER,
-    PROGRESSBAR,
-    CHECKBOX,
-    COMBOBOX,
-    DROPDOWNBOX,
+    SLIDER = 4,
+    PROGRESSBAR = 5,
+    CHECKBOX = 6,
+    COMBOBOX = 7,
+    DROPDOWNBOX = 8,
     /// <summary>
     /// Used also for: TEXTBOXMULTI
     /// </summary>
-    TEXTBOX,
-    VALUEBOX,
-    CONTROL11,
-    LISTVIEW,
-    COLORPICKER,
-    SCROLLBAR,
-    STATUSBAR,
+    TEXTBOX = 9,
+    VALUEBOX = 10,
+    TABBAR = 11,
+    LISTVIEW = 12,
+    COLORPICKER = 13,
+    SCROLLBAR = 14,
+    STATUSBAR = 15,
 }

@@ -16,7 +16,7 @@ public enum GuiListViewProperty
     /// </summary>
     SCROLLBAR_WIDTH,
     /// <summary>
-    /// ListView scrollbar side (0-SCROLLBAR_LEFT_SIDE, 1-SCROLLBAR_RIGHT_SIDE)
+    /// ListView scrollbar side: 0-Left side, 1-Right Side
     /// </summary>
     SCROLLBAR_SIDE,
     /// <summary>

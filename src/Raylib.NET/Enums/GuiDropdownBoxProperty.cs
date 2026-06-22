@@ -16,7 +16,7 @@ public enum GuiDropdownBoxProperty
     /// </summary>
     DROPDOWN_ARROW_HIDDEN,
     /// <summary>
-    /// DropdownBox roll up flag (default rolls down)
+    /// DropdownBox roll up flag: 0-Roll down, 1-Roll up
     /// </summary>
     DROPDOWN_ROLL_UP,
 }

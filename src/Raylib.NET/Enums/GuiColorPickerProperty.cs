@@ -3,6 +3,9 @@ namespace RaylibNET;
 
 public enum GuiColorPickerProperty
 {
+    /// <summary>
+    /// ColorPicker selector square size
+    /// </summary>
     COLOR_SELECTOR_SIZE = 16,
     /// <summary>
     /// ColorPicker right hue bar width

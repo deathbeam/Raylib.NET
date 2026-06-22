@@ -10,47 +10,47 @@ public enum GuiControlProperty
     /// <summary>
     /// Control base color in STATE_NORMAL
     /// </summary>
-    BASE_COLOR_NORMAL,
+    BASE_COLOR_NORMAL = 1,
     /// <summary>
     /// Control text color in STATE_NORMAL
     /// </summary>
-    TEXT_COLOR_NORMAL,
+    TEXT_COLOR_NORMAL = 2,
     /// <summary>
     /// Control border color in STATE_FOCUSED
     /// </summary>
-    BORDER_COLOR_FOCUSED,
+    BORDER_COLOR_FOCUSED = 3,
     /// <summary>
     /// Control base color in STATE_FOCUSED
     /// </summary>
-    BASE_COLOR_FOCUSED,
+    BASE_COLOR_FOCUSED = 4,
     /// <summary>
     /// Control text color in STATE_FOCUSED
     /// </summary>
-    TEXT_COLOR_FOCUSED,
+    TEXT_COLOR_FOCUSED = 5,
     /// <summary>
     /// Control border color in STATE_PRESSED
     /// </summary>
-    BORDER_COLOR_PRESSED,
+    BORDER_COLOR_PRESSED = 6,
     /// <summary>
     /// Control base color in STATE_PRESSED
     /// </summary>
-    BASE_COLOR_PRESSED,
+    BASE_COLOR_PRESSED = 7,
     /// <summary>
     /// Control text color in STATE_PRESSED
     /// </summary>
-    TEXT_COLOR_PRESSED,
+    TEXT_COLOR_PRESSED = 8,
     /// <summary>
     /// Control border color in STATE_DISABLED
     /// </summary>
-    BORDER_COLOR_DISABLED,
+    BORDER_COLOR_DISABLED = 9,
     /// <summary>
     /// Control base color in STATE_DISABLED
     /// </summary>
-    BASE_COLOR_DISABLED,
+    BASE_COLOR_DISABLED = 10,
     /// <summary>
     /// Control text color in STATE_DISABLED
     /// </summary>
-    TEXT_COLOR_DISABLED,
+    TEXT_COLOR_DISABLED = 11,
     /// <summary>
     /// Control border size, 0 for no border
     /// </summary>
@@ -60,7 +60,11 @@ public enum GuiControlProperty
     /// </summary>
     TEXT_PADDING = 13,
     /// <summary>
-    /// Control text horizontal alignment inside control text bound (after border and padding)
+    /// Control text horizontal alignment inside control text bound (after border and padding): 0-Left, 1-Center, 2-Right
     /// </summary>
     TEXT_ALIGNMENT = 14,
+    /// <summary>
+    /// Not used yet...
+    /// </summary>
+    BASEPROP16 = 15,
 }

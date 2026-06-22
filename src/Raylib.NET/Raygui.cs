@@ -10,9 +10,9 @@ public static unsafe partial class Raygui
 {
     public const string LIBRARY = "raylib";
 
-    public const int RAYGUI_VERSION_MAJOR = 4;
+    public const int RAYGUI_VERSION_MAJOR = 5;
 
-    public const int RAYGUI_VERSION_MINOR = 5;
+    public const int RAYGUI_VERSION_MINOR = 0;
 
     public const int RAYGUI_VERSION_PATCH = 0;
 
@@ -114,6 +114,13 @@ public static unsafe partial class Raygui
     public static partial void GuiLoadStyle(string fileName);
 
     /// <summary>
+    /// Load style from memory (binary only)
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static unsafe partial void GuiLoadStyleFromMemory(byte* fileData, int dataSize);
+
+    /// <summary>
     /// Load style default over global style
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
@@ -168,6 +175,13 @@ public static unsafe partial class Raygui
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static unsafe partial sbyte** GuiLoadIcons(string fileName, NativeBool loadIconsName);
+
+    /// <summary>
+    /// Load raygui icons file (.rgi) from memory into internal icons data
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static unsafe partial sbyte** GuiLoadIconsFromMemory(byte* fileData, int dataSize, NativeBool loadIconsName);
 
     /// <summary>
     /// Draw icon using pixel size at specified position
@@ -366,7 +380,7 @@ public static unsafe partial class Raygui
     public static partial int GuiListView(Vector4 bounds, string text, ref int scrollIndex, ref int active);
 
     /// <summary>
-    /// List View with extended parameters
+    /// List View using text entries list and returning focus entry
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]

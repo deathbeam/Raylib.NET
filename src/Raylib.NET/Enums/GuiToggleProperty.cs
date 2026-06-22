@@ -7,4 +7,8 @@ public enum GuiToggleProperty
     /// ToggleGroup separation between toggles
     /// </summary>
     GROUP_PADDING = 16,
+    /// <summary>
+    /// ToggleGroup bounds width considers all items: 0-Width per item, 1-Full width
+    /// </summary>
+    GROUP_WIDTH_FULL,
 }

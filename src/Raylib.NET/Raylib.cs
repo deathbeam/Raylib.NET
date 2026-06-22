@@ -557,7 +557,7 @@ public static unsafe partial class Raylib
     public static partial Shader LoadShaderFromMemory(string vsCode, string fsCode);
 
     /// <summary>
-    /// Check if a shader is valid (loaded on GPU)
+    /// Check if shader is valid (loaded on GPU)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -886,42 +886,42 @@ public static unsafe partial class Raylib
     public static unsafe partial void SetSaveFileTextCallback(delegate* unmanaged[Cdecl]<sbyte*, sbyte*, sbyte> callback);
 
     /// <summary>
-    /// Rename file (if exists)
+    /// Rename file (if exists), returns 0 on success
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial int FileRename(string fileName, string fileRename);
 
     /// <summary>
-    /// Remove file (if exists)
+    /// Remove file (if exists), returns 0 on success
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial int FileRemove(string fileName);
 
     /// <summary>
-    /// Copy file from one path to another, dstPath created if it doesn't exist
+    /// Copy file from one path to another, dstPath created if it doesn't exist, returns 0 on success
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial int FileCopy(string srcPath, string dstPath);
 
     /// <summary>
-    /// Move file from one directory to another, dstPath created if it doesn't exist
+    /// Move file from one directory to another, dstPath created if it doesn't exist, returns 0 on success
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial int FileMove(string srcPath, string dstPath);
 
     /// <summary>
-    /// Replace text in an existing file
+    /// Replace text in an existing file, returns 0 on success
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial int FileTextReplace(string fileName, string search, string replacement);
 
     /// <summary>
-    /// Find text in existing file
+    /// Find text in existing file, returns -1 if index not found or index otherwise
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -935,7 +935,7 @@ public static unsafe partial class Raylib
     public static partial NativeBool FileExists(string fileName);
 
     /// <summary>
-    /// Check if a directory path exists
+    /// Check if directory path exists
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -1019,14 +1019,14 @@ public static unsafe partial class Raylib
     public static partial int MakeDirectory(string dirPath);
 
     /// <summary>
-    /// Change working directory, return true on success
+    /// Change working directory, returns 0 on success
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial NativeBool ChangeDirectory(string dirPath);
+    public static partial int ChangeDirectory(string dirPath);
 
     /// <summary>
-    /// Check if a given path is a file or a directory
+    /// Check if given path is a file or a directory
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -1047,7 +1047,7 @@ public static unsafe partial class Raylib
     public static partial FilePathList LoadDirectoryFiles(string dirPath);
 
     /// <summary>
-    /// Load directory filepaths with extension filtering and subdir scan; some filters available: `*.*`,`FILES*`,`DIRS*`
+    /// Load directory filepaths with extension filtering and subdir scan; some filters available: '*.*','FILES*','DIRS*'
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -1061,7 +1061,7 @@ public static unsafe partial class Raylib
     public static partial void UnloadDirectoryFiles(FilePathList files);
 
     /// <summary>
-    /// Check if a file has been dropped into window
+    /// Check if file has been dropped into window
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -1208,35 +1208,35 @@ public static unsafe partial class Raylib
     public static partial void PlayAutomationEvent(AutomationEvent @event);
 
     /// <summary>
-    /// Check if a key has been pressed once
+    /// Check if key has been pressed once
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial NativeBool IsKeyPressed(int key);
 
     /// <summary>
-    /// Check if a key has been pressed again
+    /// Check if key has been pressed again
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial NativeBool IsKeyPressedRepeat(int key);
 
     /// <summary>
-    /// Check if a key is being pressed
+    /// Check if key is being pressed
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial NativeBool IsKeyDown(int key);
 
     /// <summary>
-    /// Check if a key has been released once
+    /// Check if key has been released once
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial NativeBool IsKeyReleased(int key);
 
     /// <summary>
-    /// Check if a key is NOT being pressed
+    /// Check if key is NOT being pressed
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -1271,7 +1271,7 @@ public static unsafe partial class Raylib
     public static partial void SetExitKey(int key);
 
     /// <summary>
-    /// Check if a gamepad is available
+    /// Check if gamepad is available
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -1285,28 +1285,28 @@ public static unsafe partial class Raylib
     public static partial string GetGamepadName(int gamepad);
 
     /// <summary>
-    /// Check if a gamepad button has been pressed once
+    /// Check if gamepad button has been pressed once
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial NativeBool IsGamepadButtonPressed(int gamepad, int button);
 
     /// <summary>
-    /// Check if a gamepad button is being pressed
+    /// Check if gamepad button is being pressed
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial NativeBool IsGamepadButtonDown(int gamepad, int button);
 
     /// <summary>
-    /// Check if a gamepad button has been released once
+    /// Check if gamepad button has been released once
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial NativeBool IsGamepadButtonReleased(int gamepad, int button);
 
     /// <summary>
-    /// Check if a gamepad button is NOT being pressed
+    /// Check if gamepad button is NOT being pressed
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -1348,28 +1348,28 @@ public static unsafe partial class Raylib
     public static partial void SetGamepadVibration(int gamepad, float leftMotor, float rightMotor, float duration);
 
     /// <summary>
-    /// Check if a mouse button has been pressed once
+    /// Check if mouse button has been pressed once
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial NativeBool IsMouseButtonPressed(int button);
 
     /// <summary>
-    /// Check if a mouse button is being pressed
+    /// Check if mouse button is being pressed
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial NativeBool IsMouseButtonDown(int button);
 
     /// <summary>
-    /// Check if a mouse button has been released once
+    /// Check if mouse button has been released once
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial NativeBool IsMouseButtonReleased(int button);
 
     /// <summary>
-    /// Check if a mouse button is NOT being pressed
+    /// Check if mouse button is NOT being pressed
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -1488,7 +1488,7 @@ public static unsafe partial class Raylib
     public static partial void SetGesturesEnabled(uint flags);
 
     /// <summary>
-    /// Check if a gesture has been detected
+    /// Check if gesture has been detected
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -1555,7 +1555,7 @@ public static unsafe partial class Raylib
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void SetShapesTexture(Texture texture, Vector4 source);
+    public static partial void SetShapesTexture(Texture texture, Vector4 rec);
 
     /// <summary>
     /// Get texture that is used for shapes drawing
@@ -1628,6 +1628,146 @@ public static unsafe partial class Raylib
     public static partial void DrawLineDashed(Vector2 startPos, Vector2 endPos, int dashSize, int spaceSize, Color color);
 
     /// <summary>
+    /// Draw a color-filled triangle, counter-clockwise vertex order
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void DrawTriangle(Vector2 v1, Vector2 v2, Vector2 v3, Color color);
+
+    /// <summary>
+    /// Draw triangle with interpolated colors, counter-clockwise vertex/color order
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void DrawTriangleGradient(Vector2 v1, Vector2 v2, Vector2 v3, Color c1, Color c2, Color c3);
+
+    /// <summary>
+    /// Draw triangle outline, counter-clockwise vertex order
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void DrawTriangleLines(Vector2 v1, Vector2 v2, Vector2 v3, Color color);
+
+    /// <summary>
+    /// Draw a triangle fan defined by points (first vertex is the center)
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static unsafe partial void DrawTriangleFan(Vector2* points, int pointCount, Color color);
+
+    /// <summary>
+    /// Draw a triangle strip defined by points
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static unsafe partial void DrawTriangleStrip(Vector2* points, int pointCount, Color color);
+
+    /// <summary>
+    /// Draw a color-filled rectangle
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void DrawRectangle(int posX, int posY, int width, int height, Color color);
+
+    /// <summary>
+    /// Draw a color-filled rectangle (Vector version)
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void DrawRectangleV(Vector2 position, Vector2 size, Color color);
+
+    /// <summary>
+    /// Draw a color-filled rectangle
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void DrawRectangleRec(Vector4 rec, Color color);
+
+    /// <summary>
+    /// Draw a color-filled rectangle with pro parameters
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void DrawRectanglePro(Vector4 rec, Vector2 origin, float rotation, Color color);
+
+    /// <summary>
+    /// Draw a vertical-gradient-filled rectangle
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void DrawRectangleGradientV(int posX, int posY, int width, int height, Color top, Color bottom);
+
+    /// <summary>
+    /// Draw a horizontal-gradient-filled rectangle
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void DrawRectangleGradientH(int posX, int posY, int width, int height, Color left, Color right);
+
+    /// <summary>
+    /// Draw a gradient-filled rectangle with custom vertex colors, counter-clockwise color order
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void DrawRectangleGradientEx(Vector4 rec, Color col1, Color col2, Color col3, Color col4);
+
+    /// <summary>
+    /// Draw rectangle outline
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void DrawRectangleLines(int posX, int posY, int width, int height, Color color);
+
+    /// <summary>
+    /// Draw rectangle outline with line thickness
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void DrawRectangleLinesEx(Vector4 rec, float thick, Color color);
+
+    /// <summary>
+    /// Draw rectangle with rounded edges
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void DrawRectangleRounded(Vector4 rec, float roundness, int segments, Color color);
+
+    /// <summary>
+    /// Draw rectangle lines with rounded edges
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void DrawRectangleRoundedLines(Vector4 rec, float roundness, int segments, Color color);
+
+    /// <summary>
+    /// Draw rectangle lines with rounded edges outline and line thickness
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void DrawRectangleRoundedLinesEx(Vector4 rec, float roundness, int segments, float thick, Color color);
+
+    /// <summary>
+    /// Draw a polygon of n sides
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void DrawPoly(Vector2 center, int sides, float radius, float rotation, Color color);
+
+    /// <summary>
+    /// Draw a polygon outline of n sides
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void DrawPolyLines(Vector2 center, int sides, float radius, float rotation, Color color);
+
+    /// <summary>
+    /// Draw a polygon outline of n sides with line thickness
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void DrawPolyLinesEx(Vector2 center, int sides, float radius, float rotation, float thick, Color color);
+
+    /// <summary>
     /// Draw a color-filled circle
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
@@ -1677,6 +1817,13 @@ public static unsafe partial class Raylib
     public static partial void DrawCircleLinesV(Vector2 center, float radius, Color color);
 
     /// <summary>
+    /// Draw circle outline with line thickness
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void DrawCircleLinesEx(Vector2 center, float radius, float thick, Color color);
+
+    /// <summary>
     /// Draw ellipse
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
@@ -1717,146 +1864,6 @@ public static unsafe partial class Raylib
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial void DrawRingLines(Vector2 center, float innerRadius, float outerRadius, float startAngle, float endAngle, int segments, Color color);
-
-    /// <summary>
-    /// Draw a color-filled rectangle
-    /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
-    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DrawRectangle(int posX, int posY, int width, int height, Color color);
-
-    /// <summary>
-    /// Draw a color-filled rectangle (Vector version)
-    /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
-    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DrawRectangleV(Vector2 position, Vector2 size, Color color);
-
-    /// <summary>
-    /// Draw a color-filled rectangle
-    /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
-    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DrawRectangleRec(Vector4 rec, Color color);
-
-    /// <summary>
-    /// Draw a color-filled rectangle with pro parameters
-    /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
-    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DrawRectanglePro(Vector4 rec, Vector2 origin, float rotation, Color color);
-
-    /// <summary>
-    /// Draw a vertical-gradient-filled rectangle
-    /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
-    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DrawRectangleGradientV(int posX, int posY, int width, int height, Color top, Color bottom);
-
-    /// <summary>
-    /// Draw a horizontal-gradient-filled rectangle
-    /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
-    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DrawRectangleGradientH(int posX, int posY, int width, int height, Color left, Color right);
-
-    /// <summary>
-    /// Draw a gradient-filled rectangle with custom vertex colors
-    /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
-    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DrawRectangleGradientEx(Vector4 rec, Color topLeft, Color bottomLeft, Color bottomRight, Color topRight);
-
-    /// <summary>
-    /// Draw rectangle outline
-    /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
-    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DrawRectangleLines(int posX, int posY, int width, int height, Color color);
-
-    /// <summary>
-    /// Draw rectangle outline with extended parameters
-    /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
-    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DrawRectangleLinesEx(Vector4 rec, float lineThick, Color color);
-
-    /// <summary>
-    /// Draw rectangle with rounded edges
-    /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
-    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DrawRectangleRounded(Vector4 rec, float roundness, int segments, Color color);
-
-    /// <summary>
-    /// Draw rectangle lines with rounded edges
-    /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
-    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DrawRectangleRoundedLines(Vector4 rec, float roundness, int segments, Color color);
-
-    /// <summary>
-    /// Draw rectangle lines with rounded edges outline
-    /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
-    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DrawRectangleRoundedLinesEx(Vector4 rec, float roundness, int segments, float lineThick, Color color);
-
-    /// <summary>
-    /// Draw a color-filled triangle (vertex in counter-clockwise order!)
-    /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
-    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DrawTriangle(Vector2 v1, Vector2 v2, Vector2 v3, Color color);
-
-    /// <summary>
-    /// Draw triangle with interpolated colors (vertex in counter-clockwise order!)
-    /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
-    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DrawTriangleGradient(Vector2 v1, Vector2 v2, Vector2 v3, Color c1, Color c2, Color c3);
-
-    /// <summary>
-    /// Draw triangle outline (vertex in counter-clockwise order!)
-    /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
-    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DrawTriangleLines(Vector2 v1, Vector2 v2, Vector2 v3, Color color);
-
-    /// <summary>
-    /// Draw a triangle fan defined by points (first vertex is the center)
-    /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
-    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void DrawTriangleFan(Vector2* points, int pointCount, Color color);
-
-    /// <summary>
-    /// Draw a triangle strip defined by points
-    /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
-    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void DrawTriangleStrip(Vector2* points, int pointCount, Color color);
-
-    /// <summary>
-    /// Draw a polygon of n sides
-    /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
-    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DrawPoly(Vector2 center, int sides, float radius, float rotation, Color color);
-
-    /// <summary>
-    /// Draw a polygon outline of n sides
-    /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
-    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DrawPolyLines(Vector2 center, int sides, float radius, float rotation, Color color);
-
-    /// <summary>
-    /// Draw a polygon outline of n sides with extended parameters
-    /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
-    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DrawPolyLinesEx(Vector2 center, int sides, float radius, float rotation, float lineThick, Color color);
 
     /// <summary>
     /// Draw spline: Linear, minimum 2 points
@@ -2482,67 +2489,11 @@ public static unsafe partial class Raylib
     public static partial void ImageDrawLineEx(ref Image dst, Vector2 start, Vector2 end, int thick, Color color);
 
     /// <summary>
-    /// Draw a filled circle within an image
+    /// Draw a lines sequence within an image
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ImageDrawCircle(ref Image dst, int centerX, int centerY, int radius, Color color);
-
-    /// <summary>
-    /// Draw a filled circle within an image (Vector version)
-    /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
-    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ImageDrawCircleV(ref Image dst, Vector2 center, int radius, Color color);
-
-    /// <summary>
-    /// Draw circle outline within an image
-    /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
-    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ImageDrawCircleLines(ref Image dst, int centerX, int centerY, int radius, Color color);
-
-    /// <summary>
-    /// Draw circle outline within an image (Vector version)
-    /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
-    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ImageDrawCircleLinesV(ref Image dst, Vector2 center, int radius, Color color);
-
-    /// <summary>
-    /// Draw rectangle within an image
-    /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
-    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ImageDrawRectangle(ref Image dst, int posX, int posY, int width, int height, Color color);
-
-    /// <summary>
-    /// Draw rectangle within an image (Vector version)
-    /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
-    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial void ImageDrawRectangleV(Image* dst, Vector2 position, Vector2 size, Color color);
-
-    /// <summary>
-    /// Draw rectangle within an image
-    /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
-    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ImageDrawRectangleRec(ref Image dst, Vector4 rec, Color color);
-
-    /// <summary>
-    /// Draw rectangle lines within an image
-    /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
-    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ImageDrawRectangleLines(ref Image dst, int posX, int posY, int width, int height, Color color);
-
-    /// <summary>
-    /// Draw rectangle lines within an image with extended parameters
-    /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
-    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ImageDrawRectangleLinesEx(ref Image dst, Vector4 rec, int thick, Color color);
+    public static unsafe partial void ImageDrawLineStrip(ref Image dst, Vector2* points, int pointCount, Color color);
 
     /// <summary>
     /// Draw triangle within an image
@@ -2580,11 +2531,95 @@ public static unsafe partial class Raylib
     public static unsafe partial void ImageDrawTriangleStrip(ref Image dst, Vector2* points, int pointCount, Color color);
 
     /// <summary>
-    /// Draw a source image within a destination image (tint applied to source)
+    /// Draw rectangle within an image
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ImageDraw(ref Image dst, Image src, Vector4 srcRec, Vector4 dstRec, Color tint);
+    public static partial void ImageDrawRectangle(ref Image dst, int posX, int posY, int width, int height, Color color);
+
+    /// <summary>
+    /// Draw rectangle within an image (Vector version)
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static unsafe partial void ImageDrawRectangleV(Image* dst, Vector2 position, Vector2 size, Color color);
+
+    /// <summary>
+    /// Draw rectangle within an image
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ImageDrawRectangleRec(ref Image dst, Vector4 rec, Color color);
+
+    /// <summary>
+    /// Draw rectangle lines within an image
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ImageDrawRectangleLines(ref Image dst, int posX, int posY, int width, int height, Color color);
+
+    /// <summary>
+    /// Draw rectangle lines within an image with line thickness
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ImageDrawRectangleLinesEx(ref Image dst, Vector4 rec, int thick, Color color);
+
+    /// <summary>
+    /// Draw a filled circle within an image
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ImageDrawCircle(ref Image dst, int centerX, int centerY, int radius, Color color);
+
+    /// <summary>
+    /// Draw a filled circle within an image (Vector version)
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ImageDrawCircleV(ref Image dst, Vector2 center, int radius, Color color);
+
+    /// <summary>
+    /// Draw circle outline within an image
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ImageDrawCircleLines(ref Image dst, int centerX, int centerY, int radius, Color color);
+
+    /// <summary>
+    /// Draw circle outline within an image (Vector version)
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ImageDrawCircleLinesV(ref Image dst, Vector2 center, int radius, Color color);
+
+    /// <summary>
+    /// Draw a gradient-filled circle within an image
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ImageDrawCircleGradient(ref Image dst, Vector2 center, float radius, Color inner, Color outer);
+
+    /// <summary>
+    /// Draw an image within an image
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ImageDrawImage(ref Image dst, Image src, int posX, int posY, Color tint);
+
+    /// <summary>
+    /// Draw a part of an image defined by a rectangle within an image
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ImageDrawImageRec(ref Image dst, Image src, Vector4 srcRec, Vector2 position, Color tint);
+
+    /// <summary>
+    /// Draw a part of an image defined by a rectangle into destination rectangle, with scaling and rotation, within an image
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ImageDrawImagePro(ref Image dst, Image src, Vector4 srcRec, Vector4 dstRec, Vector2 origin, float rotation, Color tint);
 
     /// <summary>
     /// Draw text (using default font) within an image (destination)
@@ -2629,7 +2664,7 @@ public static unsafe partial class Raylib
     public static partial RenderTexture LoadRenderTexture(int width, int height);
 
     /// <summary>
-    /// Check if a texture is valid (loaded in GPU)
+    /// Check if texture is valid (loaded in GPU)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -2643,7 +2678,7 @@ public static unsafe partial class Raylib
     public static partial void UnloadTexture(Texture texture);
 
     /// <summary>
-    /// Check if a render texture is valid (loaded in GPU)
+    /// Check if render texture is valid (loaded in GPU)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -2706,7 +2741,7 @@ public static unsafe partial class Raylib
     public static partial void DrawTextureV(Texture texture, Vector2 position, Color tint);
 
     /// <summary>
-    /// Draw a Texture2D with extended parameters
+    /// Draw a Texture2D with rotation and scale
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -2717,21 +2752,21 @@ public static unsafe partial class Raylib
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DrawTextureRec(Texture texture, Vector4 source, Vector2 position, Color tint);
+    public static partial void DrawTextureRec(Texture texture, Vector4 rec, Vector2 position, Color tint);
 
     /// <summary>
-    /// Draw a part of a texture defined by a rectangle with 'pro' parameters
+    /// Draw a part of a texture defined by a source rectangle to destination rectangle, with scaling and rotation
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DrawTexturePro(Texture texture, Vector4 source, Vector4 dest, Vector2 origin, float rotation, Color tint);
+    public static partial void DrawTexturePro(Texture texture, Vector4 srcrec, Vector4 dstrec, Vector2 origin, float rotation, Color tint);
 
     /// <summary>
     /// Draw a texture (or part of it) that stretches or shrinks nicely
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DrawTextureNPatch(Texture texture, NPatchInfo nPatchInfo, Vector4 dest, Vector2 origin, float rotation, Color tint);
+    public static partial void DrawTextureNPatch(Texture texture, NPatchInfo nPatchInfo, Vector4 dstrec, Vector2 origin, float rotation, Color tint);
 
     /// <summary>
     /// Check if two colors are equal
@@ -2867,7 +2902,7 @@ public static unsafe partial class Raylib
     public static partial Font LoadFont(string fileName);
 
     /// <summary>
-    /// Load font from file with extended parameters, use NULL for codepoints and 0 for codepointCount to load the default character set, font size is provided in pixels height
+    /// Load font from file with defined codepoints and generation size, use NULL for codepoints and 0 for codepointCount to load the default character set, font size is provided in pixels height
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -2888,7 +2923,7 @@ public static unsafe partial class Raylib
     public static unsafe partial Font LoadFontFromMemory(string fileType, byte* fileData, int dataSize, int fontSize, int* codepoints, int codepointCount);
 
     /// <summary>
-    /// Check if a font is valid (font data loaded, WARNING: GPU texture not checked)
+    /// Check if font is valid (font data loaded, WARNING: GPU texture not checked)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -3287,7 +3322,7 @@ public static unsafe partial class Raylib
     public static partial void DrawCircle3D(Vector3 center, float radius, Vector3 rotationAxis, float rotationAngle, Color color);
 
     /// <summary>
-    /// Draw a color-filled triangle (vertex in counter-clockwise order!)
+    /// Draw a color-filled triangle, counter-clockwise vertex order
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -3336,7 +3371,7 @@ public static unsafe partial class Raylib
     public static partial void DrawSphere(Vector3 centerPos, float radius, Color color);
 
     /// <summary>
-    /// Draw sphere with extended parameters
+    /// Draw sphere with defined rings and slices
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -3354,7 +3389,7 @@ public static unsafe partial class Raylib
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DrawCylinder(Vector3 position, float radiusTop, float radiusBottom, float height, int slices, Color color);
+    public static partial void DrawCylinder(Vector3 position, float radiusTop, float radiusBottom, float height, int sides, Color color);
 
     /// <summary>
     /// Draw a cylinder with base at startPos and top at endPos
@@ -3368,14 +3403,14 @@ public static unsafe partial class Raylib
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DrawCylinderWires(Vector3 position, float radiusTop, float radiusBottom, float height, int slices, Color color);
+    public static partial void DrawCylinderWires(Vector3 position, float radiusTop, float radiusBottom, float height, int sides, Color color);
 
     /// <summary>
     /// Draw a cylinder wires with base at startPos and top at endPos
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DrawCylinderWiresEx(Vector3 startPos, Vector3 endPos, float startRadius, float endRadius, int slices, Color color);
+    public static partial void DrawCylinderWiresEx(Vector3 startPos, Vector3 endPos, float startRadius, float endRadius, int sides, Color color);
 
     /// <summary>
     /// Draw a capsule with the center of its sphere caps at startPos and endPos
@@ -3427,7 +3462,7 @@ public static unsafe partial class Raylib
     public static partial Model LoadModelFromMesh(Mesh mesh);
 
     /// <summary>
-    /// Check if a model is valid (loaded in GPU, VAO/VBOs)
+    /// Check if model is valid (loaded in GPU, VAO/VBOs)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -3455,7 +3490,7 @@ public static unsafe partial class Raylib
     public static partial void DrawModel(Model model, Vector3 position, float scale, Color tint);
 
     /// <summary>
-    /// Draw a model with extended parameters
+    /// Draw a model with custom transform
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -3469,7 +3504,7 @@ public static unsafe partial class Raylib
     public static partial void DrawModelWires(Model model, Vector3 position, float scale, Color tint);
 
     /// <summary>
-    /// Draw a model wires (with texture if set) with extended parameters
+    /// Draw a model wires with custom transform
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -3490,18 +3525,18 @@ public static unsafe partial class Raylib
     public static partial void DrawBillboard(Camera3D camera, Texture texture, Vector3 position, float scale, Color tint);
 
     /// <summary>
-    /// Draw a billboard texture defined by source
+    /// Draw a billboard texture defined by rectangle
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DrawBillboardRec(Camera3D camera, Texture texture, Vector4 source, Vector3 position, Vector2 size, Color tint);
+    public static partial void DrawBillboardRec(Camera3D camera, Texture texture, Vector4 rec, Vector3 position, Vector2 size, Color tint);
 
     /// <summary>
-    /// Draw a billboard texture defined by source and rotation
+    /// Draw a billboard texture defined by source rectangle with scaling and rotation
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void DrawBillboardPro(Camera3D camera, Texture texture, Vector4 source, Vector3 position, Vector3 up, Vector2 size, Vector2 origin, float rotation, Color tint);
+    public static partial void DrawBillboardPro(Camera3D camera, Texture texture, Vector4 rec, Vector3 position, Vector3 up, Vector2 size, Vector2 origin, float rotation, Color tint);
 
     /// <summary>
     /// Upload mesh vertex data in GPU and provide VAO/VBO ids
@@ -3658,7 +3693,7 @@ public static unsafe partial class Raylib
     public static partial Material LoadMaterialDefault();
 
     /// <summary>
-    /// Check if a material is valid (shader assigned, map textures loaded in GPU)
+    /// Check if material is valid (shader assigned, map textures loaded in GPU)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -3854,7 +3889,7 @@ public static unsafe partial class Raylib
     public static partial Sound LoadSoundAlias(Sound source);
 
     /// <summary>
-    /// Check if a sound is valid (data loaded and buffers initialized)
+    /// Check if sound is valid (data loaded and buffers initialized)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -3931,7 +3966,7 @@ public static unsafe partial class Raylib
     public static partial void ResumeSound(Sound sound);
 
     /// <summary>
-    /// Check if a sound is currently playing
+    /// Check if sound is currently playing
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -4008,7 +4043,7 @@ public static unsafe partial class Raylib
     public static unsafe partial Music LoadMusicStreamFromMemory(string fileType, byte* data, int dataSize);
 
     /// <summary>
-    /// Check if a music stream is valid (context and buffers initialized)
+    /// Check if music stream is valid (context and buffers initialized)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
