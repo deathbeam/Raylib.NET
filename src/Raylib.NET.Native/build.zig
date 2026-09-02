@@ -68,11 +68,12 @@ pub fn build(b: *std.Build) !void {
     else
         std.builtin.LinkMode.dynamic;
 
-    // Determine OpenGL version based on target
-    const opengl_version = if (target.result.os.tag == .emscripten)
-        rl.OpenglVersion.gles_3
-    else
-        rl.OpenglVersion.gl_4_3;
+    // macOS only supports OpenGL up to 4.1, so use the 3.3 backend there.
+    const opengl_version = switch (target.result.os.tag) {
+        .emscripten => rl.OpenglVersion.gles_3,
+        .macos => rl.OpenglVersion.gl_3_3,
+        else => rl.OpenglVersion.gl_4_3,
+    };
 
     const platform = if (target.result.os.tag == .emscripten)
         rl.PlatformBackend.glfw
