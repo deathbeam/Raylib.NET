@@ -4,4 +4,11 @@
     <DirectPInvoke Include="raylib"/>
     <NativeLibrary Include="$(RaylibStaticLibrary)"/>
   </ItemGroup>
+
+  <ItemGroup Condition="'$(PublishAot)' == 'true' And ('$(RuntimeIdentifier)' == 'osx-x64' Or '$(RuntimeIdentifier)' == 'osx-arm64')">
+    <NativeFramework Include="Cocoa" />
+    <NativeFramework Include="IOKit" />
+    <NativeFramework Include="CoreFoundation" />
+    <NativeFramework Include="OpenGL" />
+  </ItemGroup>
 </Project>
