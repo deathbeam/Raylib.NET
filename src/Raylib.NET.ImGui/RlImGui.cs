@@ -146,6 +146,22 @@ public static unsafe class RlImGui
         ImGui.NewFrame();
     }
 
+    /// <summary>Begin a frame rendered at displaySize and presented in a window-space viewport (x, y, width, height).</summary>
+    public static void Begin(Vector2 displaySize, Vector4 viewport, float dt = -1)
+    {
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(displaySize.X);
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(displaySize.Y);
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(viewport.Z);
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(viewport.W);
+        SetContexts();
+        NewFrame(dt);
+        var io = ImGui.GetIO();
+        io.DisplaySize = displaySize;
+        io.DisplayFramebufferScale = Vector2.One;
+        FrameEvents(new Vector2(viewport.X, viewport.Y), displaySize / new Vector2(viewport.Z, viewport.W));
+        ImGui.NewFrame();
+    }
+
     /// <summary>
     /// End the current ImGui frame and render to screen.
     /// </summary>
@@ -591,9 +607,9 @@ public static unsafe class RlImGui
     }
 
     /// <summary>
-    /// Setup FontAwesome icons by merging them with existing fonts.
+    /// Merge FontAwesome icons into the most recently added font, at that font's size.
     /// </summary>
-    private static void SetupFontAwesome()
+    public static void SetupFontAwesome()
     {
         var io = ImGui.GetIO();
 
@@ -605,8 +621,13 @@ public static unsafe class RlImGui
             0
         ];
 
-        // Prepare font config with merge settings
-        var fontConfig = FontConfig(11);
+        if (io.Fonts.Fonts.Size == 0)
+            return;
+
+        // Merge at the target font's size: icons rasterize 1:1, and the DPI multiply only fits FontConfig-scaled fonts.
+        var fontConfig = ImGui.ImFontConfig();
+        fontConfig.SizePixels = io.Fonts.Fonts[io.Fonts.Fonts.Size - 1].LegacySize;
+        fontConfig.RasterizerMultiply = 1f;
         fontConfig.MergeMode = true;                    // Merge icons into the previously added font
         fontConfig.PixelSnapH = true;
         fontConfig.FontDataOwnedByAtlas = false;        // Data is owned by us (decoded base64), not ImGui
@@ -785,9 +806,10 @@ public static unsafe class RlImGui
         }
     }
 
-    private static void FrameEvents()
+    private static void FrameEvents(Vector2 mouseOffset = default, Vector2? mouseScale = null)
     {
         ImGuiIOPtr io = ImGui.GetIO();
+        var scale = mouseScale ?? Vector2.One;
 
         bool focused = Raylib.IsWindowFocused();
         if (focused != LastFrameFocused)
@@ -844,9 +866,15 @@ public static unsafe class RlImGui
         if (focused)
         {
             if (!io.WantSetMousePos)
-                io.AddMousePosEvent(Raylib.GetMouseX(), Raylib.GetMouseY());
+            {
+                var mouse = (Raylib.GetMousePosition() - mouseOffset) * scale;
+                io.AddMousePosEvent(mouse.X, mouse.Y);
+            }
             else
-                Raylib.SetMousePosition((int)io.MousePos.X, (int)io.MousePos.Y);
+            {
+                var mouse = io.MousePos / scale + mouseOffset;
+                Raylib.SetMousePosition((int)mouse.X, (int)mouse.Y);
+            }
 
             SetMouseEvent(io, 0, ImGuiMouseButton.Left);
             SetMouseEvent(io, 1, ImGuiMouseButton.Right);
@@ -992,6 +1020,18 @@ public static unsafe class RlImGui
         Rlgl.DrawRenderBatchActive();
         Rlgl.DisableBackfaceCulling();
 
+        // ImGui's backend blends rgb with src alpha and alpha with one, so drawing into a
+        // transparent target leaves true premultiplied alpha instead of alpha squared.
+        Rlgl.SetBlendFactorsSeparate(
+            Rlgl.RL_SRC_ALPHA,
+            Rlgl.RL_ONE_MINUS_SRC_ALPHA,
+            Rlgl.RL_ONE,
+            Rlgl.RL_ONE_MINUS_SRC_ALPHA,
+            Rlgl.RL_FUNC_ADD,
+            Rlgl.RL_FUNC_ADD
+        );
+        Raylib.BeginBlendMode((int)BlendMode.BLEND_CUSTOM_SEPARATE);
+
         for (int l = 0; l < data.CmdListsCount; l++)
         {
             var commandList = data.CmdLists[l];
@@ -1024,6 +1064,8 @@ public static unsafe class RlImGui
                 Rlgl.DrawRenderBatchActive();
             }
         }
+
+        Raylib.EndBlendMode();
 
         Rlgl.SetTexture(0);
         Rlgl.DisableScissorTest();
