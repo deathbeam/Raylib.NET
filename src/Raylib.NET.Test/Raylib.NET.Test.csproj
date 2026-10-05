@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Raylib.NET\Raylib.NET.csproj" />
+    <ProjectReference Include="..\Raylib.NET.ImGui\Raylib.NET.ImGui.csproj" />
   </ItemGroup>
 
 </Project>

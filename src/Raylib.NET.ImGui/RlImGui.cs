@@ -633,6 +633,8 @@ public static unsafe class RlImGui
         fontConfig.FontDataOwnedByAtlas = false;        // Data is owned by us (decoded base64), not ImGui
         fontConfig.OversampleH = 2;                     // FontAwesome uses explicit oversampling
         fontConfig.OversampleV = 1;
+        fontConfig.GlyphMinAdvanceX = fontConfig.SizePixels;   // Fixed-width icon cells: min == max forces
+        fontConfig.GlyphMaxAdvanceX = fontConfig.SizePixels;   // every glyph to the same advance width
 
         // Decode base64 font data
         byte[] fontData = Convert.FromBase64String(FontAwesomeData.CompressedDataBase64);
