@@ -75,22 +75,23 @@
         </When>
         <When Condition="$(RuntimeIdentifier) == 'linux-x64'">
             <PropertyGroup>
-                <ZigIdentifier>x86_64-linux-gnu</ZigIdentifier>
+                <!-- .2.17 = oldest glibc zig targets (CentOS 7 / Ubuntu 14.04+), so natives load on old LTS distros -->
+                <ZigIdentifier>x86_64-linux-gnu.2.17</ZigIdentifier>
             </PropertyGroup>
         </When>
         <When Condition="$(RuntimeIdentifier) == 'linux-x86'">
             <PropertyGroup>
-                <ZigIdentifier>x86-linux-gnu</ZigIdentifier>
+                <ZigIdentifier>x86-linux-gnu.2.17</ZigIdentifier>
             </PropertyGroup>
         </When>
         <When Condition="$(RuntimeIdentifier) == 'linux-arm'">
             <PropertyGroup>
-                <ZigIdentifier>arm-linux-gnueabihf</ZigIdentifier>
+                <ZigIdentifier>arm-linux-gnueabihf.2.17</ZigIdentifier>
             </PropertyGroup>
         </When>
         <When Condition="$(RuntimeIdentifier) == 'linux-arm64'">
             <PropertyGroup>
-                <ZigIdentifier>aarch64-linux-gnu</ZigIdentifier>
+                <ZigIdentifier>aarch64-linux-gnu.2.17</ZigIdentifier>
             </PropertyGroup>
         </When>
         <When Condition="$(RuntimeIdentifier) == 'osx-x64'">

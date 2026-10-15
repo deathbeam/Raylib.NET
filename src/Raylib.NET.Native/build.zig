@@ -3,7 +3,8 @@ const std = @import("std");
 // Compile raylib (lib/raylib submodule) + raygui (lib/raygui submodule) sources directly,
 // without depending on raylib's own build.zig. Mirrors the flags raylib's build sets:
 // glfw platform, OpenGL 4.3 desktop / 3.3 macOS / ES 3 emscripten, Wayland-only on Linux.
-// Kept in sync with lib/raylib/build.zig (module sources, defines, system libs).
+// Kept in sync with lib/raylib/build.zig (module sources, defines), except we link no
+// system libraries on Linux (see the linux section below).
 
 const raylib_dir = "../../lib/raylib";
 const raygui_dir = "../../lib/raygui";
@@ -12,15 +13,6 @@ fn linkWindows(mod: *std.Build.Module) void {
     mod.linkSystemLibrary("opengl32", .{});
     mod.linkSystemLibrary("winmm", .{});
     mod.linkSystemLibrary("gdi32", .{});
-}
-
-fn linkLinux(mod: *std.Build.Module) void {
-    mod.linkSystemLibrary("GL", .{});
-    // Wayland-only display backend, matching previous builds (_GLFW_X11 is not set)
-    mod.linkSystemLibrary("wayland-client", .{});
-    mod.linkSystemLibrary("wayland-cursor", .{});
-    mod.linkSystemLibrary("wayland-egl", .{});
-    mod.linkSystemLibrary("xkbcommon", .{});
 }
 
 fn linkMacOS(b: *std.Build, mod: *std.Build.Module) void {
@@ -148,7 +140,7 @@ fn buildRaylib(
             mod.addCMacro("PLATFORM_DESKTOP_GLFW", "");
             mod.addCMacro("GRAPHICS_API_OPENGL_43", "");
             mod.addCMacro("_GLFW_WAYLAND", "");
-            linkLinux(mod);
+            mod.addSystemIncludePath(.{ .cwd_relative = "/usr/include" });
             waylandGenerate(b, raylib);
 
             const files = sources ++ [_][]const u8{raylib_dir ++ "/src/rglfw.c"};
@@ -174,22 +166,6 @@ fn buildRaylib(
             mod.addCSourceFiles(.{ .files = &sources, .flags = &flags });
         },
         else => @panic("Target is not supported"),
-    }
-
-    // Add platform-specific include/library paths for cross-compiling
-    // Due to *terrible* zig default behaviour for include paths when cross-compiling I have to do this
-    // The includes are resolved properly only when -Dtarget=native (or omitted) is passed
-    if (os == .linux) {
-        // Debian multiarch dir for the target; x86 is called i386 there
-        const arch = if (target.result.cpu.arch == .x86) "i386" else @tagName(target.result.cpu.arch);
-        const multiarch = b.fmt("{s}-linux-{s}", .{ arch, @tagName(target.result.abi) });
-        mod.addLibraryPath(.{ .cwd_relative = b.fmt("/usr/lib/{s}", .{multiarch}) });
-        mod.addIncludePath(.{ .cwd_relative = b.fmt("/usr/include/{s}", .{multiarch}) });
-        mod.addSystemIncludePath(.{ .cwd_relative = "/usr/include" });
-        mod.addLibraryPath(.{ .cwd_relative = "/usr/lib" });
-
-        // https://github.com/ziglang/zig/issues/7935
-        if (target.result.cpu.arch == .x86) raylib.link_z_notext = true;
     }
 
     // The csproj passes --sysroot "$(EMSDK)/upstream/emscripten"; emsdk ships the sysroot

@@ -80,79 +80,11 @@ jobs:
         with:
           dotnet-version: 8.0.x
 
-      - name: Setup Environment (x64)
-        if: matrix.os == 'ubuntu-latest' && matrix.runtime == 'linux-x64'
+      - name: Setup Environment (Linux)
+        if: startsWith(matrix.runtime, 'linux-')
         run: |
           sudo apt-get update
-          sudo apt-get install -y --no-install-recommends \
-              gcc-multilib \
-              libgl1-mesa-dev \
-              libx11-dev \
-              libxcursor-dev \
-              libxrandr-dev \
-              libxinerama-dev \
-              libxi-dev \
-              libxext-dev \
-              libxfixes-dev \
-              libwayland-dev \
-              libxkbcommon-dev
-
-      - name: Setup Environment (x86)
-        if: matrix.os == 'ubuntu-latest' && matrix.runtime == 'linux-x86'
-        run: |
-          sudo dpkg --add-architecture i386
-          sudo apt-get update
-          # Install dependencies
-          sudo apt-get install -y --no-install-recommends \
-              libgl1-mesa-dev:i386 \
-              libx11-dev:i386 \
-              libxcursor-dev:i386 \
-              libxrandr-dev:i386 \
-              libxinerama-dev:i386 \
-              libxi-dev:i386 \
-              libxext-dev:i386 \
-              libxfixes-dev:i386 \
-              libwayland-dev:i386 \
-              libxkbcommon-dev:i386
-
-      - name: Setup Environment (arm64)
-        if: matrix.os == 'ubuntu-latest' && matrix.runtime == 'linux-arm64'
-        run: |
-          sudo dpkg --add-architecture arm64
-          sudo apt-get install -y lsb-release
-
-          # Restrict main sources to amd64 only
-          sudo sed -i '/^Components:/a Architectures: amd64' /etc/apt/sources.list.d/ubuntu.sources
-
-          # Add ports sources for arm64
-          UBUNTU_CODENAME=$(lsb_release -cs)
-          sudo tee /etc/apt/sources.list.d/ubuntu-ports.sources << EOF
-          Types: deb
-          URIs: http://ports.ubuntu.com/ubuntu-ports/
-          Suites: $UBUNTU_CODENAME $UBUNTU_CODENAME-updates $UBUNTU_CODENAME-backports
-          Components: main universe restricted multiverse
-          Architectures: arm64
-
-          Types: deb
-          URIs: http://ports.ubuntu.com/ubuntu-ports/
-          Suites: $UBUNTU_CODENAME-security
-          Components: main universe restricted multiverse
-          Architectures: arm64
-          EOF
-
-          sudo apt-get update
-          # Install dependencies
-          sudo apt-get install -y --no-install-recommends \
-              libgl1-mesa-dev:arm64 \
-              libx11-dev:arm64 \
-              libxcursor-dev:arm64 \
-              libxrandr-dev:arm64 \
-              libxinerama-dev:arm64 \
-              libxi-dev:arm64 \
-              libxext-dev:arm64 \
-              libxfixes-dev:arm64 \
-              libwayland-dev:arm64 \
-              libxkbcommon-dev:arm64
+          sudo apt-get install -y --no-install-recommends libwayland-dev libxkbcommon-dev
 
       - name: Setup EMSDK
         if: matrix.runtime == 'browser-wasm'
