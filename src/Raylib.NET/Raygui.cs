@@ -12,11 +12,11 @@ public static unsafe partial class Raygui
 
     public const int RAYGUI_VERSION_MAJOR = 5;
 
-    public const int RAYGUI_VERSION_MINOR = 0;
+    public const int RAYGUI_VERSION_MINOR = 1;
 
     public const int RAYGUI_VERSION_PATCH = 0;
 
-    public const string RAYGUI_VERSION = "5.0-dev";
+    public const string RAYGUI_VERSION = "5.1-dev";
 
     public const int SCROLLBAR_LEFT_SIDE = 0;
 
@@ -226,13 +226,6 @@ public static unsafe partial class Raygui
     public static partial int GuiPanel(Vector4 bounds, string text);
 
     /// <summary>
-    /// Tab Bar control, returns TAB to be closed or -1
-    /// </summary>
-    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
-    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static unsafe partial int GuiTabBar(Vector4 bounds, sbyte** text, int count, ref int active);
-
-    /// <summary>
     /// Scroll Panel control
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
@@ -380,28 +373,42 @@ public static unsafe partial class Raygui
     public static partial int GuiListView(Vector4 bounds, string text, ref int scrollIndex, ref int active);
 
     /// <summary>
-    /// List View using text entries list and returning focus entry
+    /// List View control, using text entries list and returning focus entry
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static unsafe partial int GuiListViewEx(Vector4 bounds, sbyte** text, int count, ref int scrollIndex, ref int active, ref int focus);
 
     /// <summary>
+    /// Tab Bar control
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial int GuiTabBar(Vector4 bounds, string text, ref int hscroll, ref int active);
+
+    /// <summary>
+    /// Tab Bar control, using text entries list and returning focus entry
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static unsafe partial int GuiTabBarEx(Vector4 bounds, sbyte** text, int count, ref int hscroll, ref int active, ref int focus);
+
+    /// <summary>
     /// Message Box control, displays a message
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial int GuiMessageBox(Vector4 bounds, string title, string message, string buttons);
+    public static partial int GuiMessageBox(Vector4 bounds, string title, string message, string btnText, ref int btnActive);
 
     /// <summary>
     /// Text Input Box control, ask for text, supports secret
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial int GuiTextInputBox(Vector4 bounds, string title, string message, string buttons, string text, int textMaxSize, ref NativeBool secretViewActive);
+    public static partial int GuiTextInputBox(Vector4 bounds, string title, string message, string text, int textSize, string btnText, ref int btnActive, ref NativeBool secretViewActive);
 
     /// <summary>
-    /// Color Picker control (multiple color controls)
+    /// Color Picker control, includes Color bar controls
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -429,14 +436,14 @@ public static unsafe partial class Raygui
     public static partial int GuiColorBarHue(Vector4 bounds, string text, ref float value);
 
     /// <summary>
-    /// Color Picker control that avoids conversion to RGB on each call (multiple color controls)
+    /// Color Picker control, using Hue-Saturation-Value color data, includes Color bar controls
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial int GuiColorPickerHSV(Vector4 bounds, string text, ref Vector3 colorHsv);
 
     /// <summary>
-    /// Color Panel control that updates Hue-Saturation-Value color value, used by GuiColorPickerHSV()
+    /// Color Panel control, using Hue-Saturation-Value color data
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]

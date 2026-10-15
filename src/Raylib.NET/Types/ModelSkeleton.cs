@@ -11,7 +11,7 @@ public partial struct ModelSkeleton
     /// <summary>
     /// Number of bones
     /// </summary>
-    public int BoneCount;
+    public uint BoneCount;
     /// <summary>
     /// Bones information (skeleton)
     /// </summary>
@@ -21,7 +21,7 @@ public partial struct ModelSkeleton
     /// </summary>
     public unsafe Transform* BindPose;
 
-    public unsafe ModelSkeleton(int boneCount, BoneInfo* bones, Transform* bindPose)
+    public unsafe ModelSkeleton(uint boneCount, BoneInfo* bones, Transform* bindPose)
     {
         this.BoneCount = boneCount;
         this.Bones = bones;

@@ -1062,7 +1062,6 @@ public static unsafe partial class Raymath
 
     /// <summary>
     /// Compose a transformation matrix from rotational, translational and scaling components
-    /// TODO: This function is not following raymath conventions defined in header: NOT self-contained
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -1070,7 +1069,7 @@ public static unsafe partial class Raymath
 
     /// <summary>
     /// Decompose a transformation matrix into its rotational, translational and scaling components and remove shear
-    /// TODO: This function is not following raymath conventions defined in header: NOT self-contained
+    /// TODO: WARNING: Following raymath convention and make the function self-contained
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]

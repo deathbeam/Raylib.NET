@@ -9,7 +9,7 @@ namespace RaylibNET;
 public partial struct Camera2D
 {
     /// <summary>
-    /// Camera offset (screen space offset from window origin)
+    /// Camera offset (screen space offset from window origin, unscaled by DPI, real pixel size)
     /// </summary>
     public Vector2 Offset;
     /// <summary>

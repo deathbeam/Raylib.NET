@@ -15,7 +15,7 @@ public partial struct ModelAnimation
     /// <summary>
     /// Number of bones (per pose)
     /// </summary>
-    public int BoneCount;
+    public uint BoneCount;
     /// <summary>
     /// Number of animation key frames
     /// </summary>

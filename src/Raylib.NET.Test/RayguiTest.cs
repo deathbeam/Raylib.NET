@@ -14,6 +14,7 @@ public class RayguiTest
     [Fact]
     public void CheckTypes()
     {
+        CheckType<GuiResult>();
         CheckType<GuiState>();
         CheckType<GuiTextAlignment>();
         CheckType<GuiTextAlignmentVertical>();

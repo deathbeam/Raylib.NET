@@ -19,4 +19,8 @@ public enum GuiDropdownBoxProperty
     /// DropdownBox roll up flag: 0-Roll down, 1-Roll up
     /// </summary>
     DROPDOWN_ROLL_UP,
+    /// <summary>
+    /// DropdownBox max height, using scrollbar if required, 0-No limit
+    /// </summary>
+    DROPDOWN_MAX_HEIGHT,
 }

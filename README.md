@@ -1,7 +1,7 @@
 ### Stuff being done here
 
 - Everything is 100% generated, no manual wrappers, minimal amount of manual mappings (mostly just slight correction for array detection, C "arrays" are worst thing ever made)
-- Natives are built for all platforms, using raylib zig build scripts
+- Natives are built for all platforms, using own zig build scripts (compiling raylib and raygui submodule sources directly)
 
 ### Stuff not being done here
 

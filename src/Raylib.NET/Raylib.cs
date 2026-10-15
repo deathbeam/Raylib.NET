@@ -12,11 +12,11 @@ public static unsafe partial class Raylib
 
     public const int RAYLIB_VERSION_MAJOR = 6;
 
-    public const int RAYLIB_VERSION_MINOR = 1;
+    public const int RAYLIB_VERSION_MINOR = 2;
 
     public const int RAYLIB_VERSION_PATCH = 0;
 
-    public const string RAYLIB_VERSION = "6.1-dev";
+    public const string RAYLIB_VERSION = "6.2";
 
     public const float PI = 3.14159265358979323846f;
 
@@ -753,7 +753,7 @@ public static unsafe partial class Raylib
     public static partial void TakeScreenshot(string fileName);
 
     /// <summary>
-    /// Set up init configuration flags (view FLAGS)
+    /// Set init configuration flags (view FLAGS)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -949,6 +949,13 @@ public static unsafe partial class Raylib
     public static partial NativeBool IsFileExtension(string fileName, string ext);
 
     /// <summary>
+    /// Check if file path (file or directory) is hidden by OS
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial NativeBool IsFileHidden(string filePath);
+
+    /// <summary>
     /// Get file length in bytes (NOTE: GetFileSize() conflicts with windows.h)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
@@ -984,14 +991,14 @@ public static unsafe partial class Raylib
     public static partial string GetFileNameWithoutExt(string filePath);
 
     /// <summary>
-    /// Get full path for a given fileName with path (uses static string)
+    /// Get full path for a provided fileName with path (uses static string)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial string GetDirectoryPath(string filePath);
 
     /// <summary>
-    /// Get previous directory path for a given path (uses static string)
+    /// Get previous directory path for a provided path (uses static string)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -1026,11 +1033,25 @@ public static unsafe partial class Raylib
     public static partial int ChangeDirectory(string dirPath);
 
     /// <summary>
-    /// Check if given path is a file or a directory
+    /// Check if provided path points to a file
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial NativeBool IsPathFile(string path);
+
+    /// <summary>
+    /// Check if provided path points to a directory
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial NativeBool IsPathDirectory(string path);
+
+    /// <summary>
+    /// Check if provided path is an absolute path
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial NativeBool IsPathAbsolute(string path);
 
     /// <summary>
     /// Check if fileName is valid for the platform/OS
@@ -1467,7 +1488,7 @@ public static unsafe partial class Raylib
     public static partial Vector2 GetTouchPosition(int index);
 
     /// <summary>
-    /// Get touch point identifier for given index
+    /// Get touch point identifier for provided index
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -1649,6 +1670,13 @@ public static unsafe partial class Raylib
     public static partial void DrawTriangleLines(Vector2 v1, Vector2 v2, Vector2 v3, Color color);
 
     /// <summary>
+    /// Draw triangle outline with line thickness, counter-clockwise vertex order
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void DrawTriangleLinesEx(Vector2 v1, Vector2 v2, Vector2 v3, float thick, Color color);
+
+    /// <summary>
     /// Draw a triangle fan defined by points (first vertex is the center)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
@@ -1803,6 +1831,13 @@ public static unsafe partial class Raylib
     public static partial void DrawCircleSectorLines(Vector2 center, float radius, float startAngle, float endAngle, int segments, Color color);
 
     /// <summary>
+    /// Draw circle sector outline with thickness
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void DrawCircleSectorLinesEx(Vector2 center, float radius, float startAngle, float endAngle, int segments, float thick, Color color);
+
+    /// <summary>
     /// Draw circle outline
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
@@ -1852,6 +1887,13 @@ public static unsafe partial class Raylib
     public static partial void DrawEllipseLinesV(Vector2 center, float radiusH, float radiusV, Color color);
 
     /// <summary>
+    /// Draw ellipse outline with line thickness
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void DrawEllipseLinesEx(Vector2 center, float radiusH, float radiusV, float thick, Color color);
+
+    /// <summary>
     /// Draw ring
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
@@ -1864,6 +1906,13 @@ public static unsafe partial class Raylib
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial void DrawRingLines(Vector2 center, float innerRadius, float outerRadius, float startAngle, float endAngle, int segments, Color color);
+
+    /// <summary>
+    /// Draw ring outline with line thickness
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void DrawRingLinesEx(Vector2 center, float innerRadius, float outerRadius, float startAngle, float endAngle, int segments, float thick, Color color);
 
     /// <summary>
     /// Draw spline: Linear, minimum 2 points
@@ -2447,7 +2496,7 @@ public static unsafe partial class Raylib
     public static partial Color GetImageColor(Image image, int x, int y);
 
     /// <summary>
-    /// Clear image background with given color
+    /// Clear image background with provided color
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -2552,6 +2601,13 @@ public static unsafe partial class Raylib
     public static partial void ImageDrawRectangleRec(ref Image dst, Vector4 rec, Color color);
 
     /// <summary>
+    /// Draw a color-filled rectangle with pro parameters within and image
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ImageDrawRectanglePro(ref Image dst, Vector4 rec, Vector2 origin, float rotation, Color color);
+
+    /// <summary>
     /// Draw rectangle lines within an image
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
@@ -2564,6 +2620,13 @@ public static unsafe partial class Raylib
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial void ImageDrawRectangleLinesEx(ref Image dst, Vector4 rec, int thick, Color color);
+
+    /// <summary>
+    /// Draw rectangle with gradient colors within an image, counter-clockwise color order
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ImageDrawRectangleGradientEx(ref Image dst, Vector4 rec, Color col1, Color col2, Color col3, Color col4);
 
     /// <summary>
     /// Draw a filled circle within an image
@@ -2608,6 +2671,13 @@ public static unsafe partial class Raylib
     public static partial void ImageDrawImage(ref Image dst, Image src, int posX, int posY, Color tint);
 
     /// <summary>
+    /// Draw an image with scaling and rotation within an image
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ImageDrawImageEx(ref Image dst, Image src, Vector2 position, float rotation, float scale, Color tint);
+
+    /// <summary>
     /// Draw a part of an image defined by a rectangle within an image
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
@@ -2636,6 +2706,13 @@ public static unsafe partial class Raylib
     public static partial void ImageDrawTextEx(ref Image dst, Font font, string text, Vector2 position, float fontSize, float spacing, Color tint);
 
     /// <summary>
+    /// Draw text using Font and pro parameters (rotation)
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ImageDrawTextPro(ref Image dst, Font font, string text, Vector2 position, Vector2 origin, float rotation, float fontSize, float spacing, Color tint);
+
+    /// <summary>
     /// Load texture from file into GPU memory (VRAM)
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
@@ -2662,6 +2739,13 @@ public static unsafe partial class Raylib
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial RenderTexture LoadRenderTexture(int width, int height);
+
+    /// <summary>
+    /// Load texture for rendering (framebuffer), with specific format
+    /// </summary>
+    [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial RenderTexture LoadRenderTextureEx(int width, int height, int format);
 
     /// <summary>
     /// Check if texture is valid (loaded in GPU)
