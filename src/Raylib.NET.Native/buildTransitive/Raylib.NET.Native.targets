@@ -10,5 +10,6 @@
     <NativeFramework Include="IOKit" />
     <NativeFramework Include="CoreFoundation" />
     <NativeFramework Include="OpenGL" />
+    <NativeFramework Include="QuartzCore" />
   </ItemGroup>
 </Project>

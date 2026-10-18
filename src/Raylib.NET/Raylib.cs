@@ -12,11 +12,11 @@ public static unsafe partial class Raylib
 
     public const int RAYLIB_VERSION_MAJOR = 6;
 
-    public const int RAYLIB_VERSION_MINOR = 2;
+    public const int RAYLIB_VERSION_MINOR = 5;
 
     public const int RAYLIB_VERSION_PATCH = 0;
 
-    public const string RAYLIB_VERSION = "6.2";
+    public const string RAYLIB_VERSION = "6.5-dev";
 
     public const float PI = 3.14159265358979323846f;
 

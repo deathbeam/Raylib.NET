@@ -96,12 +96,12 @@
         </When>
         <When Condition="$(RuntimeIdentifier) == 'osx-x64'">
             <PropertyGroup>
-                <ZigIdentifier>x86_64-macos</ZigIdentifier>
+                <ZigIdentifier>x86_64-macos.11.0</ZigIdentifier>
             </PropertyGroup>
         </When>
         <When Condition="$(RuntimeIdentifier) == 'osx-arm64'">
             <PropertyGroup>
-                <ZigIdentifier>aarch64-macos</ZigIdentifier>
+                <ZigIdentifier>aarch64-macos.11.0</ZigIdentifier>
             </PropertyGroup>
         </When>
         <When Condition="$(RuntimeIdentifier) == 'browser-wasm'">
