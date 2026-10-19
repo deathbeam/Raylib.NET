@@ -16,7 +16,7 @@
 - Raymath
 - Rlgl
 - Raygui
-- ImGui raylib renderer
+- RlImGui
 
 ### Supported platforms
 
