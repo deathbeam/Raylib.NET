@@ -55,29 +55,24 @@
     <Choose>
         <When Condition="$(RuntimeIdentifier) == 'win-x64'">
             <PropertyGroup>
-                <!-- MSVC-abi static lib for NativeAOT, needs MSVC on the host; gnu dll-only cross build otherwise -->
-                <ZigIdentifier Condition="$([MSBuild]::IsOSPlatform('Windows'))">x86_64-windows-msvc</ZigIdentifier>
-                <ZigIdentifier Condition="!$([MSBuild]::IsOSPlatform('Windows'))">x86_64-windows-gnu</ZigIdentifier>
+                <ZigIdentifier>x86_64-windows-gnu</ZigIdentifier>
                 <ZigArgs Condition="!$([MSBuild]::IsOSPlatform('Windows'))">-Dstatic=false</ZigArgs>
             </PropertyGroup>
         </When>
         <When Condition="$(RuntimeIdentifier) == 'win-x86'">
             <PropertyGroup>
-                <ZigIdentifier Condition="$([MSBuild]::IsOSPlatform('Windows'))">x86-windows-msvc</ZigIdentifier>
-                <ZigIdentifier Condition="!$([MSBuild]::IsOSPlatform('Windows'))">x86-windows-gnu</ZigIdentifier>
+                <ZigIdentifier>x86-windows-gnu</ZigIdentifier>
                 <ZigArgs Condition="!$([MSBuild]::IsOSPlatform('Windows'))">-Dstatic=false</ZigArgs>
             </PropertyGroup>
         </When>
         <When Condition="$(RuntimeIdentifier) == 'win-arm64'">
             <PropertyGroup>
-                <ZigIdentifier Condition="$([MSBuild]::IsOSPlatform('Windows'))">aarch64-windows-msvc</ZigIdentifier>
-                <ZigIdentifier Condition="!$([MSBuild]::IsOSPlatform('Windows'))">aarch64-windows-gnu</ZigIdentifier>
+                <ZigIdentifier>aarch64-windows-gnu</ZigIdentifier>
                 <ZigArgs Condition="!$([MSBuild]::IsOSPlatform('Windows'))">-Dstatic=false</ZigArgs>
             </PropertyGroup>
         </When>
         <When Condition="$(RuntimeIdentifier) == 'linux-x64'">
             <PropertyGroup>
-                <!-- .2.17 = oldest glibc zig targets (CentOS 7 / Ubuntu 14.04+), so natives load on old LTS distros -->
                 <ZigIdentifier>x86_64-linux-gnu.2.17</ZigIdentifier>
             </PropertyGroup>
         </When>

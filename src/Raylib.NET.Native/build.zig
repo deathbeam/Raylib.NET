@@ -191,7 +191,14 @@ pub fn build(b: *std.Build) !void {
         &.{.dynamic};
 
     for (linkages, 0..) |linkage, i| {
-        const raylib = buildRaylib(b, target, optimize, linkage);
+        // the static lib is linked by MSVC link.exe (NativeAOT), so build it with the msvc abi
+        var lib_target = target;
+        if (linkage == .static and target.result.os.tag == .windows) {
+            var query = target.query;
+            query.abi = .msvc;
+            lib_target = b.resolveTargetQuery(query);
+        }
+        const raylib = buildRaylib(b, lib_target, optimize, linkage);
         if (i == 0) installHeaders(b, raylib);
         b.installArtifact(raylib);
     }
