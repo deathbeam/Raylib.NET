@@ -1,11 +1,5 @@
 const std = @import("std");
 
-// Compile raylib (lib/raylib submodule) + raygui (lib/raygui submodule) sources directly,
-// without depending on raylib's own build.zig. Mirrors the flags raylib's build sets:
-// glfw platform, OpenGL 4.3 desktop / 3.3 macOS / ES 3 emscripten, Wayland-only on Linux.
-// Kept in sync with lib/raylib/build.zig (module sources, defines), except we link no
-// system libraries on Linux (see the linux section below).
-
 const raylib_dir = "../../lib/raylib";
 const raygui_dir = "../../lib/raygui";
 
@@ -16,7 +10,6 @@ fn linkWindows(mod: *std.Build.Module) void {
 }
 
 fn linkMacOS(b: *std.Build, mod: *std.Build.Module) void {
-    // xcode_frameworks provides the frameworks for cross compiling from non-mac hosts
     if (b.lazyDependency("xcode_frameworks", .{})) |dep| {
         mod.addSystemFrameworkPath(dep.path("Frameworks"));
         mod.addSystemIncludePath(dep.path("include"));
@@ -32,7 +25,6 @@ fn linkMacOS(b: *std.Build, mod: *std.Build.Module) void {
 }
 
 // Generate wayland protocol headers with wayland-scanner for every protocol xml shipped
-// by glfw, like raylib's build does (glfw needs them pregenerated, they are not shipped)
 fn waylandGenerate(b: *std.Build, raylib: *std.Build.Step.Compile) void {
     const protocols_dir = raylib_dir ++ "/src/external/glfw/deps/wayland";
 
@@ -88,7 +80,8 @@ fn buildRaylib(
     });
 
     const raylib = b.addLibrary(.{
-        .name = "raylib",
+        // windows: the dll import lib and the static archive would both be raylib.lib and overwrite each other
+        .name = if (linkage == .static and os == .windows) "raylib_static" else "raylib",
         .linkage = linkage,
         .root_module = mod,
     });
@@ -168,8 +161,6 @@ fn buildRaylib(
         else => @panic("Target is not supported"),
     }
 
-    // The csproj passes --sysroot "$(EMSDK)/upstream/emscripten"; emsdk ships the sysroot
-    // headers prebuilt with the toolchain tarball, so no emcc run is needed
     if (os == .emscripten) {
         const sysroot = b.sysroot orelse @panic("emscripten needs --sysroot $(EMSDK)/upstream/emscripten");
         mod.addIncludePath(.{ .cwd_relative = b.pathJoin(&.{ sysroot, "cache/sysroot/include" }) });
@@ -190,13 +181,14 @@ fn installHeaders(b: *std.Build, raylib: *std.Build.Step.Compile) void {
 pub fn build(b: *std.Build) !void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
+    const static = b.option(bool, "static", "Build the static library in addition to the shared one") orelse true;
 
-    // For non-emscripten targets, build shared and static libraries,
-    // for emscripten only the static one
     const linkages: []const std.builtin.LinkMode = if (target.result.os.tag == .emscripten)
         &.{.static}
+    else if (static)
+        &.{ .dynamic, .static }
     else
-        &.{ .dynamic, .static };
+        &.{.dynamic};
 
     for (linkages, 0..) |linkage, i| {
         const raylib = buildRaylib(b, target, optimize, linkage);

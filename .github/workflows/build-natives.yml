@@ -52,22 +52,22 @@ jobs:
             os: macos-14
           - runtime: win-x64
             config: Debug
-            os: ubuntu-latest
+            os: windows-latest
           - runtime: win-x64
             config: Release
-            os: ubuntu-latest
+            os: windows-latest
           - runtime: win-x86
             config: Debug
-            os: ubuntu-latest
+            os: windows-latest
           - runtime: win-x86
             config: Release
-            os: ubuntu-latest
+            os: windows-latest
           - runtime: win-arm64
             config: Debug
-            os: ubuntu-latest
+            os: windows-latest
           - runtime: win-arm64
             config: Release
-            os: ubuntu-latest
+            os: windows-latest
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout Repository
