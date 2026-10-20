@@ -1,4 +1,11 @@
 <Project>
+  <!-- The SDK infers RuntimeIdentifier (e.g. PublishAot without -r) after package props are imported -->
+  <PropertyGroup>
+    <RaylibStaticPath>$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)../static/$(RuntimeIdentifier)/native/'))</RaylibStaticPath>
+    <RaylibStaticLibrary Condition="$(RuntimeIdentifier.StartsWith('win-'))">$(RaylibStaticPath)raylib.lib</RaylibStaticLibrary>
+    <RaylibStaticLibrary Condition="!$(RuntimeIdentifier.StartsWith('win-'))">$(RaylibStaticPath)libraylib.a</RaylibStaticLibrary>
+  </PropertyGroup>
+
   <ItemGroup Condition="('$(PublishAot)' == 'true' Or '$(RuntimeIdentifier)' == 'browser-wasm') And Exists('$(RaylibStaticLibrary)')">
     <!-- Statically link library to both PublishAOT and PublishAOT-LLVM -->
     <DirectPInvoke Include="raylib"/>

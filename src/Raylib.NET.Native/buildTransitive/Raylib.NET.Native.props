@@ -1,9 +1,4 @@
 <Project>
-  <PropertyGroup>
-    <RaylibStaticPath>$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)../static/$(RuntimeIdentifier)/native/'))</RaylibStaticPath>
-    <RaylibStaticLibrary Condition="$(RuntimeIdentifier.StartsWith('win-'))">$(RaylibStaticPath)raylib.lib</RaylibStaticLibrary>
-    <RaylibStaticLibrary Condition="!$(RuntimeIdentifier.StartsWith('win-'))">$(RaylibStaticPath)libraylib.a</RaylibStaticLibrary>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(RuntimeIdentifier)' == 'browser-wasm'">
     <!-- NativeAOT-LLVM build -->
     <PublishTrimmed>true</PublishTrimmed>
@@ -16,6 +11,6 @@
     <!-- Set emcc flags for debug and release builds -->
     <EmccFlags Condition="$(Configuration) == 'Debug'">-O2 -g3 -sASSERTIONS=1 -sVERBOSE=1 -Wbad-function-cast -Wcast-function-type</EmccFlags>
     <EmccFlags Condition="$(Configuration) == 'Release'">-O3 -g0</EmccFlags>
-    <EmccFlags>$(EmccFlags) -sUSE_GLFW=3 -sASYNCIFY=1 --shell-file $(RaylibStaticPath)minshell.html</EmccFlags>
+    <EmccFlags>$(EmccFlags) -sUSE_GLFW=3 -sASYNCIFY=1 --shell-file $(MSBuildThisFileDirectory)../static/browser-wasm/native/minshell.html</EmccFlags>
   </PropertyGroup>
 </Project>
