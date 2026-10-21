@@ -24,4 +24,14 @@
     <NativeFramework Include="OpenGL" />
     <NativeFramework Include="QuartzCore" />
   </ItemGroup>
+
+  <!-- The static library is linked into the exe, so don't publish the unused shared one -->
+  <Target Name="RaylibNETNativeRemoveSharedLibrariesFromPublish"
+          AfterTargets="ComputeResolvedFilesToPublishList"
+          Condition="'$(PublishAot)' == 'true' And Exists('$(RaylibStaticLibrary)')">
+    <ItemGroup>
+      <ResolvedFileToPublish Remove="@(ResolvedFileToPublish)"
+                             Condition="'%(ResolvedFileToPublish.NuGetPackageId)' == 'Raylib.NET.Native' Or '%(ResolvedFileToPublish.NuGetPackageId)' == 'Raylib.NET.Native.Debug'" />
+    </ItemGroup>
+  </Target>
 </Project>
