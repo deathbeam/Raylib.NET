@@ -178,15 +178,20 @@ fn installHeaders(b: *std.Build, raylib: *std.Build.Step.Compile) void {
     raylib.installHeader(b.path(raylib_dir ++ "/src/rlgl.h"), "rlgl.h");
 }
 
+fn hasMsvc(b: *std.Build, arch: std.Target.Cpu.Arch) bool {
+    const sdk = std.zig.WindowsSdk.find(b.allocator, b.graph.io, arch, &b.graph.environ_map) catch return false;
+    return sdk.msvc_lib_dir != null;
+}
+
 pub fn build(b: *std.Build) !void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
     const os = target.result.os.tag;
 
-    // the windows static lib needs the msvc sdk, which only windows hosts have
+    // the windows static lib needs msvc, skip it when it is not installed
     const linkages: []const std.builtin.LinkMode = if (os == .emscripten)
         &.{.static}
-    else if (os == .windows and b.graph.host.result.os.tag != .windows)
+    else if (os == .windows and !hasMsvc(b, target.result.cpu.arch))
         &.{.dynamic}
     else
         &.{ .dynamic, .static };
