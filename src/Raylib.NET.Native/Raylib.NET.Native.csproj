@@ -56,19 +56,16 @@
         <When Condition="$(RuntimeIdentifier) == 'win-x64'">
             <PropertyGroup>
                 <ZigIdentifier>x86_64-windows-gnu</ZigIdentifier>
-                <ZigArgs Condition="!$([MSBuild]::IsOSPlatform('Windows'))">-Dstatic=false</ZigArgs>
             </PropertyGroup>
         </When>
         <When Condition="$(RuntimeIdentifier) == 'win-x86'">
             <PropertyGroup>
                 <ZigIdentifier>x86-windows-gnu</ZigIdentifier>
-                <ZigArgs Condition="!$([MSBuild]::IsOSPlatform('Windows'))">-Dstatic=false</ZigArgs>
             </PropertyGroup>
         </When>
         <When Condition="$(RuntimeIdentifier) == 'win-arm64'">
             <PropertyGroup>
                 <ZigIdentifier>aarch64-windows-gnu</ZigIdentifier>
-                <ZigArgs Condition="!$([MSBuild]::IsOSPlatform('Windows'))">-Dstatic=false</ZigArgs>
             </PropertyGroup>
         </When>
         <When Condition="$(RuntimeIdentifier) == 'linux-x64'">

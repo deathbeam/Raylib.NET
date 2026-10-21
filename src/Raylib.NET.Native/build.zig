@@ -181,19 +181,20 @@ fn installHeaders(b: *std.Build, raylib: *std.Build.Step.Compile) void {
 pub fn build(b: *std.Build) !void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
-    const static = b.option(bool, "static", "Build the static library in addition to the shared one") orelse true;
+    const os = target.result.os.tag;
 
-    const linkages: []const std.builtin.LinkMode = if (target.result.os.tag == .emscripten)
+    // the windows static lib needs the msvc sdk, which only windows hosts have
+    const linkages: []const std.builtin.LinkMode = if (os == .emscripten)
         &.{.static}
-    else if (static)
-        &.{ .dynamic, .static }
+    else if (os == .windows and b.graph.host.result.os.tag != .windows)
+        &.{.dynamic}
     else
-        &.{.dynamic};
+        &.{ .dynamic, .static };
 
     for (linkages, 0..) |linkage, i| {
         // the static lib is linked by MSVC link.exe (NativeAOT), so build it with the msvc abi
         var lib_target = target;
-        if (linkage == .static and target.result.os.tag == .windows) {
+        if (linkage == .static and os == .windows) {
             var query = target.query;
             query.abi = .msvc;
             lib_target = b.resolveTargetQuery(query);
