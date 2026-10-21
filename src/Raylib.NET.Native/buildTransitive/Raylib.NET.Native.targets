@@ -15,6 +15,7 @@
     <NativeLibrary Include="opengl32.lib" />
     <NativeLibrary Include="gdi32.lib" />
     <NativeLibrary Include="winmm.lib" />
+    <NativeLibrary Include="shell32.lib" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(PublishAot)' == 'true' And ('$(RuntimeIdentifier)' == 'osx-x64' Or '$(RuntimeIdentifier)' == 'osx-arm64')">
