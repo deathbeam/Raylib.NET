@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Raylib.NET.Native" Version="*-build.*" />
+    <PackageReference Include="Deathbeam.Raylib.NET.Native" Version="*-build.*" />
     <ProjectReference Include="..\Raylib.NET\Raylib.NET.csproj" />
     <ProjectReference Include="..\Raylib.NET.ImGui\Raylib.NET.ImGui.csproj" />
   </ItemGroup>
