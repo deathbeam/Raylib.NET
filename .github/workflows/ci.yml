@@ -70,16 +70,16 @@ jobs:
             os: ubuntu-latest
           - runtime: osx-x64
             config: Debug
-            os: macos-14
+            os: macos-15
           - runtime: osx-x64
             config: Release
-            os: macos-14
+            os: macos-15
           - runtime: osx-arm64
             config: Debug
-            os: macos-14
+            os: macos-15
           - runtime: osx-arm64
             config: Release
-            os: macos-14
+            os: macos-15
           - runtime: win-x64
             config: Debug
             os: windows-latest
