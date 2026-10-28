@@ -10,6 +10,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
+        <PackageId>Deathbeam.Raylib.NET.ImGui</PackageId>
         <Description>ImGui integration for Raylib.NET</Description>
     </PropertyGroup>
 

@@ -21,13 +21,13 @@
     <Choose>
         <When Condition="'$(Configuration)' == 'Debug'">
             <PropertyGroup>
-                <PackageId>Raylib.NET.Native.Debug</PackageId>
+                <PackageId>Deathbeam.Raylib.NET.Native.Debug</PackageId>
                 <ZigConfiguration>Debug</ZigConfiguration>
             </PropertyGroup>
         </When>
         <When Condition="'$(Configuration)' == 'Release'">
             <PropertyGroup>
-                <PackageId>Raylib.NET.Native</PackageId>
+                <PackageId>Deathbeam.Raylib.NET.Native</PackageId>
                 <ZigConfiguration>ReleaseFast</ZigConfiguration>
             </PropertyGroup>
         </When>

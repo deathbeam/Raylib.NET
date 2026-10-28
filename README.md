@@ -30,8 +30,8 @@
 You can use the latest builds from NuGet:
 
 ```sh
-dotnet add package Raylib.NET --version '*-build.*'
-dotnet add package Raylib.NET.Native --version '*-build.*'
+dotnet add package Deathbeam.Raylib.NET --version '*-build.*'
+dotnet add package Deathbeam.Raylib.NET.Native --version '*-build.*'
 ```
 
 Or from GitHub Packages (replace `YOUR_GITHUB_USERNAME` and `YOUR_GITHUB_TOKEN` with your GitHub username and [classic personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic) with `read:packages` scope)

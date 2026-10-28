@@ -4,8 +4,13 @@
     <Authors>deathbeam</Authors>
     <RepositoryUrl>https://github.com/deathbeam/Raylib.NET.git</RepositoryUrl>
     <PackageProjectUrl>https://github.com/deathbeam/Raylib.NET</PackageProjectUrl>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageLicenseExpression>Zlib</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)../README.md" Pack="true" PackagePath="/" Visible="false"/>
+  </ItemGroup>
 
   <PropertyGroup>
     <HostArch>$([System.Runtime.InteropServices.RuntimeInformation]::ProcessArchitecture)</HostArch>

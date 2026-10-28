@@ -173,26 +173,22 @@ jobs:
         run: |
           echo "VersionSuffix=build.$(git rev-list --count HEAD)" >> $GITHUB_ENV
 
-      - name: Create NuGet Debug Packages
-        run: dotnet pack src/Raylib.NET.Native -c Debug --output nuget -p:SkipNatives=true -p:SkipGen=true
-
-      - name: Create NuGet Release Packages
-        run: dotnet pack src/Raylib.NET.Native -c Release --output nuget -p:SkipNatives=true -p:SkipGen=true
-
       - name: Create NuGet Packages
         run: |
-          dotnet pack src/Raylib.NET -c Release --output nuget -p:SkipNatives=true -p:SkipGen=true
-          dotnet pack src/Raylib.NET.ImGui -c Release --output nuget -p:SkipNatives=true -p:SkipGen=true
+          dotnet pack src/Raylib.NET.Native -c Debug -o artifacts/nuget -p:SkipNatives=true -p:SkipGen=true
+          dotnet pack src/Raylib.NET.Native -c Release -o artifacts/nuget -p:SkipNatives=true -p:SkipGen=true
+          dotnet pack src/Raylib.NET -c Release -o artifacts/nuget -p:SkipNatives=true -p:SkipGen=true
+          dotnet pack src/Raylib.NET.ImGui -c Release -o artifacts/nuget -p:SkipNatives=true -p:SkipGen=true
 
       - name: Upload NuGet Packages As Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: nuget-packages
-          path: nuget/*
+          path: artifacts/**
 
       - name: Publish NuGet Packages to GitHub Packages
         if: github.ref == 'refs/heads/master'
-        run: dotnet nuget push "nuget/*.nupkg" -s https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json -k ${{ secrets.GITHUB_TOKEN }} --skip-duplicate
+        run: dotnet nuget push "artifacts/nuget/*.nupkg" -s https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json -k ${{ secrets.GITHUB_TOKEN }} --skip-duplicate
 
       - name: Login to NuGet.org
         if: github.ref == 'refs/heads/master'
@@ -203,4 +199,4 @@ jobs:
 
       - name: Publish NuGet Packages to NuGet.org
         if: github.ref == 'refs/heads/master'
-        run: dotnet nuget push "nuget/*.nupkg" --api-key ${{ steps.nuget-login.outputs.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
+        run: dotnet nuget push "artifacts/nuget/*.nupkg" --api-key ${{ steps.nuget-login.outputs.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate

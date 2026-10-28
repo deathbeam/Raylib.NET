@@ -10,6 +10,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
+        <PackageId>Deathbeam.Raylib.NET</PackageId>
         <Description>C# bindings for Raylib</Description>
     </PropertyGroup>
 </Project>

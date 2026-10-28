@@ -32,7 +32,7 @@
           Condition="'$(PublishAot)' == 'true' And Exists('$(RaylibStaticLibrary)')">
     <ItemGroup>
       <ResolvedFileToPublish Remove="@(ResolvedFileToPublish)"
-                             Condition="'%(ResolvedFileToPublish.NuGetPackageId)' == 'Raylib.NET.Native' Or '%(ResolvedFileToPublish.NuGetPackageId)' == 'Raylib.NET.Native.Debug'" />
+                             Condition="'%(ResolvedFileToPublish.NuGetPackageId)' == '$(MSBuildThisFileName)'" />
     </ItemGroup>
   </Target>
 </Project>
