@@ -27,19 +27,17 @@
 
 ### Use as dependency
 
-#### Add source
-
-Needs GitHub credentials.
-
-```sh
-dotnet nuget add source --name "raylib.net" --username "YOUR_GITHUB_USERNAME" --password "YOUR_GITHUB_TOKEN" --store-password-in-clear-text "https://nuget.pkg.github.com/deathbeam/index.json"
-```
-
-#### Use package
+You can use the latest builds from NuGet:
 
 ```sh
 dotnet add package Raylib.NET --version '*-build.*'
 dotnet add package Raylib.NET.Native --version '*-build.*'
+```
+
+Or from GitHub Packages (replace `YOUR_GITHUB_USERNAME` and `YOUR_GITHUB_TOKEN` with your GitHub username and [classic personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic) with `read:packages` scope)
+
+```sh
+dotnet nuget add source --name "deathbeam" --username "YOUR_GITHUB_USERNAME" --password "YOUR_GITHUB_TOKEN" --store-password-in-clear-text "https://nuget.pkg.github.com/deathbeam/index.json"
 ```
 
 ### Try the example

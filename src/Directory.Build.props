@@ -4,7 +4,7 @@
     <Authors>deathbeam</Authors>
     <RepositoryUrl>https://github.com/deathbeam/Raylib.NET.git</RepositoryUrl>
     <PackageProjectUrl>https://github.com/deathbeam/Raylib.NET</PackageProjectUrl>
-    <PackageLicenseExpression>zlib</PackageLicenseExpression>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <PropertyGroup>
