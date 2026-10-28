@@ -7,6 +7,39 @@ on:
       - master
 
 jobs:
+  build-and-update:
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Build
+        run: dotnet build -c Release -p:SkipNatives=true
+
+      - name: Test
+        run: dotnet test -p:SkipNatives=true -p:SkipGen=true
+
+      - name: Push Changes
+        run: |
+          git config --global user.name github-actions
+          git config --global user.email github-actions@github.com
+          if [ -n "$(git status --porcelain)" ]; then
+             git add .
+             git commit -m "Update bindings [ci skip]"
+             git push
+          else
+             echo "No changes to commit"
+          fi
+
   natives:
     strategy:
       matrix:
@@ -100,39 +133,6 @@ jobs:
           path: src/Raylib.NET.Native/bin/${{ matrix.config }}/runtimes/**
           if-no-files-found: error
 
-  build-and-update:
-    permissions:
-      contents: write
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-        with:
-          submodules: true
-
-      - name: Setup .NET 8
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: 8.0.x
-
-      - name: Build
-        run: dotnet build -c Release -p:SkipNatives=true
-
-      - name: Test
-        run: dotnet test -p:SkipNatives=true -p:SkipGen=true
-
-      - name: Push Changes
-        run: |
-          git config --global user.name github-actions
-          git config --global user.email github-actions@github.com
-          if [ -n "$(git status --porcelain)" ]; then
-             git add .
-             git commit -m "Update bindings [ci skip]"
-             git push
-          else
-             echo "No changes to commit"
-          fi
-
   packages:
     permissions:
       contents: read
@@ -199,7 +199,7 @@ jobs:
         id: nuget-login
         uses: NuGet/login@v1
         with:
-          user: ${{ secrets.NUGET_USER }}
+          user: deathbeam
 
       - name: Publish NuGet Packages to NuGet.org
         if: github.ref == 'refs/heads/master'
