@@ -60,6 +60,16 @@ public static unsafe class RlImGui
     //----------------------------------------------------------------------
 
     /// <summary>
+    /// Outline drawn behind every glyph, in framebuffer pixels. 0 disables it.
+    /// </summary>
+    public static int TextOutlineThickness { get; set; }
+
+    /// <summary>
+    /// Glyph outline color. Its alpha multiplies each glyph's own alpha.
+    /// </summary>
+    public static Vector4 TextOutlineColor { get; set; } = new(0f, 0f, 0f, 1f);
+
+    /// <summary>
     /// Simple setup with default font and dark theme.
     /// For custom fonts or themes, use BeginSetup() / EndSetup() instead.
     /// </summary>
@@ -775,6 +785,10 @@ public static unsafe class RlImGui
 
         io.DisplayFramebufferScale = resolutionScale;
 
+        // Baked AA lines sample their own atlas texels, which would read as glyphs and get outlined.
+        if (TextOutlineThickness > 0)
+            ImGui.GetStyle().AntiAliasedLinesUseTex = false;
+
         float deltaTime = dt >= 0 ? dt : Raylib.GetFrameTime();
         if (deltaTime <= 0)
             deltaTime = 0.001f;
@@ -946,15 +960,7 @@ public static unsafe class RlImGui
     {
         Rlgl.EnableScissorTest();
         ImGuiIOPtr io = ImGui.GetIO();
-        Vector2 scale = io.DisplayFramebufferScale;
-
-        // On non-macOS platforms, when not in HIGHDPI mode, force scale to 1:1
-        // (matching C++ EnableScissor logic)
-        if (!RuntimeInformation.IsOSPlatform(OSPlatform.OSX) &&
-            !Raylib.IsWindowState((int)ConfigFlags.FLAG_WINDOW_HIGHDPI))
-        {
-            scale = new Vector2(1, 1);
-        }
+        Vector2 scale = FramebufferScale();
 
         Rlgl.Scissor(
             (int)(x * scale.X),
@@ -963,26 +969,78 @@ public static unsafe class RlImGui
             (int)(height * scale.Y));
     }
 
-    private static void TriangleVert(ImDrawVert* idx_vert)
+    // Framebuffer pixels per ImGui unit, 1:1 outside HIGHDPI on non-macOS (matching C++ EnableScissor).
+    private static Vector2 FramebufferScale()
+    {
+        if (!RuntimeInformation.IsOSPlatform(OSPlatform.OSX) && !Raylib.IsWindowState((int)ConfigFlags.FLAG_WINDOW_HIGHDPI))
+            return Vector2.One;
+
+        return ImGui.GetIO().DisplayFramebufferScale;
+    }
+
+    private static void TriangleVert(ImDrawVert* idx_vert, Vector2 offset, bool outline)
     {
         Vector4 color = ImGui.ColorConvertU32ToFloat4(idx_vert->Col);
 
+        if (outline)
+            color = new Vector4(TextOutlineColor.X, TextOutlineColor.Y, TextOutlineColor.Z, TextOutlineColor.W * color.W);
+
         Rlgl.Color4f(color.X, color.Y, color.Z, color.W);
         Rlgl.TexCoord2f(idx_vert->Uv.X, idx_vert->Uv.Y);
-        Rlgl.Vertex2f(idx_vert->Pos.X, idx_vert->Pos.Y);
+        Rlgl.Vertex2f(idx_vert->Pos.X + offset.X, idx_vert->Pos.Y + offset.Y);
     }
 
-    private static void RenderTriangles(uint count, uint indexStart, ushort* indexBuffer, ImDrawVert* vertBuffer, nint texturePtr)
+    private static bool IsWhitePixelUv(ImDrawVert* vertex, Vector2 whitePixelUv) =>
+        MathF.Abs(vertex->Uv.X - whitePixelUv.X) < 1e-6f && MathF.Abs(vertex->Uv.Y - whitePixelUv.Y) < 1e-6f;
+
+    // Solid shapes sample the atlas white pixel on every vertex, anything else in the font atlas counts as text.
+    private static bool IsGlyphTriangle(ushort* indexBuffer, ImDrawVert* vertBuffer, uint index, Vector2 whitePixelUv) =>
+        !IsWhitePixelUv(&vertBuffer[indexBuffer[index]], whitePixelUv)
+        || !IsWhitePixelUv(&vertBuffer[indexBuffer[index + 1]], whitePixelUv)
+        || !IsWhitePixelUv(&vertBuffer[indexBuffer[index + 2]], whitePixelUv);
+
+    // A mid-frame atlas grow leaves earlier commands on an older texture generation, so match every live atlas texture.
+    private static bool TryGetAtlasWhitePixelUv(nint texturePtr, out Vector2 whitePixelUv)
     {
-        if (count < 3)
-            return;
+        whitePixelUv = Vector2.Zero;
+        // Destroyed generations stay in TexList with id 0, so an untextured command must not match them.
+        if (texturePtr == 0)
+            return false;
 
-        uint textureId = (uint)texturePtr;
+        var atlas = ImGui.GetIO().Fonts;
 
-        Rlgl.Begin(4); // RL_TRIANGLES
-        Rlgl.SetTexture(textureId);
+        var current = atlas.TexData;
+        for (int i = 0; i < atlas.TexList.Size; i++)
+        {
+            var texture = atlas.TexList[i];
+            if (texture.IsNull || texture.TexID != texturePtr)
+                continue;
 
-        for (int i = 0; i <= (count - 3); i += 3)
+            whitePixelUv = ImGui.GetFontTexUvWhitePixel();
+            // The white pixel keeps its atlas position, so an older generation's UV scales with the size ratio.
+            if (texture.Handle != current.Handle)
+                whitePixelUv = new Vector2(
+                    whitePixelUv.X * (float)current.Width / texture.Width,
+                    whitePixelUv.Y * (float)current.Height / texture.Height
+                );
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private static void RenderRunPass(
+        uint start,
+        uint count,
+        ushort* indexBuffer,
+        ImDrawVert* vertBuffer,
+        uint textureId,
+        Vector2 offset,
+        bool outline
+    )
+    {
+        for (uint i = start; i + 2 < start + count; i += 3)
         {
             if (Rlgl.CheckRenderBatchLimit(3))
             {
@@ -990,18 +1048,63 @@ public static unsafe class RlImGui
                 Rlgl.SetTexture(textureId);
             }
 
-            ushort indexA = indexBuffer[indexStart + i];
-            ushort indexB = indexBuffer[indexStart + i + 1];
-            ushort indexC = indexBuffer[indexStart + i + 2];
-
-            ImDrawVert* vertexA = &vertBuffer[indexA];
-            ImDrawVert* vertexB = &vertBuffer[indexB];
-            ImDrawVert* vertexC = &vertBuffer[indexC];
-
-            TriangleVert(vertexA);
-            TriangleVert(vertexB);
-            TriangleVert(vertexC);
+            TriangleVert(&vertBuffer[indexBuffer[i]], offset, outline);
+            TriangleVert(&vertBuffer[indexBuffer[i + 1]], offset, outline);
+            TriangleVert(&vertBuffer[indexBuffer[i + 2]], offset, outline);
         }
+    }
+
+    // One run at a time, outline first: a run's outline never covers an earlier glyph or shape.
+    private static void RenderRun(uint start, uint count, ushort* indexBuffer, ImDrawVert* vertBuffer, uint textureId, bool glyph)
+    {
+        if (glyph)
+        {
+            Vector2 scale = FramebufferScale();
+            var x = TextOutlineThickness / scale.X;
+            var y = TextOutlineThickness / scale.Y;
+            RenderRunPass(start, count, indexBuffer, vertBuffer, textureId, new Vector2(-x, 0), true);
+            RenderRunPass(start, count, indexBuffer, vertBuffer, textureId, new Vector2(x, 0), true);
+            RenderRunPass(start, count, indexBuffer, vertBuffer, textureId, new Vector2(0, -y), true);
+            RenderRunPass(start, count, indexBuffer, vertBuffer, textureId, new Vector2(0, y), true);
+        }
+
+        RenderRunPass(start, count, indexBuffer, vertBuffer, textureId, Vector2.Zero, false);
+    }
+
+    private static void RenderTriangles(
+        uint count,
+        uint indexStart,
+        ushort* indexBuffer,
+        ImDrawVert* vertBuffer,
+        nint texturePtr,
+        bool text,
+        Vector2 whitePixelUv
+    )
+    {
+        if (count < 3)
+            return;
+
+        uint textureId = (uint)texturePtr;
+        uint end = indexStart + count;
+
+        Rlgl.Begin(4); // RL_TRIANGLES
+        Rlgl.SetTexture(textureId);
+
+        uint runStart = indexStart;
+        bool runIsGlyph = text && IsGlyphTriangle(indexBuffer, vertBuffer, indexStart, whitePixelUv);
+
+        for (uint i = indexStart + 3; i + 2 < end; i += 3)
+        {
+            bool glyph = text && IsGlyphTriangle(indexBuffer, vertBuffer, i, whitePixelUv);
+            if (glyph == runIsGlyph)
+                continue;
+
+            RenderRun(runStart, i - runStart, indexBuffer, vertBuffer, textureId, runIsGlyph);
+            runStart = i;
+            runIsGlyph = glyph;
+        }
+
+        RenderRun(runStart, end - runStart, indexBuffer, vertBuffer, textureId, runIsGlyph);
         Rlgl.End();
     }
 
@@ -1055,12 +1158,17 @@ public static unsafe class RlImGui
                     continue;
                 }
 
+                var textureId = cmd.GetTexID();
+                Vector2 whitePixelUv = default;
+                bool text = TextOutlineThickness > 0 && TryGetAtlasWhitePixelUv(textureId, out whitePixelUv);
                 RenderTriangles(
                     cmd.ElemCount,
                     cmd.IdxOffset,
                     commandList.IdxBuffer.Data,
                     commandList.VtxBuffer.Data,
-                    cmd.GetTexID()
+                    textureId,
+                    text,
+                    whitePixelUv
                 );
 
                 Rlgl.DrawRenderBatchActive();
