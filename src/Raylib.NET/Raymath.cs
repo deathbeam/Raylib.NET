@@ -857,7 +857,7 @@ public static unsafe partial class Raymath
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial Matrix4x4 MatrixFrustum(double left, double right, double bottom, double top, double nearPlane, double farPlane);
+    public static partial Matrix4x4 MatrixFrustum(float left, float right, float bottom, float top, float nearPlane, float farPlane);
 
     /// <summary>
     /// Get perspective projection matrix
@@ -865,14 +865,14 @@ public static unsafe partial class Raymath
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial Matrix4x4 MatrixPerspective(double fovY, double aspect, double nearPlane, double farPlane);
+    public static partial Matrix4x4 MatrixPerspective(float fovY, float aspect, float nearPlane, float farPlane);
 
     /// <summary>
     /// Get orthographic projection matrix
     /// </summary>
     [LibraryImport(LIBRARY, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial Matrix4x4 MatrixOrtho(double left, double right, double bottom, double top, double nearPlane, double farPlane);
+    public static partial Matrix4x4 MatrixOrtho(float left, float right, float bottom, float top, float nearPlane, float farPlane);
 
     /// <summary>
     /// Get camera look-at matrix (view matrix)

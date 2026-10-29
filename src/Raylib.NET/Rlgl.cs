@@ -238,11 +238,11 @@ public static unsafe partial class Rlgl
 
     [LibraryImport(LIBRARY, EntryPoint = "rlFrustum", StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void Frustum(double left, double right, double bottom, double top, double znear, double zfar);
+    public static partial void Frustum(float left, float right, float bottom, float top, float znear, float zfar);
 
     [LibraryImport(LIBRARY, EntryPoint = "rlOrtho", StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void Ortho(double left, double right, double bottom, double top, double znear, double zfar);
+    public static partial void Ortho(float left, float right, float bottom, float top, float znear, float zfar);
 
     /// <summary>
     /// Set the viewport area
@@ -256,21 +256,21 @@ public static unsafe partial class Rlgl
     /// </summary>
     [LibraryImport(LIBRARY, EntryPoint = "rlSetClipPlanes", StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void SetClipPlanes(double nearPlane, double farPlane);
+    public static partial void SetClipPlanes(float nearPlane, float farPlane);
 
     /// <summary>
     /// Get cull plane distance near
     /// </summary>
     [LibraryImport(LIBRARY, EntryPoint = "rlGetCullDistanceNear", StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial double GetCullDistanceNear();
+    public static partial float GetCullDistanceNear();
 
     /// <summary>
     /// Get cull plane distance far
     /// </summary>
     [LibraryImport(LIBRARY, EntryPoint = "rlGetCullDistanceFar", StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial double GetCullDistanceFar();
+    public static partial float GetCullDistanceFar();
 
     /// <summary>
     /// Initialize drawing mode (how to organize vertex)
