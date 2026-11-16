@@ -466,7 +466,8 @@ public static unsafe class RlImGui
         io.BackendFlags |= ImGuiBackendFlags.HasMouseCursors |
                           ImGuiBackendFlags.HasSetMousePos |
                           ImGuiBackendFlags.HasGamepad |
-                          ImGuiBackendFlags.RendererHasTextures;
+                          ImGuiBackendFlags.RendererHasTextures |
+                          ImGuiBackendFlags.RendererHasVtxOffset;
 
         io.MousePos = new Vector2(0, 0);
 
@@ -1165,7 +1166,7 @@ public static unsafe class RlImGui
                     cmd.ElemCount,
                     cmd.IdxOffset,
                     commandList.IdxBuffer.Data,
-                    commandList.VtxBuffer.Data,
+                    commandList.VtxBuffer.Data + cmd.VtxOffset,
                     textureId,
                     text,
                     whitePixelUv
